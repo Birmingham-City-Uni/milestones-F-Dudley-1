@@ -58,12 +58,15 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region User Input
-    private void UserInput(){
-        if (Input.GetKeyDown(KeyCode.P)) {
+    private void UserInput() 
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
             RemoveParent();
         }
 
-        if (Input.GetKeyDown(KeyCode.L)) {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
             // Toggle Debug Settings.
         }
     }
@@ -76,23 +79,27 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region Camera Functions
-    private void SetControl(CharacterMovement controller) {
-        if (controller != null) {
+    private void SetControl(CharacterMovement controller)
+    {
+        if (controller != null)
+        {
             characterScript = controller;
             controllingCharacter = true;
             characterScript.currentlyControlled = true;
         }
-        else {
+        else 
+        {
             controllingCharacter = false;
-            if (characterScript) {
+            if (characterScript)
+            {
                 characterScript.currentlyControlled = false;
                 characterScript = null;
             }
         }
     }
 
-    private void UpdateCameraTransform() {
-
+    private void UpdateCameraTransform()
+    {
         float speed = movementSpeed;
         if (Input.GetKey(KeyCode.LeftShift)) speed *= boostMultiplier;
 
@@ -108,22 +115,26 @@ public class CameraController : MonoBehaviour
         transform.position += transform.right * (GetMovementX() * speed);
     }
 
-    private void CheckCameraRay() {
+    private void CheckCameraRay()
+    {
         RaycastHit hit;
 
         bool castCollide = Physics.Raycast(transform.position, transform.forward, out hit, interactionRange, LayerMask.GetMask("Characters"));
-        if (castCollide) {
+        if (castCollide)
+        {
             Debug.Log("Casting on Character");
             CharacterMovement controller = hit.collider.transform.root.GetComponent<CharacterMovement>();
 
-            if (Input.GetKeyDown(KeyCode.F)) {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
                 transform.SetParent(controller.cameraPosition);
                 LeanTween.move(this.gameObject, controller.cameraPosition, 1.0f).setEaseInCubic()
                 .setOnStart(() => {
                     LeanTween.rotate(this.gameObject, controller.cameraPosition.forward, 1.0f).setEaseInCubic();
                 })
                 .setOnComplete(() => {
-                    if (controller.userControllable) {
+                    if (controller.userControllable) 
+                    {
                         SetControl(controller);
                     }
                 });
@@ -134,8 +145,10 @@ public class CameraController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * interactionRange, castCollide ? Color.red : Color.green, 0.0f);
     }
 
-    private void RemoveParent() {
-        if (transform.parent) {
+    private void RemoveParent()
+    {
+        if (transform.parent) 
+        {
             transform.SetParent(null, true);
 
             SetControl(null);
@@ -144,7 +157,8 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region Character Control Functions
-    private void CharacterControl() {
+    private void CharacterControl()
+    {
         // Rotation
         float newRotationX = transform.localEulerAngles.x - GetMouseY();
 
