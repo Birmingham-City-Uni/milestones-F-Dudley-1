@@ -29,3 +29,4 @@ jobs:
         uses: docker://github/super-linter:latest
         env:
           VALIDATE_CSHARP: true
+          FILTER_REGEX_INCLUDE: .*code/AI For Games Project/Assets/.*
