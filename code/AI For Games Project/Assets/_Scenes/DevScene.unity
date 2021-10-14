@@ -1009,11 +1009,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userControllable: 1
   currentlyControlled: 0
-  movementSpeed: 10
-  sprintMultiplier: 0
-  isGrounded: 0
+  movementSpeed: 1
+  sprintMultiplier: 1.2
+  isGrounded: 1
   groundCheck: {fileID: 585231097}
-  groundDistance: 1.5
+  groundDistance: 0.4
   cameraPosition: {fileID: 1328260715}
 --- !u!1 &1328260714
 GameObject:

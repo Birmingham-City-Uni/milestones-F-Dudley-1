@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEditor;
 
 public class LeanTweenDocumentationEditor : Editor {
-
+	
 	[MenuItem ("Help/LeanTween Documentation")]
 	static void openDocumentation()
 	{

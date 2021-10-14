@@ -25,7 +25,6 @@
 // SOFTWARE.
 
 
-
 /*
 TERMS OF USE - EASING EQUATIONS#
 Open source under the BSD License.

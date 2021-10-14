@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
     [Header("Physics Variables")]
     /// <summary>
     /// The Cameras Movement Speed.
