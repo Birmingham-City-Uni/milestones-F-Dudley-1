@@ -129,16 +129,17 @@ public class CameraController : MonoBehaviour
             {
                 transform.SetParent(controller.cameraPosition);
                 LeanTween.move(this.gameObject, controller.cameraPosition, 1.0f).setEaseInCubic()
-                .setOnStart(() =>{
+                .setOnStart(() =>
+                {
                     LeanTween.rotate(this.gameObject, controller.cameraPosition.forward, 1.0f).setEaseInCubic();
                 })
-                .setOnComplete(() =>{
+                .setOnComplete(() =>
+                {
                     if (controller.userControllable)
                     {
                         SetControl(controller);
                     }
                 });
-
             }
         }
 
