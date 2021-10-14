@@ -19,16 +19,17 @@ public class Sensors : MonoBehaviour
 
     [Header("General Variables")]
     public LayerMask hitMask;
-
     public Type sensorType = Type.Line;
     public float sensorDistance = 1.0f;
+    [SerializeField]
+    public bool Hit { get; private set;}    
 
     private Transform cachedTransform;
+    private RaycastHit castInfo = new RaycastHit();    
 
     [Header("SphereCast Settings")]
     public float sphereRadius = 1.0f;
     
-
     [Header("BoxCast Settings")]
     public Vector2 boxExtents = new Vector2(1.0f, 1.0f);
     
@@ -39,9 +40,10 @@ public class Sensors : MonoBehaviour
     [Range(0, 360)]
     public int fov;
 
-    private RayBundle_Ray[] raybundleHits;
+    private RayBundle_Ray[] raybundleHits; // To be Used in Updated Raybundle
 
-    // Start is called before the first frame update
+#region Unity Functions
+
     void Start()
     {
         cachedTransform = GetComponent<Transform>();
@@ -52,11 +54,9 @@ public class Sensors : MonoBehaviour
         Scan();
     }
 
-    public bool Hit { get; private set;}
-    public RaycastHit castInfo = new RaycastHit();
+#endregion
 
-    private void DebugHit() => Debug.Log("Hit Object");
-    private void DebugRay() => Debug.DrawRay(cachedTransform.position, cachedTransform.forward * sensorDistance, Hit ? Color.red : Color.green);
+#region Main Functions
 
     public bool Scan() {
         Hit = false;
@@ -105,6 +105,13 @@ public class Sensors : MonoBehaviour
 
         return false;
     }
+
+#endregion
+
+#region Debug Functions
+
+    private void DebugHit() => Debug.Log("Hit Object");
+    private void DebugRay() => Debug.DrawRay(cachedTransform.position, cachedTransform.forward * sensorDistance, Hit ? Color.red : Color.green);
 
     public void OnDrawGizmos() {
         if(cachedTransform == null) cachedTransform = GetComponent<Transform>();
@@ -164,4 +171,6 @@ public class Sensors : MonoBehaviour
                 break;
         }
     }
+
+#endregion
 }
