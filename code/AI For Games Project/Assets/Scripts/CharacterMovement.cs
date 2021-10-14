@@ -24,61 +24,57 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Camera Variables")]
     public Transform cameraPosition;
-
 #region Unity Functions
-
     void Start()
     {
         playerTransform = GetComponent<Transform>();
         characterController = GetComponent<CharacterController>();
-        if(userControllable) {
+        if (userControllable){
             currentlyControlled = false;
         }
     }
 
-    void Update() {
+    void Update(){
         isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(groundDistance, 0.2f, groundDistance) / 2.0f, transform.rotation, LayerMask.GetMask("Ground"));
     }
 
-    void FixedUpdate() {
+    void FixedUpdate(){
         UpdateCharacterVelocity();
     }
 
-    void OnDrawGizmos() {
-        if(isGrounded) Gizmos.color = Color.green;
+    void OnDrawGizmos(){
+        if (isGrounded) Gizmos.color = Color.green;
         else Gizmos.color = Color.red;
 
         Gizmos.DrawCube(groundCheck.position, new Vector3(groundDistance, 0.2f, groundDistance) / 2.0f);
     }
-
 #endregion
-
-    public void UpdateCharacterPosition(float _vertical, float _horizontal) {
+    public void UpdateCharacterPosition(float _vertical, float _horizontal){
         Vector3 movement = (transform.forward * _vertical) + (transform.right * _horizontal);
 
         characterController.Move(movement * movementSpeed);
     }
 
-    public void UpdateCharacterRotation(float _mouseX) {
+    public void UpdateCharacterRotation(float _mouseX){
         float newRotationY = transform.localEulerAngles.y + _mouseX;
 
         transform.localRotation = Quaternion.Euler(0.0f, newRotationY, 0.0f);
     }
 
-    public void UpdateCharacterVelocity() {
+    public void UpdateCharacterVelocity(){
         velocity += (-20f * Mathf.Pow(Time.deltaTime, 2.0f));
-        if(isGrounded) {
+        if (isGrounded){
             velocity = 0;
         }
 
         characterController.Move(new Vector3(0.0f, velocity, 0.0f));
     }
 
-    private void UserControl() {
+    private void UserControl(){
 
     }
 
-    private void ComputerControl() {
+    private void ComputerControl(){
 
     }
 }

@@ -56,7 +56,6 @@ public class CameraController : MonoBehaviour
     }
 #region User Input
     private void UserInput(){
-
         if (Input.GetKeyDown(KeyCode.P)){
             RemoveParent();
         }
