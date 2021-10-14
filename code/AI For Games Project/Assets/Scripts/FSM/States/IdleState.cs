@@ -6,7 +6,7 @@ public class IdleState : State
 {
     public IdleState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
-        
+
     }
 
     public override void Enter()

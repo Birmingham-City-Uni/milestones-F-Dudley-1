@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SeekState : State
-{   
+{
     public SeekState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
 
