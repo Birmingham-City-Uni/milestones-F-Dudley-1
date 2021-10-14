@@ -14,7 +14,6 @@ using UnityEngine;
 
 public class LeanSmooth {
 
-
     /**
     * <summary>Moves one value towards another (eases in and out to destination with no overshoot)</summary>
     * 

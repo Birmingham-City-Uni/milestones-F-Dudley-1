@@ -1,7 +1,6 @@
 //namespace DentedPixel{
 using System;
 using UnityEngine;
-
 /**
 * Internal Representation of a Tween<br>
 * <br>
@@ -30,6 +29,7 @@ using UnityEngine;
 * @class LTDescr
 * @constructor
 */
+
 public class LTDescr
 {
 	public bool toggle;

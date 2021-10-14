@@ -23,6 +23,7 @@ public class LeanTester : MonoBehaviour {
 	#endif
 }
 
+
 public class LeanTest : object {
 	public static int expected = 0;
 	private static int tests = 0;

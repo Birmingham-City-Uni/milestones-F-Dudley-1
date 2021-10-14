@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-
     [Header("Main Variables")]
     public bool userControllable = false;
     public bool currentlyControlled = false;

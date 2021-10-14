@@ -42,6 +42,7 @@ public class LeanAudio : object {
 
 	private static float[] longList;
 
+
 	public static LeanAudioOptions options(){
 		if(generatedWaveDistances==null){
 			generatedWaveDistances = new float[ PROCESSING_ITERATIONS_MAX ];

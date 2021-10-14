@@ -19,6 +19,7 @@ using UnityEngine;
 * @class LTSeq
 * @constructor
 */
+
 public class LTSeq {
 
 	public LTSeq previous;
