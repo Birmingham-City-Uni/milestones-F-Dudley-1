@@ -36,10 +36,18 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\SampleSceneAssets\Scripts\PlayerMovement.cs" />
-     <Compile Include="Assets\SampleSceneAssets\Scripts\SimpleCameraController.cs" />
-     <Compile Include="Assets\SampleSceneAssets\TutorialInfo\Scripts\Readme.cs" />
-     <Compile Include="Assets\SampleSceneAssets\Scripts\LookWithMouse.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LeanTween.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LeanTweenExt.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LeanSmooth.cs" />
+     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+     <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Sensors.cs" />
+     <None Include="Assets\LeanTween\License.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
