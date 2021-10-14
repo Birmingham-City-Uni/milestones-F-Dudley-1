@@ -30,3 +30,4 @@ jobs:
         env:
           VALIDATE_CSHARP: true
           FILTER_REGEX_INCLUDE: .*code/AI For Games Project/Assets/.*
+          FILTER_REGEX_EXCLUDE: .*code/AI For Games Project/Assets/LeanTween/.*
