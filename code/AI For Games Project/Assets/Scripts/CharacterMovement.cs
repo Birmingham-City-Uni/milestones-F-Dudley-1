@@ -25,8 +25,7 @@ public class CharacterMovement : MonoBehaviour
     [Header("Camera Variables")]
     public Transform cameraPosition;
 
-    #region Unity Functions
-    
+    #region Unity Functions    
     void Start()
     {
         playerTransform = GetComponent<Transform>();
@@ -73,11 +72,7 @@ public class CharacterMovement : MonoBehaviour
     public void UpdateCharacterVelocity()
     {
         velocity += (-20f * Mathf.Pow(Time.deltaTime, 2.0f));
-        if(isGrounded)
-        {
-            velocity = 0;
-        }
-
+        if(isGrounded) velocity = 0;
         characterController.Move(new Vector3(0.0f, velocity, 0.0f));
     }
 

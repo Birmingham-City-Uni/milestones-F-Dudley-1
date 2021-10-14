@@ -58,7 +58,7 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region User Input
-    private void UserInput() 
+    private void UserInput()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -87,7 +87,7 @@ public class CameraController : MonoBehaviour
             controllingCharacter = true;
             characterScript.currentlyControlled = true;
         }
-        else 
+        else
         {
             controllingCharacter = false;
             if (characterScript)
@@ -129,11 +129,11 @@ public class CameraController : MonoBehaviour
             {
                 transform.SetParent(controller.cameraPosition);
                 LeanTween.move(this.gameObject, controller.cameraPosition, 1.0f).setEaseInCubic()
-                .setOnStart(() => {
+                .setOnStart(() =>{
                     LeanTween.rotate(this.gameObject, controller.cameraPosition.forward, 1.0f).setEaseInCubic();
                 })
-                .setOnComplete(() => {
-                    if (controller.userControllable) 
+                .setOnComplete(() =>{
+                    if (controller.userControllable)
                     {
                         SetControl(controller);
                     }
@@ -147,7 +147,7 @@ public class CameraController : MonoBehaviour
 
     private void RemoveParent()
     {
-        if (transform.parent) 
+        if (transform.parent)
         {
             transform.SetParent(null, true);
 

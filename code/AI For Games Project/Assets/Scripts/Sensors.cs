@@ -30,10 +30,10 @@ public class Sensors : MonoBehaviour
 
     [Header("SphereCast Settings")]
     public float sphereRadius = 1.0f;
-    
+
     [Header("BoxCast Settings")]
     public Vector2 boxExtents = new Vector2(1.0f, 1.0f);
-    
+
     [Header("Raybundle Settings")]
     [Range(1, 100)]
     public int rayAmount = 1;
@@ -48,7 +48,7 @@ public class Sensors : MonoBehaviour
     {
         cachedTransform = GetComponent<Transform>();
     }
-    
+
     void Update()
     {
         Scan();
@@ -77,7 +77,7 @@ public class Sensors : MonoBehaviour
                 for (int i = 1; i < rayAmount + 1; i++)
                 {
                     Vector3 rayDirection = Quaternion.Euler(0f, (fov / 2) + (angleIncrement * i), 0f) * cachedTransform.forward;
-                        
+
                     if (Physics.Raycast(cachedTransform.position, rayDirection, out castInfo, sensorDistance, hitMask, QueryTriggerInteraction.Ignore))
                     {
                         Hit = true;
@@ -87,7 +87,7 @@ public class Sensors : MonoBehaviour
                 break;
 
             case Type.SphereCast:
-                if(Physics.SphereCast(new Ray(cachedTransform.position, dir), sphereRadius, out castInfo, sensorDistance, hitMask, QueryTriggerInteraction.Ignore))
+                if (Physics.SphereCast(new Ray(cachedTransform.position, dir), sphereRadius, out castInfo, sensorDistance, hitMask, QueryTriggerInteraction.Ignore))
                 {
                     Hit = true;
                     return true;
@@ -145,7 +145,7 @@ public class Sensors : MonoBehaviour
                     for (int i = 1; i < rayAmount + 1; i++)
                     {
                         Vector3 rayDirection = Quaternion.Euler(0f, (fov / 2) + (angleIncrement * i), 0f) * Vector3.forward;
-                        
+
                         Gizmos.DrawRay(Vector3.zero, rayDirection * length);
                         Gizmos.DrawCube(rayDirection * length, new Vector3(0.05f, 0.05f, 0.05f));
                     }
