@@ -15,6 +15,7 @@ public class PathGrid : MonoBehaviour
     
     [Header("Debug")]
     public bool showPathOnly;
+    public List<Node> currentPath;
 
     #region Unity Functions
     private void Awake()
@@ -36,9 +37,17 @@ public class PathGrid : MonoBehaviour
         if(grid != null)
         {
             foreach (Node node in grid)
-            {
+            {   
                 Gizmos.color = node.isWalkable ? Color.gray : Color.red;
-                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));
+                if (currentPath != null && currentPath.Contains(node))
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));
+                }
+                else
+                {
+                    Gizmos.DrawWireCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));                
+                }
             }
         }
     }
@@ -57,7 +66,7 @@ public class PathGrid : MonoBehaviour
             {
                 Vector3 pointInWorld = worldBottomLeft + (Vector3.right * (x * nodeDiameter + nodeRadius)) + (Vector3.forward * (z * nodeDiameter + nodeRadius));
                 bool isWalkable = !(Physics.CheckBox(pointInWorld, Vector3.one * nodeRadius, Quaternion.identity, unwalkableTerrainMask, QueryTriggerInteraction.Ignore));
-                grid[x,z] = new Node(isWalkable, pointInWorld);
+                grid[x,z] = new Node(isWalkable, pointInWorld, x, z);
             }
         }
     }
@@ -71,6 +80,29 @@ public class PathGrid : MonoBehaviour
         int z = Mathf.RoundToInt((gridSizeZ - 1) * percentZ);
         
         return grid[x,z];
+    }
+
+    public List<Node> GetNodeNeighbours(Node _node)
+    {
+        List<Node> neighbourNodes = new List<Node>();
+
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int z = -1; z <= 1; z++)
+            {
+                if (x == 0 && z == 0) continue;
+
+                int checkX = _node.gridX + x;
+                int checkZ = _node.gridZ + z;
+
+                if (checkX >= 0 && checkX < gridSizeX && checkZ >= 0 && checkZ < gridSizeZ)
+                {
+                    neighbourNodes.Add(grid[checkX, checkZ]);
+                }
+            }
+        }
+
+        return neighbourNodes;
     }
     #endregion
 }
