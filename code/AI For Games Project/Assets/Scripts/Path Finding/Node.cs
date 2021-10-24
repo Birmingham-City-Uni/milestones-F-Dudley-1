@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node
+public class Node : IPQueueItem<Node>
 {
     [Header("World Variables")]
     public bool isWalkable;
@@ -14,11 +15,7 @@ public class Node
     public int gCost;
     public int hCost;
 
-    public int fCost {
-        get {
-            return gCost + hCost;
-        }
-    }
+    private int queueIndex;
 
     public Node(bool _isWalkable, Vector3 _worldPosition, int _gridX, int _gridZ)
     {
@@ -26,5 +23,31 @@ public class Node
         worldPosition = _worldPosition;
         gridX = _gridX;
         gridZ = _gridZ;
+    }
+
+    public int fCost {
+        get {
+            return gCost + hCost;
+        }
+    }
+
+    public int QueueIndex {
+        get {
+            return queueIndex;
+        }
+        set {
+            queueIndex = value;
+        }
+    }
+
+    public int CompareTo(Node _NodeToCompare)
+    {
+        int compare = fCost.CompareTo(_NodeToCompare.fCost);
+        if (compare == 0)
+        {
+            compare = hCost.CompareTo(_NodeToCompare.hCost);
+        }
+
+        return -compare;
     }
 }

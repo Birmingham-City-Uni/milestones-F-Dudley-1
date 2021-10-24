@@ -47,6 +47,7 @@
      <Compile Include="Assets\Scripts\FSM\States\WanderState.cs" />
      <Compile Include="Assets\Scripts\FSM\States\SeekState.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
+     <Compile Include="Assets\Scripts\Path Finding\PathFinding.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanSmooth.cs" />
      <Compile Include="Assets\Scripts\CharacterMovement.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
@@ -55,7 +56,8 @@
      <Compile Include="Assets\Scripts\FSM\StateManager.cs" />
      <Compile Include="Assets\Scripts\FSM\States\IdleState.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
-     <Compile Include="Assets\Scripts\Path Finding\PathFinding.cs" />
+     <Compile Include="Assets\Scripts\Data Structures\PriorityQueue.cs" />
+     <Compile Include="Assets\Scripts\Data Structures\DataItems.cs" />
      <None Include="Assets\LeanTween\License.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

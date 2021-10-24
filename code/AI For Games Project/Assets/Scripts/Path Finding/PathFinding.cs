@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class PathFinding : MonoBehaviour
     #region Path Finding Methods
     public void FindPath(Vector3 _startPosition, Vector3 _targetPosition)
     {
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         Node startingNode = grid.GetNodeFromWorldPoint(_startPosition);
         Node targetNode = grid.GetNodeFromWorldPoint(_targetPosition);
 
@@ -50,6 +54,8 @@ public class PathFinding : MonoBehaviour
 
             if(currentNode == targetNode)
             {
+                stopwatch.Stop();
+                UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
                 RetracePath(startingNode, targetNode);
                 return;
             }

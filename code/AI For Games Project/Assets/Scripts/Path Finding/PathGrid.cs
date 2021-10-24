@@ -37,8 +37,7 @@ public class PathGrid : MonoBehaviour
         if(grid != null)
         {
             foreach (Node node in grid)
-            {   
-                Gizmos.color = node.isWalkable ? Color.gray : Color.red;
+            {
                 if (currentPath != null && currentPath.Contains(node))
                 {
                     Gizmos.color = Color.green;
@@ -46,7 +45,11 @@ public class PathGrid : MonoBehaviour
                 }
                 else
                 {
-                    Gizmos.DrawWireCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));                
+                    if (!showPathOnly)
+                    {
+                        Gizmos.color = node.isWalkable ? Color.gray : Color.red;                        
+                        Gizmos.DrawWireCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));
+                    }
                 }
             }
         }
