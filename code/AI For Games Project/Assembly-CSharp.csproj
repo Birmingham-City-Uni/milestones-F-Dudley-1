@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Data Structures\PriorityQueue.cs" />
      <Compile Include="Assets\Scripts\Data Structures\DataItems.cs" />
+     <Compile Include="Assets\Scripts\Path Finding\PathFindingManager.cs" />
      <None Include="Assets\LeanTween\License.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

@@ -14,8 +14,7 @@ public class PathGrid : MonoBehaviour
     private int gridSizeX, gridSizeZ;
     
     [Header("Debug")]
-    public bool showPathOnly;
-    public List<Node> currentPath;
+    public bool showGridGizmos;
 
     #region Unity Functions
     private void Awake()
@@ -34,23 +33,12 @@ public class PathGrid : MonoBehaviour
     {
         Gizmos.DrawWireCube((transform.position + gridPositionOffset) + Vector3.up * (gridWorldSize.y/2), gridWorldSize);
 
-        if(grid != null)
+        if(grid != null && showGridGizmos)
         {
             foreach (Node node in grid)
             {
-                if (currentPath != null && currentPath.Contains(node))
-                {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));
-                }
-                else
-                {
-                    if (!showPathOnly)
-                    {
-                        Gizmos.color = node.isWalkable ? Color.gray : Color.red;                        
-                        Gizmos.DrawWireCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));
-                    }
-                }
+                Gizmos.color = node.isWalkable ? Color.gray : Color.red;                        
+                Gizmos.DrawWireCube(node.worldPosition, Vector3.one * (nodeDiameter-0.1f));                    
             }
         }
     }

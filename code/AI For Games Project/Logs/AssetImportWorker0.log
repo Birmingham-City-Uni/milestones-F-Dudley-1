@@ -206,3 +206,68 @@ System memory in use after: 138.3 MB.
 Unloading 76 unused Assets to reduce memory usage. Loaded Objects now: 3704.
 Total: 5.251600 ms (FindLiveObjects: 0.391900 ms CreateObjectMapping: 0.085500 ms MarkObjects: 1.787000 ms  DeleteObjects: 2.985900 ms)
 
+========================================================================
+Received Import Request.
+  Time since last request: 3596.459061 seconds.
+  path: Assets/Scripts/Data Structures/DataItems.cs
+  artifactKey: Guid(0a178aa3bca06e64aafe992f86d5dc42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Data Structures/DataItems.cs using Guid(0a178aa3bca06e64aafe992f86d5dc42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6d0dafc52240043039c60a038062610') in 0.012205 seconds
+  Import took 0.018120 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 26.616056 seconds.
+  path: Assets/Scripts/Path Finding/PathFindingManager.cs
+  artifactKey: Guid(6662ba88275042945a6eb46cd7adbbf3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Path Finding/PathFindingManager.cs using Guid(6662ba88275042945a6eb46cd7adbbf3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ef3a86f19af6df78fb4cd650adc7ef0') in 0.006957 seconds
+  Import took 0.012590 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001277 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.83 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.944 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.69 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3282 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 143.0 MB.
+System memory in use after: 138.3 MB.
+
+Unloading 76 unused Assets to reduce memory usage. Loaded Objects now: 3708.
+Total: 5.677100 ms (FindLiveObjects: 0.382000 ms CreateObjectMapping: 0.083200 ms MarkObjects: 1.972500 ms  DeleteObjects: 3.238200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001365 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.70 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.833 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.75 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3282 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 143.1 MB.
+System memory in use after: 138.3 MB.
+
+Unloading 76 unused Assets to reduce memory usage. Loaded Objects now: 3711.
+Total: 5.834600 ms (FindLiveObjects: 0.417800 ms CreateObjectMapping: 0.086600 ms MarkObjects: 2.192800 ms  DeleteObjects: 3.135700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 2814.972730 seconds.
+  path: Assets/Scripts/Path Finding/PathFindingManager.cs
+  artifactKey: Guid(6662ba88275042945a6eb46cd7adbbf3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Path Finding/PathFindingManager.cs using Guid(6662ba88275042945a6eb46cd7adbbf3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66db2d30a4eef091939bdea574c2c316') in 0.006228 seconds
+  Import took 0.012099 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
