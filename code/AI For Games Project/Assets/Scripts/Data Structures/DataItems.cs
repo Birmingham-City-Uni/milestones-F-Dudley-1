@@ -12,10 +12,12 @@ public interface IPQueueItem<T> : IComparable<T>
         set;
     }
 }
-#endregion 
+#endregion
 
 #region Pathfinding Items
-[System.Serializable] public struct PathRequest {
+[System.Serializable]
+public struct PathRequest
+{
     public Vector3 pathStart;
     public Vector3 pathEnd;
     public Action<Vector3[], bool> callback;
