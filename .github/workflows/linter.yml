@@ -31,3 +31,5 @@ jobs:
           VALIDATE_CSHARP: true
           FILTER_REGEX_INCLUDE: .*code/AI For Games Project/Assets/.*
           FILTER_REGEX_EXCLUDE: .*code/AI For Games Project/Assets/LeanTween/.*
+
+          VALIDATE_SCALAFMT_LINT: false
