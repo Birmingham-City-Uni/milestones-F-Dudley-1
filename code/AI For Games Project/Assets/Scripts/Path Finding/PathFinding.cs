@@ -4,19 +4,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnvironmentStyle
+{
+    Grid,
+    Graph
+}
+
 public class PathFinding : MonoBehaviour
 {
     [Header("References")]
+    public EnvironmentStyle environmentLayout;
     public PathFindingManager pathManager;
 
     [Header("Debug")]
     private PathGrid grid;
+    private PathGraph graph;
 
     #region Unity Methods
     private void Awake()
     {
         pathManager = GetComponent<PathFindingManager>();
         grid = GetComponent<PathGrid>();
+        graph = GetComponent<PathGraph>();
+
+        if (grid != null) environmentLayout = EnvironmentStyle.Grid;
+        else if (graph != null) environmentLayout = EnvironmentStyle.Graph;
     }
 
     private void Update()
@@ -43,23 +55,14 @@ public class PathFinding : MonoBehaviour
         Node targetNode = grid.GetNodeFromWorldPoint(_targetPosition);
 
         if (startingNode.isWalkable && targetNode.isWalkable) {
-            List<Node> openSet = new List<Node>();
+            PriorityQueue<Node> openSet = new PriorityQueue<Node>(grid.MaxSize);
             HashSet<Node> closeSet = new HashSet<Node>();
 
-            openSet.Add(startingNode);
+            openSet.Enqueue(startingNode);
 
             while (openSet.Count > 0)
             {
-                Node currentNode = openSet[0];
-                for (int i = 1; i < openSet.Count; i++)
-                {
-                    if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
-                    {
-                        currentNode = openSet[i];
-                    }
-                }
-
-                openSet.Remove(currentNode);
+                Node currentNode = openSet.Dequeue();
                 closeSet.Add(currentNode);
 
                 if(currentNode == targetNode)
@@ -85,7 +88,7 @@ public class PathFinding : MonoBehaviour
 
                         if (!openSet.Contains(neighbourNode))
                         {
-                            openSet.Add(neighbourNode);
+                            openSet.Enqueue(neighbourNode);
                         }
                     }
                 }

@@ -11,11 +11,19 @@ public class Node : IPQueueItem<Node>
     public int gridX, gridZ;
 
     [Header("Path Finding Costs")]
-    public Node parentNode;    
+    public Node parentNode;
+    public List<Node> neighbours;
     public int gCost;
     public int hCost;
 
     private int queueIndex;
+
+    public Node(bool _isWalkable, Vector3 _worldPosition, List<Node> _neighbours)
+    {
+        isWalkable = _isWalkable;
+        worldPosition = _worldPosition;
+        neighbours = _neighbours;
+    }
 
     public Node(bool _isWalkable, Vector3 _worldPosition, int _gridX, int _gridZ)
     {

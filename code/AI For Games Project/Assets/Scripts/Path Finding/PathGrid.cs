@@ -10,9 +10,16 @@ public class PathGrid : MonoBehaviour
     public float nodeDiameter;    
     public LayerMask unwalkableTerrainMask;
 
+    public int MaxSize
+    {
+        get {
+            return gridSizeX * gridSizeZ;
+        }
+    }
+
     private Node[,] grid;
     private int gridSizeX, gridSizeZ;
-    
+
     [Header("Debug")]
     public bool showGridGizmos;
 
