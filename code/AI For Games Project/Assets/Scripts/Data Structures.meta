@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:code/AI For Games Project/Assets/Scripts/Data Structures.meta
 guid: 59eb5f0fdc6ae4c4e838d1eb87fc64c7
+=======
+guid: 5bdaaa36a3cb1e342af45b96864cf1b6
+>>>>>>> main:code/AI For Games Project/Assets/Shaders.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

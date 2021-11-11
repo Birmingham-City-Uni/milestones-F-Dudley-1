@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:code/AI For Games Project/Assets/Scripts/Data Structures/DataItems.cs.meta
 guid: 0a178aa3bca06e64aafe992f86d5dc42
+=======
+guid: 9a8103fc477ba1041882424b322f4ec8
+>>>>>>> main:code/AI For Games Project/Assets/Scripts/FSM/Agent.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
