@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFindingManager : MonoBehaviour
-{   
+{
     [Header("Main")]
     public static PathFindingManager instance;
 
@@ -26,8 +26,8 @@ public class PathFindingManager : MonoBehaviour
 
     private void Update()
     {
-        
-    }    
+
+    }
     #endregion
 
     #region Manager Functions

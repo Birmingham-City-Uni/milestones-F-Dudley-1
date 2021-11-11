@@ -42,7 +42,8 @@ public class PathFinding : MonoBehaviour
         Node startingNode = grid.GetNodeFromWorldPoint(_startPosition);
         Node targetNode = grid.GetNodeFromWorldPoint(_targetPosition);
 
-        if (startingNode.isWalkable && targetNode.isWalkable) {
+        if (startingNode.isWalkable && targetNode.isWalkable)
+        {
             List<Node> openSet = new List<Node>();
             HashSet<Node> closeSet = new HashSet<Node>();
 
@@ -62,7 +63,7 @@ public class PathFinding : MonoBehaviour
                 openSet.Remove(currentNode);
                 closeSet.Add(currentNode);
 
-                if(currentNode == targetNode)
+                if (currentNode == targetNode)
                 {
                     stopwatch.Stop();
                     UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
@@ -89,7 +90,7 @@ public class PathFinding : MonoBehaviour
                         }
                     }
                 }
-            }            
+            }
         }
 
         yield return null;
@@ -132,11 +133,12 @@ public class PathFinding : MonoBehaviour
         for (int i = 1; i < _pathToOptimise.Count; i++)
         {
             Vector2 directionNew = new Vector2(
-                _pathToOptimise[i-1].gridX - _pathToOptimise[i].gridX,
-                _pathToOptimise[i-1].gridZ - _pathToOptimise[i].gridZ
+                _pathToOptimise[i - 1].gridX - _pathToOptimise[i].gridX,
+                _pathToOptimise[i - 1].gridZ - _pathToOptimise[i].gridZ
             );
 
-            if (directionNew != directionOld) {
+            if (directionNew != directionOld)
+            {
                 waypoints.Add(_pathToOptimise[i].worldPosition);
 
                 directionOld = directionNew;

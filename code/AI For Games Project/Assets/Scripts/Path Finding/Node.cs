@@ -11,7 +11,7 @@ public class Node : IPQueueItem<Node>
     public int gridX, gridZ;
 
     [Header("Path Finding Costs")]
-    public Node parentNode;    
+    public Node parentNode;
     public int gCost;
     public int hCost;
 
@@ -25,17 +25,22 @@ public class Node : IPQueueItem<Node>
         gridZ = _gridZ;
     }
 
-    public int fCost {
-        get {
+    public int fCost
+    {
+        get
+        {
             return gCost + hCost;
         }
     }
 
-    public int QueueIndex {
-        get {
+    public int QueueIndex
+    {
+        get
+        {
             return queueIndex;
         }
-        set {
+        set
+        {
             queueIndex = value;
         }
     }

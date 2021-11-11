@@ -6,7 +6,8 @@ using UnityEngine;
 #region Data Structure Items
 public interface IPQueueItem<T> : IComparable<T>
 {
-    int QueueIndex {
+    int QueueIndex
+    {
         get;
         set;
     }
@@ -14,8 +15,7 @@ public interface IPQueueItem<T> : IComparable<T>
 #endregion 
 
 #region Pathfinding Items
-[System.Serializable]
-public struct PathRequest {
+[System.Serializable] public struct PathRequest {
     public Vector3 pathStart;
     public Vector3 pathEnd;
     public Action<Vector3[], bool> callback;
@@ -26,5 +26,5 @@ public struct PathRequest {
         pathEnd = _end;
         callback = _callback;
     }
+    #endregion
 }
-#endregion
