@@ -2077,12 +2077,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 959310290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a44e7d00971cbee48b66bab3ca43d841, type: 3}
+  m_Script: {fileID: 11500000, guid: dc8b8b7df6b343e458396243072cfdd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   graphNodeContainer: {fileID: 1253588602}
-  maxNeighbourDistance: 7.5
-  cliffSearchDistance: 2
+  maxNeighbourDistance: 1
+  cliffSearchDistance: 1.5
   showGraphGizmos: 1
 --- !u!1 &1006804719
 GameObject:

@@ -12,12 +12,8 @@ public class PathGraph : MonoBehaviour
     public float maxNeighbourDistance = 10.0f;
     public float cliffSearchDistance = 1.5f;
 
-    private GameObject[] graph;
+    private List<Node> graph;
 
-    /// /// ///
-    private List<Vector3> links;
-    private List<Vector3> from_pos;   // CAN BE REWORKED LATER TO USE NODE CLASS.
-    /// /// ///
     [Header("Debug")]
     public bool showGraphGizmos;
 
@@ -34,11 +30,18 @@ public class PathGraph : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (graph != null && links != null && from_pos != null && showGraphGizmos)
+        if (graph != null && showGraphGizmos)
         {
-            for (int i = 0; i < links.Count; i++)
+            foreach (Node node in graph)
             {
-                Debug.DrawLine(from_pos[i], from_pos[i] + links[i], Color.cyan);
+                Gizmos.color = Color.blue;
+                Gizmos.DrawSphere(node.worldPosition, 0.25f);
+
+                foreach (Node neighbour in node.neighbours)
+                {
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawLine(node.worldPosition, neighbour.worldPosition);
+                }
             }
         }
     }
@@ -48,32 +51,30 @@ public class PathGraph : MonoBehaviour
     public void CreateGraph()
     {
         int numNodes = graphNodeContainer.childCount;
-        graph = new GameObject[numNodes];
+        graph = new List<Node>(numNodes);
 
-        links = new List<Vector3>();
-        from_pos = new List<Vector3>();        
-
-        for (int i = 0; i < numNodes; i++)
+        foreach (Transform child in graphNodeContainer)
         {
-            graph[i] = graphNodeContainer.GetChild(i).gameObject;
+            graph.Add(new Node(true, child.position, new List<Node>()));
+            child.gameObject.SetActive(false);
         }
 
-        foreach (GameObject node in graph)
+        foreach (Node node in graph)
         {
-            foreach (GameObject nodeToCompare in graph)
+            foreach (Node nodeToCompare in graph)
             {
                 if (node == nodeToCompare) continue;
-                float distance = Vector3.Distance(node.transform.position, nodeToCompare.transform.position);
+                float distance = Vector3.Distance(node.worldPosition, nodeToCompare.worldPosition);
 
                 if (distance < maxNeighbourDistance)
                 {
-                    Vector3 edge = nodeToCompare.transform.position - node.transform.position;
+                    Vector3 edge = nodeToCompare.worldPosition - node.worldPosition;
 
                     bool cliff = false;
                     int steps = Mathf.FloorToInt(edge.magnitude);
                     for (int i = 0; i < steps; i++)
                     {
-                        Vector3 pos = node.transform.position + (edge.normalized * i);
+                        Vector3 pos = node.worldPosition + (edge.normalized * i);
 
                         RaycastHit hit;
                         if (Physics.Raycast(pos, Vector3.down, out hit, maxNeighbourDistance))
@@ -82,10 +83,9 @@ public class PathGraph : MonoBehaviour
                         }
                     }
 
-                    if (!Physics.Raycast(node.transform.position, edge, maxNeighbourDistance) && !cliff)
+                    if (!Physics.Raycast(node.worldPosition, edge, maxNeighbourDistance) && !cliff)
                     {
-                        links.Add(edge);
-                        from_pos.Add(node.transform.position);
+                        node.neighbours.Add(nodeToCompare);
                     }
                 }
             }
