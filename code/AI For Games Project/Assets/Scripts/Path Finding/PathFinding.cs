@@ -18,16 +18,17 @@ public class PathFinding : MonoBehaviour
 
     [Header("Debug")]
     private PathGrid grid;
+    private PathGraph graph;
 
     #region Unity Methods
     private void Awake()
     {
         pathManager = GetComponent<PathFindingManager>();
         grid = GetComponent<PathGrid>();
-        //graph = GetComponent<PathGraph>();
+        graph = GetComponent<PathGraph>();
 
         if (grid != null) environmentLayout = EnvironmentStyle.Grid;
-        //else if (graph != null) environmentLayout = EnvironmentStyle.Graph;
+        else if (graph != null) environmentLayout = EnvironmentStyle.Graph;
     }
 
     private void Update()
@@ -73,7 +74,7 @@ public class PathFinding : MonoBehaviour
                     break;
                 }
 
-                foreach (Node neighbourNode in grid.GetNodeNeighbours(currentNode))
+                foreach (Node neighbourNode in currentNode.neighbours)
                 {
                     if (!neighbourNode.isWalkable || closeSet.Contains(neighbourNode)) continue;
 

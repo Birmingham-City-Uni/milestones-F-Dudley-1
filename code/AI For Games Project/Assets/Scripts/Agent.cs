@@ -5,21 +5,32 @@ using UnityEngine;
 public class Agent : MonoBehaviour
 {
     [Header("Main Variables")]
+    [SerializeField] private Vector3[] pathWaypoints;
+
     private StateManager stateManager = new StateManager();
     private Sensors sensor;
 
-    /*
-    [Header("State Variables")]
-    Add Any States Here.
-    */
+    [Header("Agent Containers")]
+    private Transform stateContainer;    
 
     #region Unity Functions
     void Start()
     {
-        // Call Contructors of Any States Here.
-
         stateManager.Init(new WanderState(this, stateManager));
         sensor = GetComponent<Sensors>();
+
+        if (stateContainer != null)
+        {
+            State[] foundStates = stateContainer.GetComponents<State>();
+
+            if (foundStates.Length > 0)
+            {
+                foreach (State state in foundStates)
+                {
+                    stateManager.pushState(state);
+                }
+            }
+        }
     }
 
     void Update()
@@ -37,9 +48,14 @@ public class Agent : MonoBehaviour
     #endregion
 
     #region Main Agent Functions
-    public void Move(float speed, Vector3 waypoint)
+    public void Move(Vector3 waypoint)
     {
         // Code To Interact With Character Controller Here.
+    }
+
+    protected void FoundPathCallback()
+    {
+
     }
     #endregion
 }

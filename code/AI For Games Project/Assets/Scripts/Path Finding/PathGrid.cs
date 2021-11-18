@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathGrid : MonoBehaviour
+public class PathGrid : MonoBehaviour, NodeContainer
 {
     [Header("Grid Attributes")]
     public Vector3 gridPositionOffset;
@@ -28,7 +28,7 @@ public class PathGrid : MonoBehaviour
     {
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
-        CreateGrid();
+        CreateContainer();
     }
 
     void Update()
@@ -52,7 +52,7 @@ public class PathGrid : MonoBehaviour
     #endregion
 
     #region Grid Functions
-    private void CreateGrid()
+    public void CreateContainer()
     {
         float nodeRadius = nodeDiameter / 2;
         grid = new Node[gridSizeX, gridSizeZ];
@@ -65,6 +65,8 @@ public class PathGrid : MonoBehaviour
                 Vector3 pointInWorld = worldBottomLeft + (Vector3.right * (x * nodeDiameter + nodeRadius)) + (Vector3.forward * (z * nodeDiameter + nodeRadius));
                 bool isWalkable = !(Physics.CheckBox(pointInWorld, Vector3.one * nodeRadius, Quaternion.identity, unwalkableTerrainMask, QueryTriggerInteraction.Ignore));
                 grid[x,z] = new Node(isWalkable, pointInWorld, x, z);
+
+                grid[x,z].neighbours = GetNodeNeighbours(grid[x,z]);
             }
         }
     }

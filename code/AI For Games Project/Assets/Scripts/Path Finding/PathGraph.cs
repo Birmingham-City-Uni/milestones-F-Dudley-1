@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathGraph : MonoBehaviour
+public class PathGraph : MonoBehaviour, NodeContainer
 {
     [Header("Graph Attributes")]
     public Transform graphNodeContainer;
@@ -20,7 +20,7 @@ public class PathGraph : MonoBehaviour
     #region Unity Functions
     private void Start()
     {
-        CreateGraph();
+        CreateContainer();
     }
 
     private void Update()
@@ -48,7 +48,7 @@ public class PathGraph : MonoBehaviour
     #endregion
 
     #region Graph Functions
-    public void CreateGraph()
+    public void CreateContainer()
     {
         int numNodes = graphNodeContainer.childCount;
         graph = new List<Node>(numNodes);
@@ -61,35 +61,62 @@ public class PathGraph : MonoBehaviour
 
         foreach (Node node in graph)
         {
-            foreach (Node nodeToCompare in graph)
+            node.neighbours = GetNodeNeighbours(node);
+        }
+    }
+
+    public Node GetNodeFromWorldPoint(Vector3 _worldPosition)
+    {
+        Node closestNode = new Node(true, _worldPosition, null);
+        float closestDistance = float.MaxValue;
+
+        foreach (Node node in graph)
+        {
+            float distance = Vector3.Distance(_worldPosition, node.worldPosition);
+            if (distance < closestDistance)
             {
-                if (node == nodeToCompare) continue;
-                float distance = Vector3.Distance(node.worldPosition, nodeToCompare.worldPosition);
+                closestDistance = distance;
+                closestNode = node;
+            }
+        }
 
-                if (distance < maxNeighbourDistance)
+        return closestNode;
+    }
+
+    public List<Node> GetNodeNeighbours(Node _node)
+    {
+        List<Node> neighbours = new List<Node>();
+
+        foreach (Node nodeToCompare in graph)
+        {
+            if (_node == nodeToCompare) continue;
+            float distance = Vector3.Distance(_node.worldPosition, nodeToCompare.worldPosition);
+
+            if (distance < maxNeighbourDistance)
+            {
+                Vector3 edge = nodeToCompare.worldPosition - _node.worldPosition;
+
+                bool cliff = false;
+                int steps = Mathf.FloorToInt(edge.magnitude);
+                for (int i = 0; i < steps; i++)
                 {
-                    Vector3 edge = nodeToCompare.worldPosition - node.worldPosition;
+                    Vector3 pos = _node.worldPosition + (edge.normalized * i);
 
-                    bool cliff = false;
-                    int steps = Mathf.FloorToInt(edge.magnitude);
-                    for (int i = 0; i < steps; i++)
+                    RaycastHit hit;
+                    if (Physics.Raycast(pos, Vector3.down, out hit, maxNeighbourDistance))
                     {
-                        Vector3 pos = node.worldPosition + (edge.normalized * i);
-
-                        RaycastHit hit;
-                        if (Physics.Raycast(pos, Vector3.down, out hit, maxNeighbourDistance))
-                        {
-                            if (hit.distance > cliffSearchDistance) cliff = true;
-                        }
+                        if (hit.distance > cliffSearchDistance) cliff = true;
                     }
+                }
 
-                    if (!Physics.Raycast(node.worldPosition, edge, maxNeighbourDistance) && !cliff)
-                    {
-                        node.neighbours.Add(nodeToCompare);
-                    }
+                if (!Physics.Raycast(_node.worldPosition, edge, maxNeighbourDistance) && !cliff)
+                {
+                    neighbours.Add(nodeToCompare);
                 }
             }
         }
+
+        return neighbours;
     }
     #endregion
 }
