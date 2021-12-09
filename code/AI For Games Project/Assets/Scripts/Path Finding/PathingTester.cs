@@ -23,7 +23,7 @@ public class PathingTester : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void OnDrawGizmos()
