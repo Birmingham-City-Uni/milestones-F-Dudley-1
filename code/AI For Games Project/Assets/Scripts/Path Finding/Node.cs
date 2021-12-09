@@ -34,17 +34,22 @@ public class Node : IHeapItem<Node>
         gridZ = _gridZ;
     }
 
-    public int fCost {
-        get {
+    public int fCost
+    {
+        get
+        {
             return gCost + hCost;
         }
     }
 
-    public int HeapIndex {
-        get {
+    public int HeapIndex
+    {
+        get
+        {
             return heapIndex;
         }
-        set {
+        set
+        {
             heapIndex = value;
         }
     }

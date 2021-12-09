@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface IHeapItem<T> : System.IComparable<T>
 {
-    int HeapIndex {
+    int HeapIndex
+    {
         get;
         set;
     }
@@ -17,7 +18,8 @@ public class Heap<T> where T : IHeapItem<T>
 
     public int Count
     {
-        get {
+        get
+        {
             return currentItemCount;
         }
     }
@@ -79,7 +81,7 @@ public class Heap<T> where T : IHeapItem<T>
 
     private void SortDown(T item)
     {
-        while(true)
+        while (true)
         {
             int childIndexLeft = item.HeapIndex * 2 + 1;
             int childIndexRight = item.HeapIndex * 2 + 2;
