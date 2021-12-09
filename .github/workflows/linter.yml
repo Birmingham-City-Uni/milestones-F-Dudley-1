@@ -28,7 +28,11 @@ jobs:
       - name: Super-Linter
         uses: docker://github/super-linter:v4.8.1
         env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
           VALIDATE_CSHARP: true
+          
           FILTER_REGEX_INCLUDE: .*code/AI For Games Project/Assets/.*
           FILTER_REGEX_EXCLUDE: .*code/AI For Games Project/Assets/LeanTween/.*
 
