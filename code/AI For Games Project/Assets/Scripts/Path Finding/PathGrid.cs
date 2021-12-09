@@ -68,7 +68,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
                 bool isWalkable = !(Physics.CheckBox(pointInWorld, Vector3.one * nodeRadius, Quaternion.identity, unwalkableTerrainMask, QueryTriggerInteraction.Ignore));
                 grid[x, z] = new Node(isWalkable, pointInWorld, x, z);
 
-                grid[x, z].neighbours = GetNodeNeighbours(grid[x,z]);
+                grid[x, z].neighbours = GetNodeNeighbours(grid[x, z]);
             }
         }
     }
