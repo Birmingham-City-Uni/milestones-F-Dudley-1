@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : IPQueueItem<Node>
+[Serializable]
+public class Node : IHeapItem<Node>
 {
     [Header("World Variables")]
     public bool isWalkable;
@@ -16,7 +17,7 @@ public class Node : IPQueueItem<Node>
     public int gCost;
     public int hCost;
 
-    private int queueIndex;
+    private int heapIndex;
 
     public Node(bool _isWalkable, Vector3 _worldPosition, List<Node> _neighbours)
     {
@@ -39,12 +40,12 @@ public class Node : IPQueueItem<Node>
         }
     }
 
-    public int QueueIndex {
+    public int HeapIndex {
         get {
-            return queueIndex;
+            return heapIndex;
         }
         set {
-            queueIndex = value;
+            heapIndex = value;
         }
     }
 

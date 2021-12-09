@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PathGraph : MonoBehaviour, NodeContainer
 {
     [Header("Graph Attributes")]
@@ -12,10 +13,16 @@ public class PathGraph : MonoBehaviour, NodeContainer
     public float maxNeighbourDistance = 10.0f;
     public float cliffSearchDistance = 1.5f;
 
-    private List<Node> graph;
+    public List<Node> graph;
 
     [Header("Debug")]
     public bool showGraphGizmos;
+
+    // Get Setters
+    public int MaxSize
+    {
+        get { return graphNodeContainer.childCount; }
+    }
 
     #region Unity Functions
     private void Start()
@@ -48,6 +55,7 @@ public class PathGraph : MonoBehaviour, NodeContainer
     #endregion
 
     #region Graph Functions
+
     public void CreateContainer()
     {
         int numNodes = graphNodeContainer.childCount;

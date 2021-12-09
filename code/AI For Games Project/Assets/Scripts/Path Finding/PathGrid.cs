@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PathGrid : MonoBehaviour, NodeContainer
 {
     [Header("Grid Attributes")]
     public Vector3 gridPositionOffset;
     public Vector3 gridWorldSize;
-    public float nodeDiameter;    
+    public float nodeDiameter;
     public LayerMask unwalkableTerrainMask;
 
     public int MaxSize
@@ -17,7 +18,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
         }
     }
 
-    private Node[,] grid;
+    public Node[,] grid;
     private int gridSizeX, gridSizeZ;
 
     [Header("Debug")]
