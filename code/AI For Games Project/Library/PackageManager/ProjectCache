@@ -5,7 +5,11 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
+<<<<<<< HEAD
+      ticks: 637722363177075255
+=======
       ticks: 637722336380274699
+>>>>>>> main
     m_Hash: 815026959
   m_LockFileStatus:
     m_FilePath: D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Packages/packages-lock.json
@@ -13,7 +17,11 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
+<<<<<<< HEAD
+      ticks: 637722363272896322
+=======
       ticks: 637722336380274699
+>>>>>>> main
     m_Hash: 3471302547
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
