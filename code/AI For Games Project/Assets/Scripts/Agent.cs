@@ -11,7 +11,6 @@ public class Agent : MonoBehaviour
     private Sensors sensor;
 
     [Header("Agent Containers")]
-
     private Transform stateContainer;
 
     #region Unity Functions
@@ -59,5 +58,4 @@ public class Agent : MonoBehaviour
 
     }
     #endregion
-
 }
