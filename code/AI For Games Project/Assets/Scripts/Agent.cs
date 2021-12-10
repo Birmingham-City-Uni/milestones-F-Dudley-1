@@ -11,10 +11,11 @@ public class Agent : MonoBehaviour
     private Sensors sensor;
 
     [Header("Agent Containers")]
-    private Transform stateContainer;    
+
+    private Transform stateContainer;
 
     #region Unity Functions
-    void Start()
+    private void Start()
     {
         stateManager.Init(new WanderState(this, stateManager));
         sensor = GetComponent<Sensors>();
@@ -33,7 +34,7 @@ public class Agent : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         stateManager.Update();
         if ((sensor.Hit == true) && (stateManager.getCurrentState().GetType() != typeof(SeekState)))
@@ -58,4 +59,5 @@ public class Agent : MonoBehaviour
 
     }
     #endregion
+
 }
