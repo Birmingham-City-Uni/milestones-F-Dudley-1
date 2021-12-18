@@ -3,20 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct PathRequest
-{
-    public Vector3 pathStart;
-    public Vector3 pathEnd;
-    public Action<Vector3[], bool> callback;
-
-    public PathRequest(Vector3 _startPos, Vector3 _endPos, Action<Vector3[], bool> _callback)
-    {
-        pathStart = _startPos;
-        pathEnd = _endPos;
-        callback = _callback;
-    }
-}
-
 public class PathRequestManager : MonoBehaviour
 {
     public static PathRequestManager instance;
@@ -48,7 +34,7 @@ public class PathRequestManager : MonoBehaviour
         {
             currentRequest = requestQueue.Dequeue();
             isProcessing = true;
-            pathfinding.StartFindPath(currentRequest.pathStart, currentRequest.pathEnd);
+            pathfinding.StartFindpath(currentRequest.pathStart, currentRequest.pathEnd);
         }
     }
 

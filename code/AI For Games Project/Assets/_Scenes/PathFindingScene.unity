@@ -233,8 +233,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd0089dff70f714e80d31a9ae79b0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 2
+  rotateSpeed: 0.05
+  waypointRange: 1.5
   target: {fileID: 955079049}
-  path: []
   showPathingGizmos: 1
   gizmoPathPointSize: 0.5
 --- !u!1 &91275176
@@ -530,7 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d7c6d05eb8b7f4080fb25d22e7e251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPathingTechnique: 0
+  pathManager: {fileID: 0}
 --- !u!114 &366982144
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,16 +7,16 @@ using UnityEngine;
 public class PathFinding : MonoBehaviour
 {
     [Header("References")]
-    public PathFindingManager pathManager;
+    public PathRequestManager pathManager;
 
     [Header("Debug")]
-    private PathGrid grid;
+    private NodeContainer nodeContainer;
 
     #region Unity Methods
     private void Awake()
     {
-        pathManager = GetComponent<PathFindingManager>();
-        grid = GetComponent<PathGrid>();
+        pathManager = GetComponent<PathRequestManager>();
+        nodeContainer = GetComponent<NodeContainer>();
     }
 
     private void Update()
@@ -39,8 +39,8 @@ public class PathFinding : MonoBehaviour
         Vector3[] pathWaypoints = new Vector3[0];
         bool pathSuccess = false;
 
-        Node startingNode = grid.GetNodeFromWorldPoint(_startPosition);
-        Node targetNode = grid.GetNodeFromWorldPoint(_targetPosition);
+        Node startingNode = nodeContainer.GetNodeFromWorldPoint(_startPosition);
+        Node targetNode = nodeContainer.GetNodeFromWorldPoint(_targetPosition);
 
         if (startingNode.isWalkable && targetNode.isWalkable)
         {
@@ -72,7 +72,7 @@ public class PathFinding : MonoBehaviour
                     break;
                 }
 
-                foreach (Node neighbourNode in grid.GetNodeNeighbours(currentNode))
+                foreach (Node neighbourNode in nodeContainer.GetNodeNeighbours(currentNode))
                 {
                     if (!neighbourNode.isWalkable || closeSet.Contains(neighbourNode)) continue;
 
@@ -95,7 +95,7 @@ public class PathFinding : MonoBehaviour
 
         yield return null;
         if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
-        pathManager.FinishedPathProcessing(pathWaypoints, pathSuccess);
+        pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
     }
 
     public Vector3[] RetracePath(Node _startNode, Node _targetNode)
