@@ -165,6 +165,9 @@ MonoBehaviour:
   currentlyControlled: 0
   movementSpeed: 5
   sprintMultiplier: 1.5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4096
   isGrounded: 1
   groundCheck: {fileID: 5337012542454857077}
   groundDistance: 0.4

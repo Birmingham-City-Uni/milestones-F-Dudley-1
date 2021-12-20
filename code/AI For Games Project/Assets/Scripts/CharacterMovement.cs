@@ -14,6 +14,7 @@ public class CharacterMovement : MonoBehaviour
 
     [Space]
 
+    public LayerMask groundMask;
     public bool isGrounded;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -38,7 +39,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(groundDistance, 0.2f, groundDistance) / 2.0f, transform.rotation, LayerMask.GetMask("Ground"));
+        isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(groundDistance, 0.2f, groundDistance) / 2.0f, transform.rotation, groundMask);
     }
 
     void FixedUpdate()
