@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bf27330af87f0ca449fd3b0bd83919cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,6 +165,9 @@ MonoBehaviour:
   currentlyControlled: 0
   movementSpeed: 5
   sprintMultiplier: 1.5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4096
   isGrounded: 1
   groundCheck: {fileID: 5337012542454857077}
   groundDistance: 0.4

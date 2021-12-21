@@ -24,6 +24,7 @@ public class CameraController : MonoBehaviour
     public float interactionRange = 100f;
 
     [Header("Character Variables")]
+    public LayerMask characterLayerMask;
     public bool controllingCharacter;
 
     private CharacterMovement characterScript;
@@ -119,7 +120,7 @@ public class CameraController : MonoBehaviour
     {
         RaycastHit hit;
 
-        bool castCollide = Physics.Raycast(transform.position, transform.forward, out hit, interactionRange, LayerMask.GetMask("Characters"));
+        bool castCollide = Physics.Raycast(transform.position, transform.forward, out hit, interactionRange, characterLayerMask);
         if (castCollide)
         {
             Debug.Log("Casting on Character");

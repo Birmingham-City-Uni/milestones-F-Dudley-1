@@ -20,7 +20,7 @@ public class FlockManager : MonoBehaviour
     public float targetChangeTime = 30f;
 
     [SerializeField] public int numBirds = 100;
-    [SerializeField] public static Vector3 targetPosition = new Vector3(0f, 0f, 0f); 
+    [SerializeField] public Vector3 targetPosition = new Vector3(0f, 0f, 0f); 
 
     public GameObject[] birds;
     public Coroutine targetChange;
@@ -37,7 +37,7 @@ public class FlockManager : MonoBehaviour
         targetPosition = GetPositionInBounds();
         boundsCollider = GetComponent<BoxCollider>();
 
-        boundsCollider.center = new Vector3(0, distanceFromGround + (flockBounds.y / 2), 0);
+        boundsCollider.center = new Vector3(0, distanceFromGround, 0);
         boundsCollider.size = flockBounds;
 
         birds = new GameObject[numBirds];
@@ -82,11 +82,11 @@ public class FlockManager : MonoBehaviour
 
     public Vector3 GetPositionInBounds()
     {
-        Vector3 halfBounds = flockBounds * 0.3f;
+        Vector3 halfBounds = flockBounds * 0.5f;
 
-        return new Vector3(Random.Range(transform.position.x - halfBounds.x, transform.position.x + halfBounds.x),
-                                     Random.Range(transform.position.y + distanceFromGround, transform.position.y + flockBounds.y),
-                                     Random.Range(transform.position.z - halfBounds.z, transform.position.z + halfBounds.z));
+        return new Vector3(Random.Range(-(halfBounds.x), halfBounds.x),
+                           Random.Range(distanceFromGround, distanceFromGround + flockBounds.y), 
+                           Random.Range(-(halfBounds.z), halfBounds.z));
     }
 
     public static bool CheckInBounds(Vector3 _positionToCheck)
