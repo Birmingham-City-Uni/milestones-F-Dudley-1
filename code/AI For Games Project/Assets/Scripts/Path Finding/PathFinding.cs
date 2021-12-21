@@ -4,8 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PathfindingAlgorithms
+{
+    ASTAR,
+    BFS,
+    DFS,
+}
+
 public class PathFinding : MonoBehaviour
 {
+    [Header("Main")]
+    public PathfindingAlgorithms currentChosenAlgorithm;
+
     [Header("References")]
     public PathRequestManager pathManager;
 
@@ -28,10 +38,26 @@ public class PathFinding : MonoBehaviour
     #region Path Finding Methods
     public void StartFindpath(Vector3 _startPositon, Vector3 _targetPosition)
     {
-        StartCoroutine(FindPath(_startPositon, _targetPosition));
+        switch (currentChosenAlgorithm)
+        {
+            
+            default:
+            case PathfindingAlgorithms.ASTAR:
+                StartCoroutine(FindPath_AStar(_startPositon, _targetPosition));
+                break;
+
+            case PathfindingAlgorithms.BFS:
+                StartCoroutine(FindPath_BFS(_startPositon, _targetPosition));
+                break;
+
+            case PathfindingAlgorithms.DFS:
+                StartCoroutine(FindPath_DFS(_startPositon, _targetPosition));
+                break;
+        }
+        
     }
 
-    public IEnumerator FindPath(Vector3 _startPosition, Vector3 _targetPosition)
+    public IEnumerator FindPath_AStar(Vector3 _startPosition, Vector3 _targetPosition)
     {
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -44,23 +70,14 @@ public class PathFinding : MonoBehaviour
 
         if (startingNode.isWalkable && targetNode.isWalkable)
         {
-            List<Node> openSet = new List<Node>();
+            Heap<Node> openSet = new Heap<Node>(nodeContainer.MaxSize);
             HashSet<Node> closeSet = new HashSet<Node>();
 
             openSet.Add(startingNode);
 
             while (openSet.Count > 0)
             {
-                Node currentNode = openSet[0];
-                for (int i = 1; i < openSet.Count; i++)
-                {
-                    if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
-                    {
-                        currentNode = openSet[i];
-                    }
-                }
-
-                openSet.Remove(currentNode);
+                Node currentNode = openSet.RemoveFirst();
                 closeSet.Add(currentNode);
 
                 if (currentNode == targetNode)
@@ -91,6 +108,66 @@ public class PathFinding : MonoBehaviour
                     }
                 }
             }
+        }
+
+        yield return null;
+        if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
+        pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+    }
+
+    public IEnumerator FindPath_BFS(Vector3 _startPosition, Vector3 _targetPosition)
+    {
+        Vector3[] pathWaypoints = new Vector3[0];
+        bool pathSuccess = false;
+
+        Node startingNode = nodeContainer.GetNodeFromWorldPoint(_startPosition);
+        Node targetNode = nodeContainer.GetNodeFromWorldPoint(_targetPosition);
+
+        if (startingNode.isWalkable && targetNode.isWalkable)
+        {
+            /*
+            while (true)
+            {
+                if (currentNode == targetNode)
+                {
+                    stopwatch.Stop();
+                    UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
+
+                    pathSuccess = true;
+                    break;
+                }
+            }
+            */
+        }
+
+        yield return null;
+        if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
+        pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+    }
+
+    public IEnumerator FindPath_DFS(Vector3 _startPosition, Vector3 _targetPosition)
+    {
+        Vector3[] pathWaypoints = new Vector3[0];
+        bool pathSuccess = false;
+
+        Node startingNode = nodeContainer.GetNodeFromWorldPoint(_startPosition);
+        Node targetNode = nodeContainer.GetNodeFromWorldPoint(_targetPosition);
+
+        if (startingNode.isWalkable && targetNode.isWalkable)
+        {
+            /*
+            while (true)
+            {
+                if (currentNode == targetNode)
+                {
+                    stopwatch.Stop();
+                    UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
+
+                    pathSuccess = true;
+                    break;
+                }
+            }
+            */
         }
 
         yield return null;
