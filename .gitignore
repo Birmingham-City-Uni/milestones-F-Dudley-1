@@ -69,3 +69,8 @@ code/AI For Games Project/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 # Temporary auto-generated Android Assets
 code/AI For Games Project/[Aa]ssets/[Ss]treamingAssets/aa.meta
 code/AI For Games Project/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Large Files
+code/AI For Games Project/Assets/Viking Village/Textures/Buildings/build_building_01_a.tif
+code/AI For Games Project/Assets/Viking Village/Textures/Buildings/build_building_02_a.tif
+code/AI For Games Project/Assets/Viking Village/Textures/wood_tiled_01_n.tif
