@@ -65,6 +65,8 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Data Structures\PriorityQueue.cs" />
      <Compile Include="Assets\Scripts\Data Structures\Heap.cs" />
+     <Compile Include="Assets\Scripts\Village Scripts\VillageManager.cs" />
+     <Compile Include="Assets\Scripts\Village Scripts\CharacterInfo.cs" />
      <None Include="Assets\LeanTween\License.txt" />
      <None Include="Assets\Viking Village\Shaders\LitSSS_Cutout\Subgraphs\CustomLighting.hlsl" />
     <Reference Include="UnityEngine">
@@ -673,6 +675,9 @@
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+        <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
@@ -697,6 +702,9 @@
     <Reference Include="Unity.Burst">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+        <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
@@ -717,12 +725,6 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Editor">
-        <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Runtime">
-        <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Physics Variables")]
     public float movementSpeed = 1f;
+    public float jumpHeight = 1f;
     public float sprintMultiplier;
 
     [Space]
@@ -19,7 +20,7 @@ public class CharacterMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
 
-    private float velocity = 0.0f;
+    [SerializeField] private float velocity = 0.0f;
     private Transform playerTransform;
     private CharacterController characterController;
 
@@ -73,8 +74,14 @@ public class CharacterMovement : MonoBehaviour
     public void UpdateCharacterVelocity()
     {
         velocity += (-20f * Mathf.Pow(Time.deltaTime, 2.0f));
-        if (isGrounded) velocity = 0;
+        if (isGrounded && velocity < 0) velocity = 0;
         characterController.Move(new Vector3(0.0f, velocity, 0.0f));
+    }
+
+
+    public void CharacterJump()
+    {
+        if (isGrounded) velocity = Mathf.Sqrt(jumpHeight * -2 * -20);
     }
 
     private void UserControl()

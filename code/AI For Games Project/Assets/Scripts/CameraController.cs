@@ -50,7 +50,11 @@ public class CameraController : MonoBehaviour
                 break;
 
             case true:
-                CharacterControl();
+                if (characterScript.userControllable)
+                {
+                    CharacterInput();
+                    CharacterControl();                    
+                }
                 break;
         }
 
@@ -105,7 +109,6 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift)) speed *= boostMultiplier;
 
         // Rotation
-
         float newRotationX = transform.localEulerAngles.x - GetMouseY();
         float newRotationY = transform.localEulerAngles.y + GetMouseX();
 
@@ -136,10 +139,7 @@ public class CameraController : MonoBehaviour
                 })
                 .setOnComplete(() =>
                 {
-                    if (controller.userControllable)
-                    {
-                        SetControl(controller);
-                    }
+                    SetControl(controller);
                 });
             }
         }
@@ -168,7 +168,15 @@ public class CameraController : MonoBehaviour
         characterScript.UpdateCharacterRotation(GetMouseX());
 
         // Position
-        characterScript.UpdateCharacterPosition(GetMovementY(), GetMovementX());
+        characterScript.UpdateCharacterPosition(GetMovementY(), GetMovementX());            
+    }
+
+    private void CharacterInput()
+    {   
+        if (Input.GetButtonDown("Jump"))
+        {
+            characterScript.CharacterJump();
+        }
     }
     #endregion
 }
