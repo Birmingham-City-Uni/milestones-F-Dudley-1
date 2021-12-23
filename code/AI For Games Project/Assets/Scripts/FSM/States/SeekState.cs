@@ -14,9 +14,11 @@ public class SeekState : State
         Debug.Log("Entering Seek State");
     }
 
-    public override void Execute()
+    public override bool Execute()
     {
         Debug.Log("Executing Seek State");
+
+        return true;
     }
 
     public override void Exit()

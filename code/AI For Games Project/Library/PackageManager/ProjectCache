@@ -5,21 +5,66 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637756906289130979
-    m_Hash: 1234800250
+      ticks: 637757845481999045
+    m_Hash: 1233672581
   m_LockFileStatus:
     m_FilePath: D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637756906289140988
-    m_Hash: 1235505328
+      ticks: 637757845531390252
+    m_Hash: 990740248
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
   m_Packages:
     m_ResolvedPackages:
+    - packageId: com.popcron.gizmos@https://github.com/popcron/gizmos.git
+      testable: 0
+      isDirectDependency: 1
+      version: 1.6.7
+      source: 5
+      resolvedPath: D:\UNI Projects\AI-For-Games Milestones\code\AI For Games Project\Library\PackageCache\com.popcron.gizmos@ba90e76b4a
+      assetPath: Packages/com.popcron.gizmos
+      name: com.popcron.gizmos
+      displayName: Popcron Gizmos
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Quick GL drawing utility for debugging.
+      status: 4
+      errors: []
+      versions:
+        all: []
+        compatible: []
+        verified: 
+      dependencies: []
+      resolvedDependencies: []
+      keywords: []
+      registry:
+        id: 
+        name: 
+        url: 
+        scopes: []
+        isDefault: 0
+        capabilities: 0
+      hasRegistry: 0
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 0
+      documentationUrl: 
+      hasRepository: 0
+      repository:
+        type: 
+        url: 
+        revision: 
+        path: 
     - packageId: com.unity.burst@1.4.4
       testable: 0
       isDirectDependency: 1

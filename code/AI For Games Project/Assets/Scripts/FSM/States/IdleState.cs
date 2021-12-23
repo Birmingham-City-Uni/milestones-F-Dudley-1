@@ -14,9 +14,11 @@ public class IdleState : State
         Debug.Log("Entering Idle State");
     }
 
-    public override void Execute()
+    public override bool Execute()
     {
         Debug.Log("Executing Idle State");
+
+        return true;
     }
 
     public override void Exit()

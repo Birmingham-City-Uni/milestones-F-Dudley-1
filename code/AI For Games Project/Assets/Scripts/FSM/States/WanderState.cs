@@ -14,9 +14,11 @@ public class WanderState : State
         Debug.Log("Entering Wander State");
     }
 
-    public override void Execute()
+    public override bool Execute()
     {
         Debug.Log("Executing Wander State");
+
+        return true;
     }
 
     public override void Exit()
