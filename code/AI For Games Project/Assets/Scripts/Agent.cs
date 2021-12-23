@@ -2,60 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+[RequireComponent(typeof(CharacterInfo))]
 public class Agent : MonoBehaviour
 {
-    [Header("Main Variables")]
-    [SerializeField] private Vector3[] pathWaypoints;
+    [Header("Base Agent")]
+    
 
-    private StateManager stateManager = new StateManager();
+    [SerializeField] private Queue<Vector3> pathWaypoints = new Queue<Vector3>();
+    private CharacterInfo info;
     private Sensors sensor;
-
-    [Header("Agent Containers")]
-    private Transform stateContainer;
+    private CharacterMovement controller;
 
     #region Unity Functions
-    private void Start()
+    protected void Start()
     {
-        stateManager.Init(new WanderState(this, stateManager));
+        info = GetComponent<CharacterInfo>();
+        controller = GetComponent<CharacterMovement>();
         sensor = GetComponent<Sensors>();
-
-        if (stateContainer != null)
-        {
-            State[] foundStates = stateContainer.GetComponents<State>();
-
-            if (foundStates.Length > 0)
-            {
-                foreach (State state in foundStates)
-                {
-                    stateManager.pushState(state);
-                }
-            }
-        }
     }
 
-    private void Update()
+    protected void OnDrawGizmos()
     {
-        stateManager.Update();
-        if ((sensor.Hit == true) && (stateManager.getCurrentState().GetType() != typeof(SeekState)))
+        if (pathWaypoints.Count > 0 && GameManager.instance.drawPathing)
         {
-            //stateManager.pushState(seekState) // Push The Seek State Here AS Sensor Detects Something.
-        }
-        if ((sensor.Hit == false) && (stateManager.getCurrentState().GetType() != typeof(WanderState)))
-        {
-            //stateManager.pushState(wanderState); // Push The Wander State As Sensor Not Detected Anything.
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, pathWaypoints.Peek());
+
+            Vector3[] tmpPath = pathWaypoints.ToArray();
+            for (int i = 0; i < pathWaypoints.Count; i++)
+            {
+                Gizmos.DrawWireSphere(tmpPath[i], 0.5f);
+                if (i < pathWaypoints.Count - 1)
+                {
+                    Gizmos.DrawLine(tmpPath[i], tmpPath[i + 1]);
+                }
+            }
         }
     }
     #endregion
 
     #region Main Agent Functions
-    public void Move(Vector3 waypoint)
+    public bool HasPath() => pathWaypoints.Count > 0;
+    public void GetPathing(Vector3 _targetLocation) => PathRequestManager.RequestPath(transform.position, _targetLocation, FoundPathCallback);
+
+    public void MoveCharacterAlongPath()
     {
-        // Code To Interact With Character Controller Here.
+        controller.UpdateCharacterPosition(pathWaypoints.Peek());
+
+        if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 1f)
+        {
+            pathWaypoints.Dequeue();
+        }
     }
 
-    protected void FoundPathCallback()
+    protected void FoundPathCallback(Vector3[] newWaypoints, bool pathingSuccess)
     {
+        if (pathingSuccess)
+        {
+            pathWaypoints.Clear();
 
+            foreach (Vector3 waypoint in newWaypoints)
+            {
+                pathWaypoints.Enqueue(waypoint);
+            }
+        }
+        else Debug.Log("Agent Could Not Find Pathing");
     }
     #endregion
 }

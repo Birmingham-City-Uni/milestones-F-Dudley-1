@@ -22,9 +22,6 @@ public class PathGrid : MonoBehaviour, NodeContainer
     public Node[,] grid;
     private int gridSizeX, gridSizeZ;
 
-    [Header("Debug")]
-    public bool showGridGizmos;
-
     #region Unity Functions
     private void Awake()
     {
@@ -42,7 +39,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
     {
         Gizmos.DrawWireCube((transform.position + gridPositionOffset) + Vector3.up * (gridWorldSize.y / 2), gridWorldSize);
 
-        if (grid != null && showGridGizmos)
+        if (grid != null && GameManager.instance.drawGrid)
         {
             foreach (Node node in grid)
             {

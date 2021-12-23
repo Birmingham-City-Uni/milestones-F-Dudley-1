@@ -65,6 +65,12 @@ public class CharacterMovement : MonoBehaviour
         characterController.Move(movement * movementSpeed);
     }
 
+    public void UpdateCharacterPosition(Vector3 _targetPos)
+    {
+        Vector3 movement = _targetPos - transform.position;
+        characterController.Move((movement).normalized * movementSpeed * Time.deltaTime);
+    }
+
     public void UpdateCharacterRotation(float _mouseX)
     {
         float newRotationY = transform.localEulerAngles.y + _mouseX;

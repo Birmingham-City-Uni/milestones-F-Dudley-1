@@ -65,7 +65,7 @@ public class FlockManager : MonoBehaviour
             Gizmos.DrawWireCube(new Vector3(0, distanceFromGround + (flockBounds.y / 2), 0), flockBounds);
         }
 
-        if (drawTargetGizmo)
+        if (GameManager.instance.drawBoidTarget)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(targetPosition, 4f);

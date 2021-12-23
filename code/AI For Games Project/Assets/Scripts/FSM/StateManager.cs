@@ -15,14 +15,16 @@ public class StateManager
         getCurrentState().Enter();
     }
 
-    public void Update()
+    public bool Update()
     {
-        if (getCurrentState() != null) getCurrentState().Execute();
+        if (hasState()) return stack.Peek().Execute();
+        else return false;
     }
     #endregion
 
     #region Stack Functions
-    public State getCurrentState() => stack.Count > 0 ? stack.Peek() : null;
+    public State getCurrentState() => hasState() ? stack.Peek() : null;
+    public bool hasState() => stack.Count > 0;
 
     public bool popState()
     {

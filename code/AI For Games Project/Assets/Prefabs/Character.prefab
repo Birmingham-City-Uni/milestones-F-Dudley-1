@@ -105,6 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5337012541005243120}
+  - component: {fileID: 9023960143591729085}
   - component: {fileID: 5337012541005243121}
   - component: {fileID: 5337012541005243122}
   m_Layer: 19
@@ -131,6 +132,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9023960143591729085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337012541005243123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7c05dacb13e6b42bdbfaffcf7f0893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  gold: 10
+  hunger: 100
+  tiredness: 100
+  homeLocation: {fileID: 0}
 --- !u!143 &5337012541005243121
 CharacterController:
   m_ObjectHideFlags: 0
@@ -164,6 +182,7 @@ MonoBehaviour:
   userControllable: 1
   currentlyControlled: 0
   movementSpeed: 5
+  jumpHeight: 1
   sprintMultiplier: 1.5
   groundMask:
     serializedVersion: 2
@@ -171,6 +190,7 @@ MonoBehaviour:
   isGrounded: 1
   groundCheck: {fileID: 5337012542454857077}
   groundDistance: 0.4
+  velocity: 0
   cameraPosition: {fileID: 5337012542333960957}
 --- !u!1 &5337012542333960958
 GameObject:
