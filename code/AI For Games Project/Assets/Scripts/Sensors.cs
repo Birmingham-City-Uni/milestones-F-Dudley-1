@@ -110,6 +110,8 @@ public class Sensors : MonoBehaviour
 
     public void OnDrawGizmos()
     {
+        Hit = Scan(LayerMask.GetMask("Player"));
+
         Gizmos.color = Color.green;
         if (Hit) Gizmos.color = Color.red;
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,15 @@ public class GameManager : MonoBehaviour
 
     [Header("Debug Controllers")]
     public bool drawGrid;
-    public bool drawPathing;
-    public bool drawBoidTarget;
+    public static Action enablePathNodesDrawing;
 
+    public bool drawPathing;
+    public static Action<bool> enablePathDrawing;
+
+    public bool drawBoidTarget;
+    public static Action<bool> enableBoidTargetDrawing;
+
+    #region Unity Functions
     private void Awake()
     {
         instance = this;
@@ -25,9 +32,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftBracket))
+        {
+            enablePathDrawing.Invoke(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightBracket))
+        {
+            enablePathDrawing.Invoke(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            enablePathNodesDrawing.Invoke();
+        }
+    }
+    #endregion
+
     #region Guard Functions
 
-    public Vector3 GetRandomGuardLocation() => guardLocations[Random.Range(0, guardLocations.Count)].position;
+    public Vector3 GetRandomGuardLocation() => guardLocations[UnityEngine.Random.Range(0, guardLocations.Count)].position;
 
     #endregion
 }

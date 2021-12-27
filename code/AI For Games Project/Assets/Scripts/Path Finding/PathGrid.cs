@@ -11,6 +11,11 @@ public class PathGrid : MonoBehaviour, NodeContainer
     public float nodeDiameter;
     public LayerMask unwalkableTerrainMask;
 
+    [Header("Debug Referernces")]
+    private GameObject pathingVisuals;
+    public Material walkableMat;
+    public Material nonWalkableMat;
+
     public int MaxSize
     {
         get
@@ -28,6 +33,17 @@ public class PathGrid : MonoBehaviour, NodeContainer
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
         CreateContainer();
+        CreateDebugVisuals();
+    }
+
+    private void OnEnable()
+    {
+        GameManager.enablePathNodesDrawing += EnablePathingVisuals;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.enablePathNodesDrawing -= EnablePathingVisuals;
     }
 
     void Update()
@@ -70,6 +86,41 @@ public class PathGrid : MonoBehaviour, NodeContainer
         }
     }
 
+    public void CreateDebugVisuals()
+    {
+        pathingVisuals = new GameObject("DebugVisualsContainer");
+        pathingVisuals.transform.parent = transform;
+        pathingVisuals.SetActive(false);        
+
+        Vector3 walkScale = new Vector3(0.2f, 0.2f, 0.2f);
+        Vector3 nonWalkScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int z = 0; z < gridSizeZ; z++)
+            {
+                GameObject nodeVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Renderer renderer = nodeVisual.GetComponent<Renderer>();
+                Destroy(nodeVisual.GetComponent<Collider>());
+                nodeVisual.transform.parent = pathingVisuals.transform;
+                nodeVisual.name = string.Format("Node-{0}-{1}", x, z);
+
+                if (grid[x, z].isWalkable)
+                {
+                    nodeVisual.transform.localScale = walkScale;
+                    renderer.material = walkableMat;
+                }
+                else
+                {
+                    nodeVisual.transform.localScale = nonWalkScale;
+                    renderer.material = nonWalkableMat;
+                }
+
+                nodeVisual.transform.position = grid[x, z].worldPosition;
+            }
+        }
+    }
+
     public Node GetNodeFromWorldPoint(Vector3 _worldPosition)
     {
         float percentX = Mathf.Clamp01((_worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x);
@@ -102,6 +153,11 @@ public class PathGrid : MonoBehaviour, NodeContainer
         }
 
         return neighbourNodes;
+    }
+
+    public void EnablePathingVisuals()
+    {
+        pathingVisuals.SetActive(!pathingVisuals.activeSelf);
     }
     #endregion
 }

@@ -7,12 +7,11 @@ using UnityEngine;
 public class Agent : MonoBehaviour
 {
     [Header("Base Agent")]
-    
-
     [SerializeField] private Queue<Vector3> pathWaypoints = new Queue<Vector3>();
     private CharacterInfo info;
     private Sensors sensor;
     private CharacterMovement controller;
+    private LineRenderer pathRenderer;
 
     #region Unity Functions
     protected void Start()
@@ -20,6 +19,18 @@ public class Agent : MonoBehaviour
         info = GetComponent<CharacterInfo>();
         controller = GetComponent<CharacterMovement>();
         sensor = GetComponent<Sensors>();
+
+        pathRenderer = GetComponentInChildren<LineRenderer>();
+    }
+
+    protected void OnEnable()
+    {
+        GameManager.enablePathDrawing += DrawCharacterPathing;
+    }
+
+    protected void OnDisable()
+    {
+        GameManager.enablePathDrawing -= DrawCharacterPathing;
     }
 
     protected void OnDrawGizmos()
@@ -56,6 +67,11 @@ public class Agent : MonoBehaviour
         }
     }
 
+    protected void DrawCharacterPathing(bool isDrawing)
+    {
+        pathRenderer.enabled = isDrawing;
+    }
+
     protected void FoundPathCallback(Vector3[] newWaypoints, bool pathingSuccess)
     {
         if (pathingSuccess)
@@ -66,6 +82,9 @@ public class Agent : MonoBehaviour
             {
                 pathWaypoints.Enqueue(waypoint);
             }
+
+            pathRenderer.positionCount = newWaypoints.Length;
+            pathRenderer.SetPositions(newWaypoints);
         }
         else Debug.Log("Agent Could Not Find Pathing");
     }

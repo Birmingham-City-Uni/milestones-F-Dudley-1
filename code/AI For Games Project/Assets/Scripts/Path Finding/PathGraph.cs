@@ -73,6 +73,11 @@ public class PathGraph : MonoBehaviour, NodeContainer
         }
     }
 
+    public void CreateDebugVisuals()
+    {
+
+    }
+
     public Node GetNodeFromWorldPoint(Vector3 _worldPosition)
     {
         Node closestNode = new Node(true, _worldPosition, null);
@@ -125,6 +130,11 @@ public class PathGraph : MonoBehaviour, NodeContainer
         }
 
         return neighbours;
+    }
+
+    public void EnablePathingVisuals()
+    {
+
     }
     #endregion
 }

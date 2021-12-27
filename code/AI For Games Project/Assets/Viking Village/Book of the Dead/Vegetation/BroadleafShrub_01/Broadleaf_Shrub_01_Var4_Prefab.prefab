@@ -140,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d66fbd493f6f6494a95b95266abb9ed9, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -204,8 +204,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584198843794870}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.07915473, y: 0.1183905, z: 0.0033327937}
-  m_Size: 1.8989804
+  m_LocalReferencePoint: {x: 0.07915485, y: 0.11839053, z: 0.003317535}
+  m_Size: 1.8989806
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -282,7 +282,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d66fbd493f6f6494a95b95266abb9ed9, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
