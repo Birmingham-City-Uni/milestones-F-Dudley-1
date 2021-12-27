@@ -9,6 +9,9 @@ public class CharacterInfo : MonoBehaviour
     public int health;
     public int gold;
 
+    public bool alerted;
+    public Vector3 alertedLocation;
+
     [Space]
 
     public float hunger;

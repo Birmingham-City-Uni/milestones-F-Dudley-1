@@ -15,5 +15,5 @@ interface NodeContainer
     List<Node> GetNodeNeighbours(Node _node);
     Node GetNodeFromWorldPoint(Vector3 _worldPosition);
 
-    void EnablePathingVisuals();
+    void EnablePathingVisuals(bool isEnabled);
 }

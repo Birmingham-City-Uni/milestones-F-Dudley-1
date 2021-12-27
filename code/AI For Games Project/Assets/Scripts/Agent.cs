@@ -8,8 +8,8 @@ public class Agent : MonoBehaviour
 {
     [Header("Base Agent")]
     [SerializeField] private Queue<Vector3> pathWaypoints = new Queue<Vector3>();
-    private CharacterInfo info;
-    private Sensors sensor;
+    public CharacterInfo info;
+    public Sensors sensor;
     private CharacterMovement controller;
     private LineRenderer pathRenderer;
 
@@ -35,7 +35,7 @@ public class Agent : MonoBehaviour
 
     protected void OnDrawGizmos()
     {
-        if (pathWaypoints.Count > 0 && GameManager.instance.drawPathing)
+        if (pathWaypoints.Count > 0 && GameManager.instance.DrawPathing)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, pathWaypoints.Peek());
@@ -56,15 +56,22 @@ public class Agent : MonoBehaviour
     #region Main Agent Functions
     public bool HasPath() => pathWaypoints.Count > 0;
     public void GetPathing(Vector3 _targetLocation) => PathRequestManager.RequestPath(transform.position, _targetLocation, FoundPathCallback);
+    public Coroutine StartAgentCoroutine(IEnumerator coroutine) => StartCoroutine(coroutine);
 
-    public void MoveCharacterAlongPath()
+    public bool MoveCharacterAlongPath()
     {
-        controller.UpdateCharacterPosition(pathWaypoints.Peek());
-
-        if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 1f)
+        if (HasPath())
         {
-            pathWaypoints.Dequeue();
+            controller.UpdateCharacterPosition(pathWaypoints.Peek());
+
+            if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 1f)
+            {
+                pathWaypoints.Dequeue();
+            }      
+
+            return true;      
         }
+        else return false;
     }
 
     protected void DrawCharacterPathing(bool isDrawing)

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Agent_FSM : Agent
 {
     [Header("Main Variables")]
+
     private StateManager stateManager;
 
     #region Unity Functions

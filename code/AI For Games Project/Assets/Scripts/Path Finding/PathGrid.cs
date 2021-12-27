@@ -38,12 +38,12 @@ public class PathGrid : MonoBehaviour, NodeContainer
 
     private void OnEnable()
     {
-        GameManager.enablePathNodesDrawing += EnablePathingVisuals;
+        GameManager.enableNodeContainerDrawing += EnablePathingVisuals;
     }
 
     private void OnDisable()
     {
-        GameManager.enablePathNodesDrawing -= EnablePathingVisuals;
+        GameManager.enableNodeContainerDrawing -= EnablePathingVisuals;
     }
 
     void Update()
@@ -55,7 +55,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
     {
         Gizmos.DrawWireCube((transform.position + gridPositionOffset) + Vector3.up * (gridWorldSize.y / 2), gridWorldSize);
 
-        if (grid != null && GameManager.instance.drawGrid)
+        if (grid != null && GameManager.instance.DrawNodeContainer)
         {
             foreach (Node node in grid)
             {
@@ -155,9 +155,9 @@ public class PathGrid : MonoBehaviour, NodeContainer
         return neighbourNodes;
     }
 
-    public void EnablePathingVisuals()
+    public void EnablePathingVisuals(bool isEnabled)
     {
-        pathingVisuals.SetActive(!pathingVisuals.activeSelf);
+        pathingVisuals.SetActive(isEnabled);
     }
     #endregion
 }

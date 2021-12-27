@@ -132,7 +132,7 @@ public class PathGraph : MonoBehaviour, NodeContainer
         return neighbours;
     }
 
-    public void EnablePathingVisuals()
+    public void EnablePathingVisuals(bool isEnabled)
     {
 
     }

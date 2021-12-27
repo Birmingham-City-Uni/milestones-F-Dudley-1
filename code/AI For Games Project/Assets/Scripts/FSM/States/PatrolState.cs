@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PatrolState : State
 {
-    public bool pathing;
-
     public PatrolState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
 
@@ -13,17 +11,18 @@ public class PatrolState : State
 
     public override void Enter()
     {
-        Debug.Log("Entering Patrol State");
         owner.GetPathing(GameManager.instance.GetRandomGuardLocation());
     }
 
     public override bool Execute()
     {
-        if (owner.HasPath()) owner.MoveCharacterAlongPath();
+        if (owner.MoveCharacterAlongPath())
+        {
+
+        }
         else
         {
             owner.GetPathing(GameManager.instance.GetRandomGuardLocation());
-            pathing = true;
         }
 
         return true;
@@ -31,6 +30,6 @@ public class PatrolState : State
 
     public override void Exit()
     {
-        Debug.Log("Exiting Patrol State");
+        
     }
 }

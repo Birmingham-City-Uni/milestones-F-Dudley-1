@@ -64,11 +64,11 @@
      <Compile Include="Assets\Scripts\Sensors.cs" />
      <Compile Include="Assets\Scripts\FSM\StateManager.cs" />
      <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
-     <Compile Include="Assets\Scripts\FSM\States\IdleState.cs" />
      <Compile Include="Assets\Scripts\Agent.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Data Structures\PriorityQueue.cs" />
      <Compile Include="Assets\Scripts\Data Structures\Heap.cs" />
+     <Compile Include="Assets\Scripts\FSM\States\AttackState.cs" />
      <None Include="Assets\LeanTween\License.txt" />
      <None Include="Assets\Viking Village\Shaders\LitSSS_Cutout\Subgraphs\CustomLighting.hlsl" />
     <Reference Include="UnityEngine">

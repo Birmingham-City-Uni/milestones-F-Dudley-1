@@ -4,25 +4,59 @@ using UnityEngine;
 
 public class SeekState : State
 {
+    bool waitedInArea;
+    Coroutine waitingCoroutine;
+
     public SeekState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
-
+    
     }
 
     public override void Enter()
     {
-        Debug.Log("Entering Seek State");
+        owner.GetPathing(owner.info.alertedLocation);
+        owner.info.alerted = false;
     }
 
     public override bool Execute()
     {
-        Debug.Log("Executing Seek State");
+        bool moving = owner.MoveCharacterAlongPath();
 
-        return true;
+        if (moving)
+        {
+
+        }
+        else if (!moving)
+        {
+            StartWait();
+        }
+
+        if (owner.sensor.Scan(LayerMask.GetMask("Player")))
+        {
+            waitingCoroutine = owner.StartAgentCoroutine(WaitInAlertedArea());
+        }
+
+        if (waitedInArea) return false;
+        else return true;
     }
 
     public override void Exit()
     {
-        Debug.Log("Exiting Seek State");
+        owner.info.alertedLocation = Vector3.zero;
+    }
+
+    private void StartWait()
+    {
+        if (waitingCoroutine == null)
+        {
+            waitingCoroutine = owner.StartAgentCoroutine(WaitInAlertedArea());
+        }
+    }
+
+    public IEnumerator WaitInAlertedArea()
+    {
+        yield return new WaitForSeconds(10f);
+
+        waitedInArea = true;
     }
 }

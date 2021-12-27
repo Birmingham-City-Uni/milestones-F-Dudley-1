@@ -104,7 +104,7 @@ public class FlockAgent : MonoBehaviour
 
     private Vector3 Cohesion(Vector3 _currentCohesionVector, int _neighbourAmount)
     {
-        return _currentCohesionVector / _neighbourAmount + (FlockManager.instance.targetPosition - transform.position);
+        return _currentCohesionVector / _neighbourAmount + (FlockManager.instance.TargetPosition - transform.position);
     }
 
     private Vector3 Seperation(Vector3 _currentSeperationVector, Transform _neighbourBird)

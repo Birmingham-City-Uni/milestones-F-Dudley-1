@@ -12,14 +12,55 @@ public class GameManager : MonoBehaviour
     public List<Transform> guardLocations = new List<Transform>();
 
     [Header("Debug Controllers")]
-    public bool drawGrid;
-    public static Action enablePathNodesDrawing;
+    [SerializeField] public bool drawNodeContainer = false;
+    public static Action<bool> enableNodeContainerDrawing;
 
-    public bool drawPathing;
+    [SerializeField] private bool drawPathing = false;
     public static Action<bool> enablePathDrawing;
 
-    public bool drawBoidTarget;
+    [SerializeField] private bool drawBoidTarget = false;
     public static Action<bool> enableBoidTargetDrawing;
+
+    public bool DrawNodeContainer
+    {
+        get
+        {
+            return drawNodeContainer;
+        }
+
+        set
+        {
+            drawNodeContainer = value;
+            enableNodeContainerDrawing(value);
+        }
+    }
+
+    public bool DrawPathing
+    {
+        get
+        {
+            return drawPathing;
+        }
+
+        set
+        {
+            drawPathing = value;
+            enablePathDrawing(value);
+        }
+    }
+
+    public bool DrawBoidTarget
+    {
+        get
+        {
+            return drawBoidTarget;
+        }
+        set
+        {
+            drawBoidTarget = value;
+            enableBoidTargetDrawing(value);
+        }
+    }
 
     #region Unity Functions
     private void Awake()
@@ -34,19 +75,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftBracket))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            enablePathDrawing.Invoke(true);
+            DrawPathing = !drawPathing;
         }
-
-        if (Input.GetKeyDown(KeyCode.RightBracket))
-        {
-            enablePathDrawing.Invoke(false);
-        }
-
         if (Input.GetKeyDown(KeyCode.M))
         {
-            enablePathNodesDrawing.Invoke();
+            DrawNodeContainer = !drawNodeContainer;
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            DrawBoidTarget = !drawBoidTarget;
         }
     }
     #endregion
