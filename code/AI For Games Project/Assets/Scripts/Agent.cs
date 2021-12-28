@@ -18,7 +18,7 @@ public class Agent : MonoBehaviour
     {
         info = GetComponent<CharacterInfo>();
         controller = GetComponent<CharacterMovement>();
-        sensor = GetComponent<Sensors>();
+        sensor = GetComponentInChildren<Sensors>();
 
         pathRenderer = GetComponentInChildren<LineRenderer>();
     }
@@ -31,6 +31,15 @@ public class Agent : MonoBehaviour
     protected void OnDisable()
     {
         GameManager.enablePathDrawing -= DrawCharacterPathing;
+    }
+
+    protected void FixedUpdate()
+    {
+        info.tiredness -= 0.005f;
+        info.hunger -= 0.0025f;
+
+        info.tiredness = Mathf.Clamp(info.tiredness, 0, 100f);
+        info.hunger = Mathf.Clamp(info.hunger, 0, 100);
     }
 
     protected void OnDrawGizmos()
@@ -58,20 +67,29 @@ public class Agent : MonoBehaviour
     public void GetPathing(Vector3 _targetLocation) => PathRequestManager.RequestPath(transform.position, _targetLocation, FoundPathCallback);
     public Coroutine StartAgentCoroutine(IEnumerator coroutine) => StartCoroutine(coroutine);
 
+    public void ChangeAgentVisability(bool visability)
+    {
+        gameObject.SetActive(visability);
+    }
+
     public bool MoveCharacterAlongPath()
     {
         if (HasPath())
         {
             controller.UpdateCharacterPosition(pathWaypoints.Peek());
 
-            if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 1f)
+            if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 0.5f)
             {
                 pathWaypoints.Dequeue();
             }      
 
             return true;      
         }
-        else return false;
+        else {
+            controller.StopCharacterAudio();
+
+            return false;
+        }
     }
 
     protected void DrawCharacterPathing(bool isDrawing)

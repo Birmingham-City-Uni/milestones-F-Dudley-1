@@ -40,7 +40,7 @@ public class StateManager
 
     public bool pushState(State newState)// Could Add '&& !Stack.Contains(newState)' to avoid repetition of states.
     {
-        if (stack.Peek() != newState)
+        if (stack.Peek() != newState && !stack.Contains(newState))
         {
             stack.Push(newState);
             getCurrentState().Enter();

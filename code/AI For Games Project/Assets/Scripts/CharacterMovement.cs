@@ -27,15 +27,16 @@ public class CharacterMovement : MonoBehaviour
     [Header("Camera Variables")]
     public Transform cameraPosition;
 
+    private AudioSource walkingAudio;
+
     #region Unity Functions    
     void Start()
     {
         playerTransform = GetComponent<Transform>();
         characterController = GetComponent<CharacterController>();
-        if (userControllable)
-        {
-            currentlyControlled = false;
-        }
+        walkingAudio = GetComponent<AudioSource>();
+
+        currentlyControlled = false;
     }
 
     void Update()
@@ -60,6 +61,9 @@ public class CharacterMovement : MonoBehaviour
 
     public void UpdateCharacterPosition(float _vertical, float _horizontal)
     {
+        if ((!isGrounded || (_vertical == 0 && _horizontal == 0)) && walkingAudio.isPlaying) walkingAudio.Stop();
+        else if (isGrounded && !walkingAudio.isPlaying && (_vertical != 0 || _horizontal != 0)) walkingAudio.Play();
+
         Vector3 movement = (transform.forward * _vertical) + (transform.right * _horizontal);
 
         characterController.Move(movement * movementSpeed);
@@ -67,6 +71,8 @@ public class CharacterMovement : MonoBehaviour
 
     public void UpdateCharacterPosition(Vector3 _targetPos)
     {
+        if (isGrounded && !walkingAudio.isPlaying) walkingAudio.Play();
+
         Vector3 movement = _targetPos - transform.position;
         characterController.Move((movement).normalized * movementSpeed * Time.deltaTime);
     }
@@ -84,19 +90,16 @@ public class CharacterMovement : MonoBehaviour
         characterController.Move(new Vector3(0.0f, velocity, 0.0f));
     }
 
-
     public void CharacterJump()
     {
         if (isGrounded) velocity = Mathf.Sqrt(jumpHeight * -2 * -20);
     }
 
-    private void UserControl()
+    public void StopCharacterAudio()
     {
-
-    }
-
-    private void ComputerControl()
-    {
-
+        if (walkingAudio.isPlaying)
+        {
+            walkingAudio.Stop();
+        }
     }
 }

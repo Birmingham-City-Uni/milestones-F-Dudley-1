@@ -4,59 +4,60 @@ using UnityEngine;
 
 public class SeekState : State
 {
-    bool waitedInArea;
+    bool waitedInArea = false;
+    bool waitingIsRunning = false;
     Coroutine waitingCoroutine;
 
     public SeekState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
-    
+        waitedInArea = false;
+        waitingIsRunning = false;
     }
 
     public override void Enter()
     {
-        owner.GetPathing(owner.info.alertedLocation);
-        owner.info.alerted = false;
+        owner.GetPathing(owner.info.AlertedLocation);
+        owner.info.isAlerted = false;
     }
 
     public override bool Execute()
-    {
-        bool moving = owner.MoveCharacterAlongPath();
+    {   
+        if (waitedInArea) return false;
 
-        if (moving)
+        if (owner.MoveCharacterAlongPath())
         {
 
         }
-        else if (!moving)
+        else if (!waitingIsRunning)
         {
             StartWait();
         }
 
         if (owner.sensor.Scan(LayerMask.GetMask("Player")))
         {
-            waitingCoroutine = owner.StartAgentCoroutine(WaitInAlertedArea());
+            StartWait();
         }
 
-        if (waitedInArea) return false;
-        else return true;
+        return true;
     }
 
     public override void Exit()
     {
-        owner.info.alertedLocation = Vector3.zero;
+        Debug.Log("Exiting Seek State");
     }
 
     private void StartWait()
     {
-        if (waitingCoroutine == null)
-        {
-            waitingCoroutine = owner.StartAgentCoroutine(WaitInAlertedArea());
-        }
+        waitingIsRunning = true;
+        waitingCoroutine = owner.StartAgentCoroutine(WaitInAlertedArea());
     }
 
     public IEnumerator WaitInAlertedArea()
     {
+        Debug.Log("Starting To Wait In Alerted Area");
         yield return new WaitForSeconds(10f);
 
         waitedInArea = true;
+        waitingIsRunning = false;
     }
 }
