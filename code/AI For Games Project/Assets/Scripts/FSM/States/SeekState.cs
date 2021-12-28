@@ -33,7 +33,7 @@ public class SeekState : State
             StartWait();
         }
 
-        if (owner.sensor.Scan(LayerMask.GetMask("Player")))
+        if (Physics.CheckSphere(owner.transform.position, 7f, LayerMask.GetMask("Player"), QueryTriggerInteraction.Ignore))
         {
             StartWait();
         }
