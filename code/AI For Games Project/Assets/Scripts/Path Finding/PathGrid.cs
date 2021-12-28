@@ -11,6 +11,11 @@ public class PathGrid : MonoBehaviour, NodeContainer
     public float nodeDiameter;
     public LayerMask unwalkableTerrainMask;
 
+    [Header("Debug Referernces")]
+    private GameObject pathingVisuals;
+    public Material walkableMat;
+    public Material nonWalkableMat;
+
     public int MaxSize
     {
         get
@@ -22,15 +27,23 @@ public class PathGrid : MonoBehaviour, NodeContainer
     public Node[,] grid;
     private int gridSizeX, gridSizeZ;
 
-    [Header("Debug")]
-    public bool showGridGizmos;
-
     #region Unity Functions
     private void Awake()
     {
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
         CreateContainer();
+        CreateDebugVisuals();
+    }
+
+    private void OnEnable()
+    {
+        GameManager.enableNodeContainerDrawing += EnablePathingVisuals;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.enableNodeContainerDrawing -= EnablePathingVisuals;
     }
 
     void Update()
@@ -42,7 +55,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
     {
         Gizmos.DrawWireCube((transform.position + gridPositionOffset) + Vector3.up * (gridWorldSize.y / 2), gridWorldSize);
 
-        if (grid != null && showGridGizmos)
+        if (grid != null && GameManager.instance.DrawNodeContainer)
         {
             foreach (Node node in grid)
             {
@@ -69,6 +82,41 @@ public class PathGrid : MonoBehaviour, NodeContainer
                 grid[x, z] = new Node(isWalkable, pointInWorld, x, z);
 
                 grid[x, z].neighbours = GetNodeNeighbours(grid[x, z]);
+            }
+        }
+    }
+
+    public void CreateDebugVisuals()
+    {
+        pathingVisuals = new GameObject("DebugVisualsContainer");
+        pathingVisuals.transform.parent = transform;
+        pathingVisuals.SetActive(false);        
+
+        Vector3 walkScale = new Vector3(0.2f, 0.2f, 0.2f);
+        Vector3 nonWalkScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int z = 0; z < gridSizeZ; z++)
+            {
+                GameObject nodeVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Renderer renderer = nodeVisual.GetComponent<Renderer>();
+                Destroy(nodeVisual.GetComponent<Collider>());
+                nodeVisual.transform.parent = pathingVisuals.transform;
+                nodeVisual.name = string.Format("Node-{0}-{1}", x, z);
+
+                if (grid[x, z].isWalkable)
+                {
+                    nodeVisual.transform.localScale = walkScale;
+                    renderer.material = walkableMat;
+                }
+                else
+                {
+                    nodeVisual.transform.localScale = nonWalkScale;
+                    renderer.material = nonWalkableMat;
+                }
+
+                nodeVisual.transform.position = grid[x, z].worldPosition;
             }
         }
     }
@@ -105,6 +153,11 @@ public class PathGrid : MonoBehaviour, NodeContainer
         }
 
         return neighbourNodes;
+    }
+
+    public void EnablePathingVisuals(bool isEnabled)
+    {
+        pathingVisuals.SetActive(isEnabled);
     }
     #endregion
 }

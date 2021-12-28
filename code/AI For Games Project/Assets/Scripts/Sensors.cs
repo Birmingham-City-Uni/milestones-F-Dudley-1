@@ -19,13 +19,11 @@ public class Sensors : MonoBehaviour
     }
 
     [Header("General Variables")]
-    public LayerMask hitMask;
     public Type sensorType = Type.Line;
     public float sensorDistance = 1.0f;
     [SerializeField]
     public bool Hit { get; private set; }
 
-    private Transform cachedTransform;
     private RaycastHit castInfo = new RaycastHit();
 
     [Header("SphereCast Settings")]
@@ -46,25 +44,21 @@ public class Sensors : MonoBehaviour
     #region Unity Functions
     void Start()
     {
-        cachedTransform = GetComponent<Transform>();
+
     }
 
-    void Update()
-    {
-        Scan();
-    }
     #endregion
 
     #region Main Functions
-    public bool Scan()
+    public bool Scan(LayerMask _maskToCheck)
     {
         Hit = false;
 
-        Vector3 dir = cachedTransform.forward;
+        Vector3 dir = transform.forward;
         switch (sensorType)
         {
             case Type.Line:
-                if (Physics.Linecast(cachedTransform.position, cachedTransform.position + dir * sensorDistance, out castInfo, hitMask, QueryTriggerInteraction.Ignore))
+                if (Physics.Linecast(transform.position, transform.position + dir * sensorDistance, out castInfo, _maskToCheck, QueryTriggerInteraction.Ignore))
                 {
                     Hit = true;
                     return true;
@@ -76,9 +70,9 @@ public class Sensors : MonoBehaviour
 
                 for (int i = 1; i < rayAmount + 1; i++)
                 {
-                    Vector3 rayDirection = Quaternion.Euler(0f, (fov / 2) + (angleIncrement * i), 0f) * cachedTransform.forward;
+                    Vector3 rayDirection = Quaternion.Euler(0f, (fov / 2) + (angleIncrement * i), 0f) * transform.forward;
 
-                    if (Physics.Raycast(cachedTransform.position, rayDirection, out castInfo, sensorDistance, hitMask, QueryTriggerInteraction.Ignore))
+                    if (Physics.Raycast(transform.position, rayDirection, out castInfo, sensorDistance, _maskToCheck, QueryTriggerInteraction.Ignore))
                     {
                         Hit = true;
                     }
@@ -87,7 +81,7 @@ public class Sensors : MonoBehaviour
                 break;
 
             case Type.SphereCast:
-                if (Physics.SphereCast(new Ray(cachedTransform.position, dir), sphereRadius, out castInfo, sensorDistance, hitMask, QueryTriggerInteraction.Ignore))
+                if (Physics.SphereCast(new Ray(transform.position, dir), sphereRadius, out castInfo, sensorDistance, _maskToCheck, QueryTriggerInteraction.Ignore))
                 {
                     Hit = true;
                     return true;
@@ -95,7 +89,7 @@ public class Sensors : MonoBehaviour
                 break;
 
             case Type.BoxCast:
-                if (Physics.CheckBox(cachedTransform.position, new Vector3(boxExtents.x, boxExtents.y, sensorDistance) / 2.0f, this.transform.rotation, hitMask, QueryTriggerInteraction.Ignore))
+                if (Physics.CheckBox(transform.position, new Vector3(boxExtents.x, boxExtents.y, sensorDistance) / 2.0f, this.transform.rotation, _maskToCheck, QueryTriggerInteraction.Ignore))
                 {
                     Hit = true;
                     return true;
@@ -112,12 +106,11 @@ public class Sensors : MonoBehaviour
 
     #region Debug Functions
     private void DebugHit() => Debug.Log("Hit Object");
-    private void DebugRay() => Debug.DrawRay(cachedTransform.position, cachedTransform.forward * sensorDistance, Hit ? Color.red : Color.green);
+    private void DebugRay() => Debug.DrawRay(transform.position, transform.forward * sensorDistance, Hit ? Color.red : Color.green);
 
     public void OnDrawGizmos()
     {
-        if (cachedTransform == null) cachedTransform = GetComponent<Transform>();
-        Scan();
+        Hit = Scan(LayerMask.GetMask("Player"));
 
         Gizmos.color = Color.green;
         if (Hit) Gizmos.color = Color.red;
@@ -127,7 +120,7 @@ public class Sensors : MonoBehaviour
         float length = sensorDistance;
         if (Hit)
         {
-            length = Vector3.Distance(cachedTransform.position, castInfo.point);
+            length = Vector3.Distance(transform.position, castInfo.point);
         }
 
         switch (sensorType)
@@ -157,7 +150,7 @@ public class Sensors : MonoBehaviour
                 if (Hit)
                 {
                     Vector3 ballCenter = castInfo.point + castInfo.normal * sphereRadius;
-                    length = Vector3.Distance(cachedTransform.position, ballCenter);
+                    length = Vector3.Distance(transform.position, ballCenter);
                 }
                 Gizmos.DrawWireSphere(Vector3.zero + Vector3.forward * length, sphereRadius);
                 Gizmos.DrawLine(Vector3.up * sphereRadius, (Vector3.up * sphereRadius) + (Vector3.forward * length)); // Top Line To Sphere

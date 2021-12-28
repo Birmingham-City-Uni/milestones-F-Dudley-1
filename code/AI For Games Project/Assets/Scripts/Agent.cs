@@ -2,60 +2,116 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+[RequireComponent(typeof(CharacterInfo))]
 public class Agent : MonoBehaviour
 {
-    [Header("Main Variables")]
-    [SerializeField] private Vector3[] pathWaypoints;
-
-    private StateManager stateManager = new StateManager();
-    private Sensors sensor;
-
-    [Header("Agent Containers")]
-    private Transform stateContainer;
+    [Header("Base Agent")]
+    [SerializeField] private Queue<Vector3> pathWaypoints = new Queue<Vector3>();
+    public CharacterInfo info;
+    public Sensors sensor;
+    private CharacterMovement controller;
+    private LineRenderer pathRenderer;
 
     #region Unity Functions
-    private void Start()
+    protected void Start()
     {
-        stateManager.Init(new WanderState(this, stateManager));
-        sensor = GetComponent<Sensors>();
+        info = GetComponent<CharacterInfo>();
+        controller = GetComponent<CharacterMovement>();
+        sensor = GetComponentInChildren<Sensors>();
 
-        if (stateContainer != null)
-        {
-            State[] foundStates = stateContainer.GetComponents<State>();
-
-            if (foundStates.Length > 0)
-            {
-                foreach (State state in foundStates)
-                {
-                    stateManager.pushState(state);
-                }
-            }
-        }
+        pathRenderer = GetComponentInChildren<LineRenderer>();
     }
 
-    private void Update()
+    protected void OnEnable()
     {
-        stateManager.Update();
-        if ((sensor.Hit == true) && (stateManager.getCurrentState().GetType() != typeof(SeekState)))
+        GameManager.enablePathDrawing += DrawCharacterPathing;
+    }
+
+    protected void OnDisable()
+    {
+        GameManager.enablePathDrawing -= DrawCharacterPathing;
+    }
+
+    protected void FixedUpdate()
+    {
+        info.tiredness -= 0.005f;
+        info.hunger -= 0.0025f;
+
+        info.tiredness = Mathf.Clamp(info.tiredness, 0, 100f);
+        info.hunger = Mathf.Clamp(info.hunger, 0, 100);
+    }
+
+    protected void OnDrawGizmos()
+    {
+        if (pathWaypoints.Count > 0 && GameManager.instance.DrawPathing)
         {
-            //stateManager.pushState(seekState) // Push The Seek State Here AS Sensor Detects Something.
-        }
-        if ((sensor.Hit == false) && (stateManager.getCurrentState().GetType() != typeof(WanderState)))
-        {
-            //stateManager.pushState(wanderState); // Push The Wander State As Sensor Not Detected Anything.
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, pathWaypoints.Peek());
+
+            Vector3[] tmpPath = pathWaypoints.ToArray();
+            for (int i = 0; i < pathWaypoints.Count; i++)
+            {
+                Gizmos.DrawWireSphere(tmpPath[i], 0.5f);
+                if (i < pathWaypoints.Count - 1)
+                {
+                    Gizmos.DrawLine(tmpPath[i], tmpPath[i + 1]);
+                }
+            }
         }
     }
     #endregion
 
     #region Main Agent Functions
-    public void Move(Vector3 waypoint)
+    public bool HasPath() => pathWaypoints.Count > 0;
+    public void GetPathing(Vector3 _targetLocation) => PathRequestManager.RequestPath(transform.position, _targetLocation, FoundPathCallback);
+    public Coroutine StartAgentCoroutine(IEnumerator coroutine) => StartCoroutine(coroutine);
+
+    public void ChangeAgentVisability(bool visability)
     {
-        // Code To Interact With Character Controller Here.
+        gameObject.SetActive(visability);
     }
 
-    protected void FoundPathCallback()
+    public bool MoveCharacterAlongPath()
     {
+        if (HasPath())
+        {
+            controller.UpdateCharacterPosition(pathWaypoints.Peek());
 
+            if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 0.5f)
+            {
+                pathWaypoints.Dequeue();
+            }      
+
+            return true;      
+        }
+        else {
+            controller.StopCharacterAudio();
+
+            return false;
+        }
+    }
+
+    protected void DrawCharacterPathing(bool isDrawing)
+    {
+        pathRenderer.enabled = isDrawing;
+    }
+
+    protected void FoundPathCallback(Vector3[] newWaypoints, bool pathingSuccess)
+    {
+        if (pathingSuccess)
+        {
+            pathWaypoints.Clear();
+
+            foreach (Vector3 waypoint in newWaypoints)
+            {
+                pathWaypoints.Enqueue(waypoint);
+            }
+
+            pathRenderer.positionCount = newWaypoints.Length;
+            pathRenderer.SetPositions(newWaypoints);
+        }
+        else Debug.Log("Agent Could Not Find Pathing");
     }
     #endregion
 }

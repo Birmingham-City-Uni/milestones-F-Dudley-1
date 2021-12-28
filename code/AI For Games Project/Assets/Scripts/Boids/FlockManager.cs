@@ -20,21 +20,34 @@ public class FlockManager : MonoBehaviour
     public float targetChangeTime = 30f;
 
     [SerializeField] public int numBirds = 100;
-    [SerializeField] public Vector3 targetPosition = new Vector3(0f, 0f, 0f); 
+    [SerializeField] private Vector3 targetPosition = new Vector3(0f, 0f, 0f); 
 
     public GameObject[] birds;
     public Coroutine targetChange;
 
     [Header("Debug")]
+    public GameObject targetVisualizer;
     public bool drawFlockBounds;
-    public bool drawTargetGizmo;
+
+    public Vector3 TargetPosition
+    {
+        get
+        {
+            return targetPosition;
+        }
+        set
+        {
+            targetPosition = value;
+            MoveTargetVisualizer();
+        }
+    }
 
     #region Unity Functions
     private void Awake()
     {
         instance = this;
 
-        targetPosition = GetPositionInBounds();
+        TargetPosition = GetPositionInBounds();
         boundsCollider = GetComponent<BoxCollider>();
 
         boundsCollider.center = new Vector3(0, distanceFromGround, 0);
@@ -52,6 +65,16 @@ public class FlockManager : MonoBehaviour
         targetChange = StartCoroutine("ChangeTarget");
     }
 
+    private void OnEnable()
+    {
+        GameManager.enableBoidTargetDrawing += EnableVisualizer;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.enableBoidTargetDrawing -= EnableVisualizer;
+    }
+
     private void Update()
     {
         
@@ -65,7 +88,7 @@ public class FlockManager : MonoBehaviour
             Gizmos.DrawWireCube(new Vector3(0, distanceFromGround + (flockBounds.y / 2), 0), flockBounds);
         }
 
-        if (drawTargetGizmo)
+        if (GameManager.instance.DrawBoidTarget)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(targetPosition, 4f);
@@ -77,7 +100,7 @@ public class FlockManager : MonoBehaviour
     private IEnumerator ChangeTarget()
     {
         yield return new WaitForSeconds(targetChangeTime);
-        targetPosition = GetPositionInBounds();
+        TargetPosition = GetPositionInBounds();
     }
 
     public Vector3 GetPositionInBounds()
@@ -94,4 +117,17 @@ public class FlockManager : MonoBehaviour
         return boundsCollider.bounds.Contains(_positionToCheck);
     }
     #endregion
+
+    #region  Visualization Functions
+    private void EnableVisualizer(bool isEnabled)
+    {
+        targetVisualizer.SetActive(isEnabled);
+    }
+
+    private void MoveTargetVisualizer()
+    {
+        targetVisualizer.transform.position = targetPosition;
+    }
+    #endregion
+
 }

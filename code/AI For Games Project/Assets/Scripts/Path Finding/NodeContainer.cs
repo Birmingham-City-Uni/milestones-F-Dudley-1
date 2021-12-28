@@ -10,6 +10,10 @@ interface NodeContainer
     }
 
     void CreateContainer();
+    void CreateDebugVisuals();
+
     List<Node> GetNodeNeighbours(Node _node);
     Node GetNodeFromWorldPoint(Vector3 _worldPosition);
+
+    void EnablePathingVisuals(bool isEnabled);
 }

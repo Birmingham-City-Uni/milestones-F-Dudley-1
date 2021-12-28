@@ -37,18 +37,23 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Path Finding\PathGraph.cs" />
+     <Compile Include="Assets\Scripts\Village Scripts\VillageManager.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanTween.cs" />
      <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanTweenExt.cs" />
      <Compile Include="Assets\Scripts\Boids\FlockAgent.cs" />
+     <Compile Include="Assets\Scripts\FSM\Agent_FSM.cs" />
      <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
      <Compile Include="Assets\Scripts\FSM\States\SeekState.cs" />
+     <Compile Include="Assets\Scripts\FSM\States\PatrolState.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
      <Compile Include="Assets\Scripts\Path Finding\Node.cs" />
      <Compile Include="Assets\Scripts\Path Finding\PathFinding.cs" />
      <Compile Include="Assets\Scripts\Data Structures\DataItems.cs" />
+     <Compile Include="Assets\Scripts\Village Scripts\CharacterInfo.cs" />
      <Compile Include="Assets\Scripts\Path Finding\PathingTester.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanSmooth.cs" />
+     <Compile Include="Assets\Scripts\_Main\GameManager.cs" />
      <Compile Include="Assets\Scripts\Path Finding\NodeContainer.cs" />
      <Compile Include="Assets\Scripts\CharacterMovement.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
@@ -59,14 +64,13 @@
      <Compile Include="Assets\Scripts\Sensors.cs" />
      <Compile Include="Assets\Scripts\FSM\StateManager.cs" />
      <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
-     <Compile Include="Assets\Scripts\FSM\States\IdleState.cs" />
-     <Compile Include="Assets\Scripts\FSM\States\WanderState.cs" />
      <Compile Include="Assets\Scripts\Agent.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Data Structures\PriorityQueue.cs" />
      <Compile Include="Assets\Scripts\Data Structures\Heap.cs" />
-     <Compile Include="Assets\Scripts\Village Scripts\VillageManager.cs" />
-     <Compile Include="Assets\Scripts\Village Scripts\CharacterInfo.cs" />
+     <Compile Include="Assets\Scripts\FSM\States\TiredState.cs" />
+     <Compile Include="Assets\Scripts\Village Scripts\CharacterHouse.cs" />
+     <Compile Include="Assets\Scripts\FSM\States\HungryState.cs" />
      <None Include="Assets\LeanTween\License.txt" />
      <None Include="Assets\Viking Village\Shaders\LitSSS_Cutout\Subgraphs\CustomLighting.hlsl" />
     <Reference Include="UnityEngine">
@@ -690,6 +694,9 @@
     <Reference Include="UnityEngine.UI">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Popcron.Gizmos.Editor">
+        <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Popcron.Gizmos.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
@@ -722,6 +729,9 @@
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Popcron.Gizmos">
+        <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Popcron.Gizmos.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
         <HintPath>D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>

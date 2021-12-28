@@ -15,14 +15,16 @@ public class StateManager
         getCurrentState().Enter();
     }
 
-    public void Update()
+    public bool Update()
     {
-        if (getCurrentState() != null) getCurrentState().Execute();
+        if (hasState()) return stack.Peek().Execute();
+        else return false;
     }
     #endregion
 
     #region Stack Functions
-    public State getCurrentState() => stack.Count > 0 ? stack.Peek() : null;
+    public State getCurrentState() => hasState() ? stack.Peek() : null;
+    public bool hasState() => stack.Count > 0;
 
     public bool popState()
     {
@@ -38,7 +40,7 @@ public class StateManager
 
     public bool pushState(State newState)// Could Add '&& !Stack.Contains(newState)' to avoid repetition of states.
     {
-        if (stack.Peek() != newState)
+        if (stack.Peek() != newState && !stack.Contains(newState))
         {
             stack.Push(newState);
             getCurrentState().Enter();
