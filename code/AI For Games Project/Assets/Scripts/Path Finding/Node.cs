@@ -10,6 +10,7 @@ public class Node : IHeapItem<Node>
     public bool isWalkable;
     public Vector3 worldPosition;
     public int gridX, gridZ;
+    public int movementPenalty;
 
     [Header("Path Finding Costs")]
     public Node parentNode;
@@ -19,19 +20,21 @@ public class Node : IHeapItem<Node>
 
     private int heapIndex;
 
-    public Node(bool _isWalkable, Vector3 _worldPosition, List<Node> _neighbours)
+    public Node(bool _isWalkable, Vector3 _worldPosition, int _penalty, List<Node> _neighbours)
     {
         isWalkable = _isWalkable;
         worldPosition = _worldPosition;
+        movementPenalty = _penalty;        
         neighbours = _neighbours;
     }
 
-    public Node(bool _isWalkable, Vector3 _worldPosition, int _gridX, int _gridZ)
+    public Node(bool _isWalkable, Vector3 _worldPosition, int _gridX, int _gridZ, int _penalty)
     {
         isWalkable = _isWalkable;
         worldPosition = _worldPosition;
         gridX = _gridX;
         gridZ = _gridZ;
+        movementPenalty = _penalty;
     }
 
     public int fCost
