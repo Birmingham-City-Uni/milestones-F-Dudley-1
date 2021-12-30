@@ -174,7 +174,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
 
 			for (int x = 1; x < gridSizeX; x++) {
 				int removeIndex = Mathf.Clamp(x - kernelExtents - 1, 0, gridSizeX);
-				int addIndex = Mathf.Clamp(x + kernelExtents, 0, gridSizeX-1);
+				int addIndex = Mathf.Clamp(x + kernelExtents, 0, gridSizeX - 1);
 
 				penaltiesHorizontalPass [x, z] = penaltiesHorizontalPass [x - 1, z] - grid [removeIndex, z].movementPenalty + grid [addIndex, z].movementPenalty;
 			}
@@ -193,8 +193,8 @@ public class PathGrid : MonoBehaviour, NodeContainer
 				int removeIndex = Mathf.Clamp(z - kernelExtents - 1, 0, gridSizeZ);
 				int addIndex = Mathf.Clamp(z + kernelExtents, 0, gridSizeZ-1);
 
-				penaltiesVerticalPass [x, z] = penaltiesVerticalPass [x, z-1] - penaltiesHorizontalPass [x,removeIndex] + penaltiesHorizontalPass [x, addIndex];
-				blurredPenalty = Mathf.RoundToInt((float)penaltiesVerticalPass [x, z] / (kernelSize * kernelSize));
+				penaltiesVerticalPass [x, z] = penaltiesVerticalPass [x, z - 1] - penaltiesHorizontalPass [x, removeIndex] + penaltiesHorizontalPass [x, addIndex];
+				blurredPenalty = Mathf.RoundToInt(penaltiesVerticalPass [x, z] / Mathf.Pow(kernelSize, 2));
 				grid [x, z].movementPenalty = blurredPenalty;
 
 				if (blurredPenalty > penaltyMax) {

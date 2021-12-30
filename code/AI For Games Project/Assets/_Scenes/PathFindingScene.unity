@@ -644,7 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d7c6d05eb8b7f4080fb25d22e7e251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentChosenAlgorithm: 0
+  currentChosenAlgorithm: 1
   pathManager: {fileID: 0}
 --- !u!114 &366982144
 MonoBehaviour:

@@ -15,8 +15,8 @@ public class Node : IHeapItem<Node>
     [Header("Path Finding Costs")]
     public Node parentNode;
     public List<Node> neighbours;
-    public int gCost;
-    public int hCost;
+    public int gCost = 0;
+    public int hCost = 0;
 
     private int heapIndex;
 
