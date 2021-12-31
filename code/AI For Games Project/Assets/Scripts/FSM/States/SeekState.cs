@@ -33,7 +33,7 @@ public class SeekState : State
             StartWait();
         }
 
-        if (Physics.CheckSphere(owner.transform.position, 7f, LayerMask.GetMask("Player"), QueryTriggerInteraction.Ignore))
+        if (Physics.CheckSphere(owner.transform.position, 12f, LayerMask.GetMask("Player"), QueryTriggerInteraction.Ignore))
         {
             StartWait();
         }
@@ -55,7 +55,7 @@ public class SeekState : State
     public IEnumerator WaitInAlertedArea()
     {
         Debug.Log("Starting To Wait In Alerted Area");
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(20f);
 
         waitedInArea = true;
         waitingIsRunning = false;

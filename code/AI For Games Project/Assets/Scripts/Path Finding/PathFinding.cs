@@ -6,15 +6,17 @@ using UnityEngine;
 
 public enum PathfindingAlgorithms
 {
-    ASTAR,
-    BFS,
-    DFS,
+    AStar,
+    UniformCostSearch,
+    GreedyBestFirstSearch,
+    BreadthFirstSearch,
+    DepthFirstSearch,
 }
 
 public class PathFinding : MonoBehaviour
 {
     [Header("Main")]
-    public PathfindingAlgorithms currentChosenAlgorithm;
+    public static PathfindingAlgorithms currentChosenAlgorithm;
 
     [Header("References")]
     public PathRequestManager pathManager;
@@ -40,18 +42,25 @@ public class PathFinding : MonoBehaviour
     {
         switch (currentChosenAlgorithm)
         {
-            
             default:
-            case PathfindingAlgorithms.ASTAR:
+            case PathfindingAlgorithms.AStar:
                 StartCoroutine(FindPath_AStar(_startPositon, _targetPosition));
                 break;
 
-            case PathfindingAlgorithms.BFS:
-                StartCoroutine(FindPath_BFS(_startPositon, _targetPosition));
+            case PathfindingAlgorithms.UniformCostSearch:
+                StartCoroutine(FindPath_UniformCostSearch(_startPositon, _targetPosition));
                 break;
 
-            case PathfindingAlgorithms.DFS:
-                StartCoroutine(FindPath_DFS(_startPositon, _targetPosition));
+            case PathfindingAlgorithms.GreedyBestFirstSearch:
+                StartCoroutine(FindPath_GreedyBestFirstSearch(_startPositon, _targetPosition));
+                break;
+
+            case PathfindingAlgorithms.BreadthFirstSearch:
+                StartCoroutine(FindPath_BreadthFirstSearch(_startPositon, _targetPosition));
+                break;
+
+            case PathfindingAlgorithms.DepthFirstSearch:
+                StartCoroutine(FindPath_DepthFirstSearch(_startPositon, _targetPosition));
                 break;
         }
         
@@ -59,9 +68,6 @@ public class PathFinding : MonoBehaviour
 
     public IEnumerator FindPath_AStar(Vector3 _startPosition, Vector3 _targetPosition)
     {
-        Stopwatch stopwatch = new Stopwatch();
-        stopwatch.Start();
-
         Vector3[] pathWaypoints = new Vector3[0];
         bool pathSuccess = false;
 
@@ -70,6 +76,9 @@ public class PathFinding : MonoBehaviour
 
         if (startingNode.isWalkable && targetNode.isWalkable)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();            
+
             Heap<Node> openSet = new Heap<Node>(nodeContainer.MaxSize);
             HashSet<Node> closeSet = new HashSet<Node>();
 
@@ -93,7 +102,7 @@ public class PathFinding : MonoBehaviour
                 {
                     if (!neighbourNode.isWalkable || closeSet.Contains(neighbourNode)) continue;
 
-                    int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbourNode);
+                    int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbourNode) + neighbourNode.movementPenalty;
                     if (newCostToNeighbour < neighbourNode.gCost || !openSet.Contains(neighbourNode))
                     {
                         neighbourNode.gCost = newCostToNeighbour;
@@ -105,17 +114,21 @@ public class PathFinding : MonoBehaviour
                         {
                             openSet.Add(neighbourNode);
                         }
+                        else
+                        {
+                            openSet.UpdateItem(neighbourNode);
+                        }
                     }
                 }
             }
         }
 
-        yield return null;
         if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
         pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+        yield return null;
     }
-
-    public IEnumerator FindPath_BFS(Vector3 _startPosition, Vector3 _targetPosition)
+    
+    public IEnumerator FindPath_UniformCostSearch(Vector3 _startPosition, Vector3 _targetPosition)
     {
         Vector3[] pathWaypoints = new Vector3[0];
         bool pathSuccess = false;
@@ -125,9 +138,19 @@ public class PathFinding : MonoBehaviour
 
         if (startingNode.isWalkable && targetNode.isWalkable)
         {
-            /*
-            while (true)
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();            
+
+            Heap<Node> openSet = new Heap<Node>(nodeContainer.MaxSize);
+            HashSet<Node> closeSet = new HashSet<Node>();
+
+            openSet.Add(startingNode);
+
+            while (openSet.Count > 0)
             {
+                Node currentNode = openSet.RemoveFirst();
+                closeSet.Add(currentNode);
+
                 if (currentNode == targetNode)
                 {
                     stopwatch.Stop();
@@ -136,16 +159,37 @@ public class PathFinding : MonoBehaviour
                     pathSuccess = true;
                     break;
                 }
+
+                foreach (Node neighbourNode in nodeContainer.GetNodeNeighbours(currentNode))
+                {
+                    if (!neighbourNode.isWalkable || closeSet.Contains(neighbourNode)) continue;
+
+                    int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbourNode) + neighbourNode.movementPenalty;
+                    if (newCostToNeighbour < neighbourNode.gCost || !openSet.Contains(neighbourNode))
+                    {
+                        neighbourNode.gCost = newCostToNeighbour;
+
+                        neighbourNode.parentNode = currentNode;
+
+                        if (!openSet.Contains(neighbourNode))
+                        {
+                            openSet.Add(neighbourNode);
+                        }
+                        else
+                        {
+                            openSet.UpdateItem(neighbourNode);
+                        }
+                    }
+                }
             }
-            */
         }
 
-        yield return null;
         if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
         pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+        yield return null;
     }
 
-    public IEnumerator FindPath_DFS(Vector3 _startPosition, Vector3 _targetPosition)
+    public IEnumerator FindPath_GreedyBestFirstSearch(Vector3 _startPosition, Vector3 _targetPosition)
     {
         Vector3[] pathWaypoints = new Vector3[0];
         bool pathSuccess = false;
@@ -155,9 +199,19 @@ public class PathFinding : MonoBehaviour
 
         if (startingNode.isWalkable && targetNode.isWalkable)
         {
-            /*
-            while (true)
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            Heap<Node> openSet = new Heap<Node>(nodeContainer.MaxSize);
+            HashSet<Node> closedSet = new HashSet<Node>();
+
+            openSet.Add(startingNode);
+
+            while (openSet.Count > 0)
             {
+                Node currentNode = openSet.RemoveFirst();
+                closedSet.Add(currentNode);
+
                 if (currentNode == targetNode)
                 {
                     stopwatch.Stop();
@@ -166,13 +220,133 @@ public class PathFinding : MonoBehaviour
                     pathSuccess = true;
                     break;
                 }
+
+                foreach (Node neighbourNode in nodeContainer.GetNodeNeighbours(currentNode))
+                {
+                    if (!neighbourNode.isWalkable || closedSet.Contains(neighbourNode)) continue;
+
+                    if (GetDistance(neighbourNode, targetNode) < neighbourNode.hCost || !openSet.Contains(neighbourNode))
+                    {
+                        neighbourNode.hCost = GetDistance(neighbourNode, targetNode);
+                        neighbourNode.parentNode = currentNode;
+
+                        if (!openSet.Contains(neighbourNode))
+                        {
+                            openSet.Add(neighbourNode);
+                        }
+                        else
+                        {
+                            openSet.UpdateItem(neighbourNode);
+                        }
+                    }
+                }
             }
-            */
+
         }
 
-        yield return null;
         if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
         pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+        yield return null;
+    }
+
+    public IEnumerator FindPath_BreadthFirstSearch(Vector3 _startPosition, Vector3 _targetPosition)
+    {
+        Vector3[] pathWaypoints = new Vector3[0];
+        bool pathSuccess = false;
+
+        Node startingNode = nodeContainer.GetNodeFromWorldPoint(_startPosition);
+        Node targetNode = nodeContainer.GetNodeFromWorldPoint(_targetPosition);
+
+        if (startingNode.isWalkable && targetNode.isWalkable)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            Queue<Node> openSet = new Queue<Node>();
+            HashSet<Node> closedSet = new HashSet<Node>();
+
+            openSet.Enqueue(startingNode);
+
+            while (openSet.Count > 0)
+            {
+                Node currentNode = openSet.Dequeue();
+                closedSet.Add(currentNode);
+
+                if (currentNode == targetNode)
+                {
+                    stopwatch.Stop();
+                    UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
+
+                    pathSuccess = true;
+                    break;
+                }
+
+                foreach (Node neighbour in nodeContainer.GetNodeNeighbours(currentNode))
+                {
+                    if (!neighbour.isWalkable || closedSet.Contains(neighbour)) continue;
+
+                    if (!openSet.Contains(neighbour) && !closedSet.Contains(neighbour))
+                    {
+                        neighbour.parentNode = currentNode;
+                        openSet.Enqueue(neighbour);
+                    }
+                }
+            }
+        }
+
+        if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
+        pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+        yield return null;
+    }
+
+    public IEnumerator FindPath_DepthFirstSearch(Vector3 _startPosition, Vector3 _targetPosition)
+    {
+        Vector3[] pathWaypoints = new Vector3[0];
+        bool pathSuccess = false;
+
+        Node startingNode = nodeContainer.GetNodeFromWorldPoint(_startPosition);
+        Node targetNode = nodeContainer.GetNodeFromWorldPoint(_targetPosition);
+
+        if (startingNode.isWalkable && targetNode.isWalkable)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            Stack<Node> openSet = new Stack<Node>();
+            HashSet<Node> closedSet = new HashSet<Node>();
+
+            openSet.Push(startingNode);
+
+            while (openSet.Count > 0)
+            {
+                Node currentNode = openSet.Pop();
+                closedSet.Add(currentNode);
+
+                if (currentNode == targetNode)
+                {
+                    stopwatch.Stop();
+                    UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
+
+                    pathSuccess = true;
+                    break;
+                }
+
+                foreach (Node neighbour in nodeContainer.GetNodeNeighbours(currentNode))
+                {
+                    if (!neighbour.isWalkable || closedSet.Contains(neighbour)) continue;
+
+                    if (!openSet.Contains(neighbour) && !closedSet.Contains(neighbour))
+                    {
+                        neighbour.parentNode = currentNode;
+                        openSet.Push(neighbour);
+                    }
+                }
+            }
+        }
+
+        if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
+        pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+        yield return null;
     }
 
     public Vector3[] RetracePath(Node _startNode, Node _targetNode)
@@ -214,7 +388,10 @@ public class PathFinding : MonoBehaviour
                 _pathToOptimise[i - 1].gridZ - _pathToOptimise[i].gridZ
             );
 
-            if (directionNew != directionOld)
+            bool collisionCheck = Physics.Linecast(_pathToOptimise[i - 1].worldPosition, _pathToOptimise[i].worldPosition, -1, QueryTriggerInteraction.Ignore);
+
+
+            if (directionNew != directionOld || collisionCheck)
             {
                 waypoints.Add(_pathToOptimise[i].worldPosition);
 

@@ -18,6 +18,16 @@ public class Agent_FSM : Agent
         stateManager.Init(new PatrolState(this, stateManager));
     }
 
+    protected new void OnEnable()
+    {
+        base.OnEnable();
+    }
+
+    protected new void OnDisable()
+    {
+        base.OnDisable();
+    }
+
     protected void Update()
     {
         if (info.isAlerted)
@@ -56,6 +66,8 @@ public class Agent_FSM : Agent
     protected new void OnDrawGizmos()
     {
         base.OnDrawGizmos();
+
+        Gizmos.DrawWireSphere(transform.position, 12f);
     }
     #endregion
 }

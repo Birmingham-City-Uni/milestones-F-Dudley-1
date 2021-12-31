@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class TerrainMaskType
+{
+    public LayerMask maskName;
+    public int maskPenalty;
+}
+
+[System.Serializable]
 public class PathGrid : MonoBehaviour, NodeContainer
 {
     [Header("Grid Attributes")]
     public Vector3 gridPositionOffset;
     public Vector3 gridWorldSize;
     public float nodeDiameter;
-    public LayerMask unwalkableTerrainMask;
+
+    [Tooltip("This Gets Assigned at Runtime.")]
+    [SerializeField] private LayerMask walkableTerrainMask;
+    [SerializeField] private LayerMask unwalkableTerrainMask;
+    public TerrainMaskType[] terrainRegions;
+
+    private int penaltyMin = int.MaxValue;
+    private int penaltyMax = int.MinValue;
+
+    private Dictionary<int, int> terrainRegionsLog = new Dictionary<int, int>();
 
     [Header("Debug Referernces")]
     private GameObject pathingVisuals;
@@ -32,6 +48,13 @@ public class PathGrid : MonoBehaviour, NodeContainer
     {
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
+
+        foreach (TerrainMaskType type in terrainRegions)
+        {
+            walkableTerrainMask |= type.maskName;
+            terrainRegionsLog.Add((int) Mathf.Log(type.maskName.value, 2), type.maskPenalty);
+        }
+
         CreateContainer();
         CreateDebugVisuals();
     }
@@ -79,11 +102,24 @@ public class PathGrid : MonoBehaviour, NodeContainer
             {
                 Vector3 pointInWorld = worldBottomLeft + (Vector3.right * (x * nodeDiameter + nodeRadius)) + (Vector3.forward * (z * nodeDiameter + nodeRadius));
                 bool isWalkable = !(Physics.CheckBox(pointInWorld, Vector3.one * nodeRadius, Quaternion.identity, unwalkableTerrainMask, QueryTriggerInteraction.Ignore));
-                grid[x, z] = new Node(isWalkable, pointInWorld, x, z);
+                
+                int movementPenalty = 0;
+                if (isWalkable)
+                {
+                    Ray ray = new Ray(pointInWorld + Vector3.up * 50, Vector3.down);
+                    RaycastHit hit;
 
-                grid[x, z].neighbours = GetNodeNeighbours(grid[x, z]);
+                    if (Physics.Raycast(ray, out hit, 100, walkableTerrainMask, QueryTriggerInteraction.Collide))
+                    {
+                        terrainRegionsLog.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
+                    }
+                }
+
+                grid[x, z] = new Node(isWalkable, pointInWorld, x, z, movementPenalty);
             }
         }
+
+        PenaltyMap(2);
     }
 
     public void CreateDebugVisuals()
@@ -119,6 +155,55 @@ public class PathGrid : MonoBehaviour, NodeContainer
                 nodeVisual.transform.position = grid[x, z].worldPosition;
             }
         }
+    }
+
+    private void PenaltyMap(int _blurSize)
+    {
+        int kernelSize = _blurSize * 2 + 1;
+        int kernelExtents = (kernelSize-1) / 2;
+
+        int[,] penaltiesHorizontalPass = new int[gridSizeX, gridSizeZ];
+        int[,] penaltiesVerticalPass = new int[gridSizeX, gridSizeZ];
+
+		for (int z = 0; z < gridSizeZ; z++) {
+			for (int x = -kernelExtents; x <= kernelExtents; x++) {
+				int sampleX = Mathf.Clamp (x, 0, kernelExtents);
+				penaltiesHorizontalPass [0, z] += grid [sampleX, z].movementPenalty;
+			}
+
+			for (int x = 1; x < gridSizeX; x++) {
+				int removeIndex = Mathf.Clamp(x - kernelExtents - 1, 0, gridSizeX);
+				int addIndex = Mathf.Clamp(x + kernelExtents, 0, gridSizeX - 1);
+
+				penaltiesHorizontalPass [x, z] = penaltiesHorizontalPass [x - 1, z] - grid [removeIndex, z].movementPenalty + grid [addIndex, z].movementPenalty;
+			}
+		}
+			
+		for (int x = 0; x < gridSizeX; x++) {
+			for (int z = -kernelExtents; z <= kernelExtents; z++) {
+				int sampleZ = Mathf.Clamp (z, 0, kernelExtents);
+				penaltiesVerticalPass [x, 0] += penaltiesHorizontalPass [x, sampleZ];
+			}
+
+			int blurredPenalty = Mathf.RoundToInt(penaltiesVerticalPass [x, 0] / Mathf.Pow(kernelSize, 2));
+			grid [x, 0].movementPenalty = blurredPenalty;
+
+			for (int z = 1; z < gridSizeZ; z++) {
+				int removeIndex = Mathf.Clamp(z - kernelExtents - 1, 0, gridSizeZ);
+				int addIndex = Mathf.Clamp(z + kernelExtents, 0, gridSizeZ-1);
+
+				penaltiesVerticalPass [x, z] = penaltiesVerticalPass [x, z - 1] - penaltiesHorizontalPass [x, removeIndex] + penaltiesHorizontalPass [x, addIndex];
+				blurredPenalty = Mathf.RoundToInt(penaltiesVerticalPass [x, z] / Mathf.Pow(kernelSize, 2));
+				grid [x, z].movementPenalty = blurredPenalty;
+
+				if (blurredPenalty > penaltyMax) {
+					penaltyMax = blurredPenalty;
+				}
+				if (blurredPenalty < penaltyMin) {
+					penaltyMin = blurredPenalty;
+				}
+			}
+		}
     }
 
     public Node GetNodeFromWorldPoint(Vector3 _worldPosition)

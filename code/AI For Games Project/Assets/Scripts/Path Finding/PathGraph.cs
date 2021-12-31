@@ -63,7 +63,7 @@ public class PathGraph : MonoBehaviour, NodeContainer
 
         foreach (Transform child in graphNodeContainer)
         {
-            graph.Add(new Node(true, child.position, new List<Node>()));
+            graph.Add(new Node(true, child.position, 0, new List<Node>()));
             child.gameObject.SetActive(false);
         }
 
@@ -80,7 +80,7 @@ public class PathGraph : MonoBehaviour, NodeContainer
 
     public Node GetNodeFromWorldPoint(Vector3 _worldPosition)
     {
-        Node closestNode = new Node(true, _worldPosition, null);
+        Node closestNode = new Node(true, _worldPosition, 0, null);
         float closestDistance = float.MaxValue;
 
         foreach (Node node in graph)

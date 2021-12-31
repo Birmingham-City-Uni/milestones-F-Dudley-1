@@ -17,18 +17,18 @@ TagManager:
   - Lighting
   - Props
   - ReflectedInWater
-  - Ground
+  - 
   - AccessibleVolume
   - PostProcessing
   - UnWalkableArea
-  - MainGround
+  - Ground
+  - Road
+  - Path
+  - 
+  - 
   - 
   - Player
   - Characters
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 

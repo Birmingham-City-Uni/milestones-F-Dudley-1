@@ -27,9 +27,8 @@ public class PathingTester : MonoBehaviour
     void Update()
     {
         if (path.Count > 0)
-        {
-            transform.Translate((path.Peek() - transform.position) * moveSpeed * Time.deltaTime, Space.World);
-            //transform.Rotate(0, Vector3.Angle(transform.forward, path.Peek() - transform.position), 0f, Space.World);
+        { 
+            transform.position = Vector3.MoveTowards(transform.position, path.Peek(), moveSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, path.Peek()) < waypointRange)
             {

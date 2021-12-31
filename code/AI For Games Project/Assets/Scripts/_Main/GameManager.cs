@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         set
         {
             drawNodeContainer = value;
-            enableNodeContainerDrawing(value);
+            enableNodeContainerDrawing.Invoke(value);
         }
     }
 
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         set
         {
             drawPathing = value;
-            enablePathDrawing(value);
+            enablePathDrawing.Invoke(value);
         }
     }
 
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         set
         {
             drawBoidTarget = value;
-            enableBoidTargetDrawing(value);
+            enableBoidTargetDrawing.Invoke(value);
         }
     }
 
@@ -67,9 +67,12 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
-        foreach (Transform location in guardLocationsContainer)
+        if (guardLocationsContainer != null)
         {
-            guardLocations.Add(location);
+            foreach (Transform location in guardLocationsContainer)
+            {
+                guardLocations.Add(location);
+            }            
         }
     }
 
