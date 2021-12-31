@@ -109,18 +109,17 @@ public class PathGrid : MonoBehaviour, NodeContainer
                     Ray ray = new Ray(pointInWorld + Vector3.up * 50, Vector3.down);
                     RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit, 100, walkableTerrainMask))
+                    if (Physics.Raycast(ray, out hit, 100, walkableTerrainMask, QueryTriggerInteraction.Collide))
                     {
                         terrainRegionsLog.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
                     }
                 }
 
                 grid[x, z] = new Node(isWalkable, pointInWorld, x, z, movementPenalty);
-                //grid[x, z].neighbours = GetNodeNeighbours(grid[x, z]);
             }
         }
 
-        PenaltyMap(3);
+        PenaltyMap(2);
     }
 
     public void CreateDebugVisuals()

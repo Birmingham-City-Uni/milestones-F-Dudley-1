@@ -177,6 +177,11 @@ public class CameraController : MonoBehaviour
         {
             characterScript.CharacterJump();
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            characterScript.CharacterShout();
+        }
     }
     #endregion
 }

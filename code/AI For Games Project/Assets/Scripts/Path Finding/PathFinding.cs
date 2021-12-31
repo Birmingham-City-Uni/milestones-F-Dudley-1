@@ -8,15 +8,15 @@ public enum PathfindingAlgorithms
 {
     AStar,
     UniformCostSearch,
+    GreedyBestFirstSearch,
     BreadthFirstSearch,
     DepthFirstSearch,
-
 }
 
 public class PathFinding : MonoBehaviour
 {
     [Header("Main")]
-    public PathfindingAlgorithms currentChosenAlgorithm;
+    public static PathfindingAlgorithms currentChosenAlgorithm;
 
     [Header("References")]
     public PathRequestManager pathManager;
@@ -42,7 +42,6 @@ public class PathFinding : MonoBehaviour
     {
         switch (currentChosenAlgorithm)
         {
-
             default:
             case PathfindingAlgorithms.AStar:
                 StartCoroutine(FindPath_AStar(_startPositon, _targetPosition));
@@ -50,6 +49,10 @@ public class PathFinding : MonoBehaviour
 
             case PathfindingAlgorithms.UniformCostSearch:
                 StartCoroutine(FindPath_UniformCostSearch(_startPositon, _targetPosition));
+                break;
+
+            case PathfindingAlgorithms.GreedyBestFirstSearch:
+                StartCoroutine(FindPath_GreedyBestFirstSearch(_startPositon, _targetPosition));
                 break;
 
             case PathfindingAlgorithms.BreadthFirstSearch:
@@ -179,6 +182,66 @@ public class PathFinding : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
+        pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess);
+        yield return null;
+    }
+
+    public IEnumerator FindPath_GreedyBestFirstSearch(Vector3 _startPosition, Vector3 _targetPosition)
+    {
+        Vector3[] pathWaypoints = new Vector3[0];
+        bool pathSuccess = false;
+
+        Node startingNode = nodeContainer.GetNodeFromWorldPoint(_startPosition);
+        Node targetNode = nodeContainer.GetNodeFromWorldPoint(_targetPosition);
+
+        if (startingNode.isWalkable && targetNode.isWalkable)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            Heap<Node> openSet = new Heap<Node>(nodeContainer.MaxSize);
+            HashSet<Node> closedSet = new HashSet<Node>();
+
+            openSet.Add(startingNode);
+
+            while (openSet.Count > 0)
+            {
+                Node currentNode = openSet.RemoveFirst();
+                closedSet.Add(currentNode);
+
+                if (currentNode == targetNode)
+                {
+                    stopwatch.Stop();
+                    UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
+
+                    pathSuccess = true;
+                    break;
+                }
+
+                foreach (Node neighbourNode in nodeContainer.GetNodeNeighbours(currentNode))
+                {
+                    if (!neighbourNode.isWalkable || closedSet.Contains(neighbourNode)) continue;
+
+                    if (GetDistance(neighbourNode, targetNode) < neighbourNode.hCost || !openSet.Contains(neighbourNode))
+                    {
+                        neighbourNode.hCost = GetDistance(neighbourNode, targetNode);
+                        neighbourNode.parentNode = currentNode;
+
+                        if (!openSet.Contains(neighbourNode))
+                        {
+                            openSet.Add(neighbourNode);
+                        }
+                        else
+                        {
+                            openSet.UpdateItem(neighbourNode);
+                        }
+                    }
+                }
+            }
+
         }
 
         if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
@@ -325,7 +388,10 @@ public class PathFinding : MonoBehaviour
                 _pathToOptimise[i - 1].gridZ - _pathToOptimise[i].gridZ
             );
 
-            if (directionNew != directionOld)
+            bool collisionCheck = Physics.Linecast(_pathToOptimise[i - 1].worldPosition, _pathToOptimise[i].worldPosition, -1, QueryTriggerInteraction.Ignore);
+
+
+            if (directionNew != directionOld || collisionCheck)
             {
                 waypoints.Add(_pathToOptimise[i].worldPosition);
 
