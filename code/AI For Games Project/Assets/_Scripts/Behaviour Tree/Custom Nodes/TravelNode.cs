@@ -8,25 +8,29 @@ namespace BehaviourTree
     {
         Agent owner;
         Transform location;
+        float distanceCheck;
 
-        public TravelNode(Agent _owner)
+        public TravelNode(Agent _owner, Transform _location, float _distance)
         {
             owner = _owner;
+            location = _location;
+
+            distanceCheck = _distance;
         }
 
         public override EvaluateState Evaluate()
         {
-            if (!owner.HasPath() && nodeState != EvaluateState.RUNNING) {
+            if (owner.DistanceToTarget(location.position) > distanceCheck && !owner.HasPath())
+            {
                 owner.GetPathing(location.position);
                 nodeState = EvaluateState.RUNNING;
                 return nodeState;
             }
             else
-            {
+            {   
                 nodeState = EvaluateState.SUCCESS;
+                return nodeState;
             }
-
-            return nodeState;
         }
     }
 }

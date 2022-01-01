@@ -11,14 +11,14 @@ public class PatrolState : State
 
     public override void Enter()
     {
-        owner.GetPathing(GameManager.instance.GetRandomGuardLocation());
+        owner.GetPathing(VillageManager.instance.GetRandomGuardLocation());
     }
 
     public override bool Execute()
     {
         if (!owner.HasPath())
         {
-            owner.GetPathing(GameManager.instance.GetRandomGuardLocation());
+            owner.GetPathing(VillageManager.instance.GetRandomGuardLocation());
         }
 
         return true;

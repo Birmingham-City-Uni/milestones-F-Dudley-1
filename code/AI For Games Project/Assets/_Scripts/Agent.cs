@@ -14,7 +14,7 @@ public class Agent : MonoBehaviour
     private LineRenderer pathRenderer;
 
     #region Unity Functions
-    protected void Awake()
+    protected void Start()
     {
         info = GetComponent<CharacterInfo>();
         controller = GetComponent<CharacterMovement>();
@@ -90,6 +90,15 @@ public class Agent : MonoBehaviour
             }       
         }
         else {
+            controller.StopCharacterAudio();
+        }
+    }
+
+    public void MoveCharacterTowardsPoint(Vector3 _position)
+    {
+        controller.UpdateCharacterPosition(_position);
+        if (Vector3.Distance(transform.position, _position) < 0.5f)
+        {
             controller.StopCharacterAudio();
         }
     }

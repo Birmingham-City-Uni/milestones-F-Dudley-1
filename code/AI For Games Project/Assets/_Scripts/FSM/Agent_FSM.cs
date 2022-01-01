@@ -10,9 +10,9 @@ public class Agent_FSM : Agent
     private StateManager stateManager;
 
     #region Unity Functions
-    protected new void Awake()
+    protected new void Start()
     {
-        base.Awake();
+        base.Start();
 
         stateManager = new StateManager();
         stateManager.Init(new PatrolState(this, stateManager));
@@ -37,14 +37,14 @@ public class Agent_FSM : Agent
             stateManager.pushState(new SeekState(this, stateManager));
         }
 
-        if (info.tiredness < 30)
+        if (info.tiredness < info.tirednessThreshold)
         {
             Debug.Log("Agent is Tired");
             stateManager.pushState(new TiredState(this, stateManager));
         }
 
         /*
-        else if (info.hunger < 30)
+        else if (info.hunger < info.hungryThreshold)
         {
             stateManager.pushState(new HungryState(this, stateManager));
         }

@@ -6,6 +6,7 @@ namespace BehaviourTree
     {
         protected List<BehaviourNode> childNodes;
 
+        
         public Sequence(List<BehaviourNode> _childNodes)
         {
             childNodes = _childNodes;

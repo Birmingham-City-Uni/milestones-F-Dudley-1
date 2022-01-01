@@ -16,7 +16,7 @@ public enum PathfindingAlgorithms
 public class PathFinding : MonoBehaviour
 {
     [Header("Main")]
-    public static PathfindingAlgorithms currentChosenAlgorithm;
+    public static PathfindingAlgorithms currentChosenAlgorithm = PathfindingAlgorithms.AStar;
 
     [Header("References")]
     public PathRequestManager pathManager;

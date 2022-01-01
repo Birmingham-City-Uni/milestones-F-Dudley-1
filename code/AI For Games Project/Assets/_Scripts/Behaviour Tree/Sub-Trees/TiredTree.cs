@@ -8,7 +8,7 @@ namespace BehaviourTree
     {
         Agent owner;
 
-        public TiredSubTree(List<BehaviourNode> _childNodes, Agent _owner) : base(_childNodes)
+        public TiredSubTree(Agent _owner) : base(new List<BehaviourNode>())
         {
             owner = _owner;
 
@@ -22,7 +22,16 @@ namespace BehaviourTree
 
         private void CreateTiredTree()
         {
+            // Go To House Sequence
+            Sequence goToHouseSequence = new Sequence(new List<BehaviourNode> {
+                new TravelNode(owner, owner.info.house.entrance, 2f),
+                new RangeNode(owner, owner.info.house.entrance, 2f),
+                new EnterHouseNode(owner),
+            });
 
+            // Is Tired Checker then GoToHouseSequence
+            childNodes.Add(new isTiredNode(owner));
+            childNodes.Add(goToHouseSequence);
         }
     }
 }

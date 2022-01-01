@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TiredState : State
 {
-    private bool enteredHouse;
+    private bool enteredHouse = true;
 
     public TiredState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
@@ -20,10 +20,15 @@ public class TiredState : State
     {
         if (owner.info.tiredness > 30) return false;
 
-        if (owner.DistanceToTarget(owner.info.house.GetEntrance()) <= 1f)
+        float ownerDistance = owner.DistanceToTarget(owner.info.house.GetEntrance());
+        if (ownerDistance <= 0.5f)
         {
             enteredHouse = true;
             owner.info.house.EnterHouse(owner);
+        }
+        else if (ownerDistance <= 2f)
+        {
+            owner.MoveCharacterTowardsPoint(owner.info.house.GetEntrance());
         }
 
         return true;

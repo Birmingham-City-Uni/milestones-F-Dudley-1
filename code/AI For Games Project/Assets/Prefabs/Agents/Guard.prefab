@@ -264,6 +264,8 @@ MonoBehaviour:
   alertedLocation: {x: 0, y: 0, z: 0}
   hunger: 100
   tiredness: 100
+  hungryThreshold: 30
+  tirednessThreshold: 30
   house: {fileID: 0}
 --- !u!143 &1515714797204989462
 CharacterController:
@@ -543,7 +545,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c2d5cb6b54fc2ec45854d76a83daaa51, type: 2}
+  - {fileID: 2100000, guid: d3913dbb4a9820d4489c6852e7aca4fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

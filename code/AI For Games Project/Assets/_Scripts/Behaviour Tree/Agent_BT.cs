@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BehaviourTree;
 
 public class Agent_BT : Agent
 {
-
+    BehaviourNode topBehaviourNode;
+    
     #region Unity Functions
-    protected new void Awake()
+    protected new void Start()
     {
-        base.Awake();
+        base.Start();
+
+        ConstructBehaviourTree();
     }
 
     protected new void OnEnable()
@@ -24,6 +28,8 @@ public class Agent_BT : Agent
     protected new void Update()
     {
         base.Update();
+
+        topBehaviourNode.Evaluate();
     }
 
     protected new void FixedUpdate()
@@ -41,6 +47,11 @@ public class Agent_BT : Agent
     private void ConstructBehaviourTree()
     {
 
+        topBehaviourNode = new Selector(new List<BehaviourNode> {
+            new AlertedSubTree(this),
+            new HungrySubTree(this),
+            new TiredSubTree(this),
+        });
     }
     #endregion
 }

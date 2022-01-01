@@ -8,7 +8,7 @@ namespace BehaviourTree
     {
         Agent owner;
 
-        public HungrySubTree(List<BehaviourNode> _childNodes, Agent _owner) : base(_childNodes)
+        public HungrySubTree(Agent _owner) : base(new List<BehaviourNode>())
         {
             owner = _owner;
 
@@ -22,7 +22,24 @@ namespace BehaviourTree
 
         private void CreateHungryTree()
         {
+            // Go To Food Stall
+            Sequence goToFoodStallSequence = new Sequence(new List<BehaviourNode> {
+                new TravelNode(owner, VillageManager.instance.FoodStallLocation, 2f),
+                new RangeNode(owner, VillageManager.instance.FoodStallLocation, 2f),
+                new EatFoodNode(owner),
+            });
+
+            // Go To House
+
+
+            // Food Location Selector
+            Selector foodLocation = new Selector(new List<BehaviourNode> {
+                goToFoodStallSequence,
+            });
+            
+            // Construct SubTree
             childNodes.Add(new isHungryNode(owner));
+            childNodes.Add(foodLocation);
         }
     }
 }

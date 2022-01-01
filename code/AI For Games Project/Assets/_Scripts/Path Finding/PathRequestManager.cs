@@ -17,6 +17,7 @@ public class PathRequestManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
         pathfinding = GetComponent<PathFinding>();
     }
     #endregion

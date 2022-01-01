@@ -7,10 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [Header("Village Locations")]
-    public Transform guardLocationsContainer;
-    public List<Transform> guardLocations = new List<Transform>();
-
     [Header("Debug Controllers")]
     [SerializeField] public bool drawNodeContainer = false;
     public static Action<bool> enableNodeContainerDrawing;
@@ -66,14 +62,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-        if (guardLocationsContainer != null)
-        {
-            foreach (Transform location in guardLocationsContainer)
-            {
-                guardLocations.Add(location);
-            }
-        }
     }
 
     private void Update()
@@ -92,11 +80,5 @@ public class GameManager : MonoBehaviour
             DrawBoidTarget = !drawBoidTarget;
         }
     }
-    #endregion
-
-    #region Guard Functions
-
-    public Vector3 GetRandomGuardLocation() => guardLocations[UnityEngine.Random.Range(0, guardLocations.Count)].position;
-
     #endregion
 }
