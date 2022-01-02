@@ -9,6 +9,20 @@ public class Agent : MonoBehaviour
     [Header("Base Agent")]
     [SerializeField] private Queue<Vector3> pathWaypoints = new Queue<Vector3>();
     public CharacterInfo info;
+    private JobLocation currentJobLocation;
+    public JobLocation CurrentJobLocation
+    {
+        get
+        {
+            return currentJobLocation;
+        }
+        set
+        {
+            currentJobLocation = value;
+            // Redraw Debug Location Values.
+        }
+    }
+
     public Sensors sensor;
     private CharacterMovement controller;
     private LineRenderer pathRenderer;
@@ -21,6 +35,9 @@ public class Agent : MonoBehaviour
         sensor = GetComponentInChildren<Sensors>();
 
         pathRenderer = GetComponentInChildren<LineRenderer>();
+
+        info.hunger = Random.Range(40, 100);
+        info.tiredness = Random.Range(50, 100);
     }
 
     protected void OnEnable()
@@ -71,7 +88,6 @@ public class Agent : MonoBehaviour
     public bool HasPath() => pathWaypoints.Count > 0;
     public void GetPathing(Vector3 _targetLocation) => PathRequestManager.RequestPath(transform.position, _targetLocation, FoundPathCallback);
     public float DistanceToTarget(Vector3 _target) => Vector3.Distance(transform.position, _target);
-    public Coroutine StartAgentCoroutine(IEnumerator coroutine) => StartCoroutine(coroutine);
 
     public void ChangeAgentVisability(bool visability)
     {

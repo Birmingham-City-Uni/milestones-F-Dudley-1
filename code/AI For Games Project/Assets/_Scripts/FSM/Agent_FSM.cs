@@ -13,7 +13,6 @@ public class Agent_FSM : Agent
     protected new void Start()
     {
         base.Start();
-
         stateManager = new StateManager();
         stateManager.Init(new PatrolState(this, stateManager));
     }

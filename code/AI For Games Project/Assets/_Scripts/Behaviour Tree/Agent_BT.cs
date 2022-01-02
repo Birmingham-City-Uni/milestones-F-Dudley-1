@@ -46,11 +46,11 @@ public class Agent_BT : Agent
     #region Behaviour Tree Functions
     private void ConstructBehaviourTree()
     {
-
         topBehaviourNode = new Selector(new List<BehaviourNode> {
             new AlertedSubTree(this),
             new HungrySubTree(this),
             new TiredSubTree(this),
+            new DoJobSubTree(this),
         });
     }
     #endregion

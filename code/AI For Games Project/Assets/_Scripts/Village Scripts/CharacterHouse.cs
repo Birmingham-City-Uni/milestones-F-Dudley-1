@@ -16,7 +16,7 @@ public class CharacterHouse : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(entrance.position, 2f);
+        Gizmos.DrawWireSphere(entrance.position, 1.75f);
     }
 
     #endregion
@@ -96,6 +96,6 @@ public class CharacterHouse : MonoBehaviour
 
     private void MoveAgentToEntrance(Agent agent)
     {
-        agent.transform.SetPositionAndRotation(entrance.position, Quaternion.identity);
+        agent.transform.SetPositionAndRotation(entrance.position, entrance.rotation);
     }
 }

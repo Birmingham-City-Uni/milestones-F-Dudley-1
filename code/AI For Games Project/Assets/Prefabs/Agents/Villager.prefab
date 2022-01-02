@@ -391,9 +391,13 @@ MonoBehaviour:
   alertedLocation: {x: 0, y: 0, z: 0}
   hunger: 100
   tiredness: 100
+  hasJobLocation: 0
+  completedCurrentJob: 0
+  currentJobLocation: {fileID: 0}
   hungryThreshold: 30
   tirednessThreshold: 30
   house: {fileID: 0}
+  job: {fileID: 0}
 --- !u!143 &2275530961589710079
 CharacterController:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class VillageManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(foodStall.position, 1.5f);
+        Gizmos.DrawWireSphere(foodStall.position, 1.75f);
     }
 
     #region Village Location Functions

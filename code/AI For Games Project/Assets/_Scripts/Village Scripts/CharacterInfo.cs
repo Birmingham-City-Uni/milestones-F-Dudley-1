@@ -20,6 +20,11 @@ public class CharacterInfo : MonoBehaviour
     public float hunger;
     public float tiredness;
 
+    [Header("Job Stats")]
+    public bool hasJobLocation = false;
+    public bool completedCurrentJob = false;
+    public Transform currentJobLocation;
+
     [Header("Effects Thresholds")]
     [Tooltip("The Amount at where the Player will start to Seek out Food")]
     public float hungryThreshold = 30f;
@@ -28,6 +33,7 @@ public class CharacterInfo : MonoBehaviour
 
     [Header("Enviroment References")]
     public CharacterHouse house;
+    public CharacterJob job;
 
     public bool isAlerted
     {

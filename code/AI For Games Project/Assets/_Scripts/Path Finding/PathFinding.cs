@@ -391,7 +391,7 @@ public class PathFinding : MonoBehaviour
             bool collisionCheck = Physics.Linecast(_pathToOptimise[i - 1].worldPosition, _pathToOptimise[i].worldPosition, -1, QueryTriggerInteraction.Ignore);
 
 
-            if (directionNew != directionOld || collisionCheck)
+            if (directionNew != directionOld || collisionCheck || i == _pathToOptimise.Count - 1)
             {
                 waypoints.Add(_pathToOptimise[i].worldPosition);
 

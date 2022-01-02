@@ -45,7 +45,7 @@ public class SeekState : State
     private void StartWait()
     {
         waitingIsRunning = true;
-        waitingCoroutine = owner.StartAgentCoroutine(WaitInAlertedArea());
+        waitingCoroutine = owner.StartCoroutine(WaitInAlertedArea());
     }
 
     public IEnumerator WaitInAlertedArea()
