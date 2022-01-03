@@ -10,6 +10,7 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Physics Variables")]
     public float movementSpeed = 1f;
+    public float rotationSpeed = 1f;
     public float jumpHeight = 1f;
     public float sprintMultiplier;
 
@@ -26,9 +27,10 @@ public class CharacterMovement : MonoBehaviour
     private Transform playerTransform;
     private CharacterController characterController;
 
-    [Header("Camera Variables")]
+    [Header("Player Variables")]
     public Transform cameraPosition;
 
+    private Animator animator;
     private AudioSource walkingAudio;
     private AudioSource shoutingAudio;
 
@@ -37,6 +39,7 @@ public class CharacterMovement : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         characterController = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
 
         walkingAudio = GetComponent<AudioSource>();
         shoutingAudio = cameraPosition.GetComponent<AudioSource>();
@@ -57,6 +60,8 @@ public class CharacterMovement : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        Gizmos.DrawRay(cameraPosition.position, transform.forward * 2f);
+
         // Shout Visual
         if (userControllable)
         {
@@ -75,8 +80,16 @@ public class CharacterMovement : MonoBehaviour
 
     public void UpdateCharacterPosition(float _vertical, float _horizontal)
     {
-        if ((!isGrounded || (_vertical == 0 && _horizontal == 0)) && walkingAudio.isPlaying) walkingAudio.Stop();
-        else if (isGrounded && !walkingAudio.isPlaying && (_vertical != 0 || _horizontal != 0)) walkingAudio.Play();
+        if ((!isGrounded || (_vertical == 0 && _horizontal == 0)) && walkingAudio.isPlaying)
+        {
+           walkingAudio.Stop();
+           animator.SetBool("isMoving", false);
+        } 
+        else if (isGrounded && !walkingAudio.isPlaying && (_vertical != 0 || _horizontal != 0)) 
+        {
+            walkingAudio.Play();
+            animator.SetBool("isMoving", true);
+        }
 
         Vector3 movement = (transform.forward * _vertical) + (transform.right * _horizontal);
 
@@ -85,10 +98,14 @@ public class CharacterMovement : MonoBehaviour
 
     public void UpdateCharacterPosition(Vector3 _targetPos)
     {
-        if (isGrounded && !walkingAudio.isPlaying) walkingAudio.Play();
+        if (isGrounded && !walkingAudio.isPlaying) 
+        {
+            walkingAudio.Play();
+            animator.SetBool("isMoving", true);
+        }
 
-        Vector3 movement = _targetPos - transform.position;
-        characterController.Move((movement).normalized * movementSpeed * Time.deltaTime);
+        Vector3 movementDirection = _targetPos - transform.position;
+        characterController.Move((movementDirection).normalized * movementSpeed * Time.deltaTime);
     }
 
     public void UpdateCharacterRotation(float _mouseX)
@@ -97,10 +114,19 @@ public class CharacterMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0.0f, newRotationY, 0.0f);
     }
 
+    public void UpdateCharacterRotation(Vector3 _targetPos)
+    {
+        Vector3 movementDirection = _targetPos - transform.position;
+        float angle = Vector3.Angle(transform.forward, _targetPos - transform.position);
+
+        if (Vector3.Cross(transform.forward, movementDirection).y < 0.0f) angle *= -1;
+        transform.Rotate(0, angle * Time.deltaTime, 0);
+    }
+
     public void UpdateCharacterVelocity()
     {
         velocity += (-20f * Mathf.Pow(Time.deltaTime, 2.0f));
-        if (isGrounded && velocity < 0) velocity = 0;
+        if (isGrounded && velocity < 0) velocity = -5;
         characterController.Move(new Vector3(0.0f, velocity, 0.0f));
     }
 
@@ -129,6 +155,11 @@ public class CharacterMovement : MonoBehaviour
 
             Debug.Log(string.Format("Shout Hit {0} Characters", i));
         }
+    }
+
+    public void StopCharacterAnimation()
+    {
+        animator.SetBool("isMoving", false);
     }
 
     public void StopCharacterAudio()

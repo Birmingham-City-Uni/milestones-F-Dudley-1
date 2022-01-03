@@ -23,11 +23,20 @@ public class CharacterJob : MonoBehaviour
     {
         const float rangeDetectionDistance = 2f;
 
-        Gizmos.DrawSphere(mainLocation.location.position, rangeDetectionDistance);
-
-        foreach (JobLocation jobLocation in jobSubLocations)
+        if (mainLocation != null)
         {
-            Gizmos.DrawSphere(jobLocation.location.position, rangeDetectionDistance);
+            Gizmos.DrawSphere(mainLocation.location.position, rangeDetectionDistance);
+        }
+
+        if (jobSubLocations.Length > 0)
+        {
+            foreach (JobLocation jobLocation in jobSubLocations)
+            {
+                if (jobLocation.location != null)
+                {
+                    Gizmos.DrawSphere(jobLocation.location.position, rangeDetectionDistance);                
+                }
+            }            
         }
     }
     #endregion

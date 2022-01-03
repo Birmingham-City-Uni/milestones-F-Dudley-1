@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JobName: 
-  mainLocation: {fileID: 3027390217025239044}
+  mainLocation:
+    locationName: 
+    location: {fileID: 3027390217025239044}
   jobSubLocations: []
 --- !u!1 &1454162698067326953
 GameObject:

@@ -23,6 +23,7 @@ public class PathFinding : MonoBehaviour
 
     [Header("Debug")]
     private NodeContainer nodeContainer;
+    [SerializeField] private bool showDebugMessages = false;
 
     #region Unity Methods
     private void Awake()
@@ -92,7 +93,7 @@ public class PathFinding : MonoBehaviour
                 if (currentNode == targetNode)
                 {
                     stopwatch.Stop();
-                    UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
+                    if (showDebugMessages) UnityEngine.Debug.Log("Pathfind Time Taken: " + stopwatch.ElapsedMilliseconds + "ms");
 
                     pathSuccess = true;
                     break;

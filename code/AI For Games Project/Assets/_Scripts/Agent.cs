@@ -96,14 +96,16 @@ public class Agent : MonoBehaviour
         if (HasPath())
         {
             controller.UpdateCharacterPosition(pathWaypoints.Peek());
+            controller.UpdateCharacterRotation(pathWaypoints.Peek());
 
             if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 0.5f)
             {
                 pathRenderer.SetPositions(pathWaypoints.ToArray());                
                 pathWaypoints.Dequeue();
-            }       
+            }
         }
         else {
+            controller.StopCharacterAnimation();
             controller.StopCharacterAudio();
         }
     }
