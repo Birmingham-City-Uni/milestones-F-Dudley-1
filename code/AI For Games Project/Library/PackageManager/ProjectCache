@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637757845481999045
+      ticks: 637765756443713479
     m_Hash: 1233672581
   m_LockFileStatus:
     m_FilePath: D:/UNI Projects/AI-For-Games Milestones/code/AI For Games Project/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637757845531390252
+      ticks: 637765756443753489
     m_Hash: 990740248
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -465,6 +465,7 @@ m_PackageAssets:
         - 3.0.5
         - 3.0.6
         - 3.0.7
+        - 3.0.9
         compatible:
         - 1.0.2
         - 1.0.6
@@ -491,6 +492,7 @@ m_PackageAssets:
         - 3.0.5
         - 3.0.6
         - 3.0.7
+        - 3.0.9
         verified: 2.0.7
       dependencies:
       - name: com.unity.test-framework
@@ -840,6 +842,7 @@ m_PackageAssets:
         - 10.6.0
         - 10.7.0
         - 10.8.0
+        - 10.8.1
         compatible:
         - 10.4.0
         - 10.5.0
@@ -3376,6 +3379,7 @@ m_PackageAssets:
         - 10.6.0
         - 10.7.0
         - 10.8.0
+        - 10.8.1
         compatible:
         - 10.4.0
         - 10.5.0
@@ -3529,6 +3533,7 @@ m_PackageAssets:
         - 10.6.0
         - 10.7.0
         - 10.8.0
+        - 10.8.1
         compatible:
         - 10.4.0
         - 10.5.0
