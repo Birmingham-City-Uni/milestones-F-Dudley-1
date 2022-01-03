@@ -36,8 +36,8 @@ public class Agent : MonoBehaviour
 
         pathRenderer = GetComponentInChildren<LineRenderer>();
 
-        info.hunger = Random.Range(40, 100);
-        info.tiredness = Random.Range(50, 100);
+        info.Hunger = Random.Range(40, 100);
+        info.Tiredness = Random.Range(50, 100);
     }
 
     protected void OnEnable()
@@ -57,11 +57,8 @@ public class Agent : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        info.tiredness -= 0.005f;
-        info.hunger -= 0.0025f;
-
-        info.tiredness = Mathf.Clamp(info.tiredness, 0, 100f);
-        info.hunger = Mathf.Clamp(info.hunger, 0, 100);
+        info.Tiredness -= 0.005f;
+        info.Hunger -= 0.0025f;
     }
 
     protected void OnDrawGizmos()

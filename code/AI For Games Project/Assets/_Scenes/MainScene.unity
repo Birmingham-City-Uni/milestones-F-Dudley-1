@@ -2585,6 +2585,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5974702394861234122, guid: 1e496a10bb9b2ad43982c51aa476cf9c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e496a10bb9b2ad43982c51aa476cf9c, type: 3}
 --- !u!1001 &120333988
@@ -11230,7 +11235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[ N ] - Agent Info'
+  m_text: '[ C ] - Agent Info'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37705,6 +37710,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guard
       objectReference: {fileID: 0}
+    - target: {fileID: 5974702394861234122, guid: 1e496a10bb9b2ad43982c51aa476cf9c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6847786525968331144, guid: 1e496a10bb9b2ad43982c51aa476cf9c,
         type: 3}
       propertyPath: MinDistance
@@ -37844,10 +37854,5 @@ PrefabInstance:
       propertyPath: currentJobLocation
       value: 
       objectReference: {fileID: 795007467}
-    - target: {fileID: 2275530961589710078, guid: 9f8e35cc5e9737048a0bfcf6bb52a108,
-        type: 3}
-      propertyPath: movementSpeed
-      value: 6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f8e35cc5e9737048a0bfcf6bb52a108, type: 3}

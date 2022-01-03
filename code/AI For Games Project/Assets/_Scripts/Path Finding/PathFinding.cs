@@ -6,11 +6,11 @@ using UnityEngine;
 
 public enum PathfindingAlgorithms
 {
-    AStar,
-    UniformCostSearch,
-    GreedyBestFirstSearch,
-    BreadthFirstSearch,
-    DepthFirstSearch,
+    AStar = 0,
+    GreedyBestFirstSearch = 1,
+    UniformCostSearch = 2,
+    BreadthFirstSearch = 3,
+    DepthFirstSearch = 4,
 }
 
 public class PathFinding : MonoBehaviour

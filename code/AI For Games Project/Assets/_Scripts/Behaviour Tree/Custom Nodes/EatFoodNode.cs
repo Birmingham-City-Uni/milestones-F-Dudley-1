@@ -15,9 +15,9 @@ namespace BehaviourTree
 
         public override EvaluateState Evaluate()
         {
-            if (owner.info.hunger <= owner.info.hungryThreshold)
+            if (owner.info.Hunger <= owner.info.hungryThreshold)
             {
-                owner.info.hunger = 100f;
+                owner.info.Hunger = 100f;
                 nodeState = EvaluateState.SUCCESS;
             }
             else

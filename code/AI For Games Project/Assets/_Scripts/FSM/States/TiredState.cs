@@ -18,7 +18,7 @@ public class TiredState : State
 
     public override bool Execute()
     {
-        if (owner.info.tiredness > 30) return false;
+        if (owner.info.Tiredness > 30) return false;
 
         float ownerDistance = owner.DistanceToTarget(owner.info.house.GetEntrance());
         if (ownerDistance <= 0.5f)

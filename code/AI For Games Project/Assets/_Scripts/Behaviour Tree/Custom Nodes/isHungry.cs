@@ -13,7 +13,7 @@ namespace BehaviourTree
             owner = _owner;
         }
 
-        public override EvaluateState Evaluate() => (owner.info.hunger <= owner.info.hungryThreshold) ? EvaluateState.SUCCESS : EvaluateState.FAILURE;
+        public override EvaluateState Evaluate() => (owner.info.Hunger <= owner.info.hungryThreshold) ? EvaluateState.SUCCESS : EvaluateState.FAILURE;
 
     }
 }

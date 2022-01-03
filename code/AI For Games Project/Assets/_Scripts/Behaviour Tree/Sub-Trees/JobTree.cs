@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BehaviourTree.Nondeterministic;
 
 namespace BehaviourTree
 {
@@ -23,7 +24,7 @@ namespace BehaviourTree
         private void CreateJobTree()
         {
             // Go To Job
-            Selector getJobLocationNonDSelector = new Selector(new List<BehaviourNode> { // Make Non - Deterministic
+            NonDSelector getJobLocationNonDSelector = new NonDSelector(new List<BehaviourNode> { // Make Non - Deterministic
                 
                 new SetJobLocationNode(owner, owner.info.job.GetMainLocation),
                 new SetJobLocationNode(owner, owner.info.job.GetSubLocation),
@@ -36,7 +37,7 @@ namespace BehaviourTree
 
             Sequence goToJobLocationSequence = new Sequence(new List<BehaviourNode> {
                 checkJobLocation,
-                new RangeNode(owner, owner.info.currentJobLocation, 2f),
+                new RangeNode(owner, owner.info.CurrentJobLocation, 2f),
             });
 
             // Do Job

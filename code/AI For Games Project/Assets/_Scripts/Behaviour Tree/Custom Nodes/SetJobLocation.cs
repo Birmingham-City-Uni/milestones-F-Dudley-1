@@ -18,12 +18,12 @@ namespace BehaviourTree
 
         public override EvaluateState Evaluate()
         {
-            if (!owner.info.hasJobLocation)
+            if (!owner.info.HasJobLocation)
             {
                 Debug.Log("Setting Job Location");
-                owner.info.hasJobLocation = true;
-                owner.info.currentJobLocation = jobGetterFunction();
-                owner.GetPathing(owner.info.currentJobLocation.position);
+                owner.info.HasJobLocation = true;
+                owner.info.CurrentJobLocation = jobGetterFunction();
+                owner.GetPathing(owner.info.CurrentJobLocation.position);
             }
 
             nodeState = EvaluateState.SUCCESS;

@@ -18,7 +18,9 @@ public class PatrolState : State
     {
         if (!owner.HasPath())
         {
-            owner.GetPathing(VillageManager.instance.GetRandomGuardLocation());
+            Vector3 newPatrolLocation = VillageManager.instance.GetRandomGuardLocation();
+            
+            owner.GetPathing(newPatrolLocation);
         }
 
         return true;

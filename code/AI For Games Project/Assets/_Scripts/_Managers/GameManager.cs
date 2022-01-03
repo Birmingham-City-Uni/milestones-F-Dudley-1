@@ -44,6 +44,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool DrawInfoBox
+    {
+        get
+        {
+            return drawInfoBox;
+        }
+        set
+        {
+            drawNodeContainer = value;
+            enableCharacterInfoBoxes.Invoke(value);
+        }
+    }
+
     public bool DrawPathing
     {
         get
@@ -83,6 +96,11 @@ public class GameManager : MonoBehaviour
         {
             debugOverlayKey.SetActive(debugOverlay.activeSelf);
             debugOverlay.SetActive(!debugOverlay.activeSelf);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            DrawInfoBox = !drawInfoBox;
         }
 
         if (Input.GetKeyDown(KeyCode.B))

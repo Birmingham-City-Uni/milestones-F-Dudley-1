@@ -29,11 +29,11 @@ public class CharacterHouse : MonoBehaviour
         {
             StartCoroutine(AgentEnteredAlerted(agent));
         }
-        else if (agent.info.hunger <= agent.info.hungryThreshold)
+        else if (agent.info.Hunger <= agent.info.hungryThreshold)
         {
             StartCoroutine(AgentEnteredHungry(agent));
         }
-        else if (agent.info.tiredness <= agent.info.tirednessThreshold)
+        else if (agent.info.Tiredness <= agent.info.tirednessThreshold)
         {
             StartCoroutine(AgentEnteredTired(agent));
         }
@@ -57,7 +57,7 @@ public class CharacterHouse : MonoBehaviour
         Debug.Log("CharacterEntered House - Hungry");
         yield return new WaitForSeconds(10f);
 
-        agent.info.hunger += 50;
+        agent.info.Hunger += 50;
 
         doorSound.Play();
         agent.ChangeAgentVisability(true);
@@ -72,7 +72,7 @@ public class CharacterHouse : MonoBehaviour
         Debug.Log("Character Entered House - Tired");
         yield return new WaitForSeconds(20f);
 
-        agent.info.tiredness = 100;
+        agent.info.Tiredness = 100;
 
         doorSound.Play();
         agent.ChangeAgentVisability(true);

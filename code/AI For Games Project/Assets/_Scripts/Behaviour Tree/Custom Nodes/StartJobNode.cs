@@ -17,7 +17,7 @@ namespace BehaviourTree
 
         public override EvaluateState Evaluate()
         {
-            if (!coroutineRunning && !owner.info.completedCurrentJob)
+            if (!coroutineRunning && !owner.info.CompletedCurrentJob)
             {
                 Debug.Log("Started Coroutine");
                 coroutineRunning = true;
@@ -32,7 +32,7 @@ namespace BehaviourTree
         {
             yield return new WaitForSeconds(10f);
 
-            owner.info.completedCurrentJob = true;
+            owner.info.CompletedCurrentJob = true;
             coroutineRunning = false;
         }
     }

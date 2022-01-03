@@ -15,7 +15,7 @@ namespace BehaviourTree
 
         public override EvaluateState Evaluate()
         {
-            if (owner.info.completedCurrentJob)
+            if (owner.info.CompletedCurrentJob)
             {
                 nodeState = EvaluateState.SUCCESS;
             }

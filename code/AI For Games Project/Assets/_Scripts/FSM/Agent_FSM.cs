@@ -36,7 +36,7 @@ public class Agent_FSM : Agent
             stateManager.pushState(new SeekState(this, stateManager));
         }
 
-        if (info.tiredness < info.tirednessThreshold)
+        if (info.Tiredness < info.tirednessThreshold)
         {
             Debug.Log("Agent is Tired");
             stateManager.pushState(new TiredState(this, stateManager));
