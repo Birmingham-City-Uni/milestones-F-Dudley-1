@@ -5,9 +5,10 @@ using UnityEngine;
 public class FlockAgent : MonoBehaviour
 {
     [Header("Bird Attributes")]
-    public float movementSpeed = 1f;
+    private float movementSpeed = 1f;
+
+    public float minMovementSpeed = 1f;    
     public float maxMovementSpeed = 5f;
-    public float minMovementSpeed = 1f;
 
     public float rotationSpeed = 3f;
     public bool turning = true;
@@ -17,46 +18,31 @@ public class FlockAgent : MonoBehaviour
     public float neighbourRange = 10f;
 
     [Header("Steering Behaviours")]
-    public Vector3 lastPlayerPos;
     public float seperationRange = 6f;
-
-
-    [Header("Enviroment References")]
-    [SerializeField] private Transform player;
-
-    public void SetPlayer(Transform _player) => player = _player;
 
     #region Unity Functions
     private void Start()
     {
         movementSpeed = Random.Range(minMovementSpeed, maxMovementSpeed);
-        lastPlayerPos = player.position;
     }
 
     private void Update()
     {
-        if (!FlockManager.boundsCollider.bounds.Contains(transform.position))
-        {
-            turning = true;
-        }
-        else if (transform.position.y <= 10f)
-        {
-            turning = true;
-        }
-        else turning = false;
-        
+        if (Vector3.Distance(transform.position, FlockManager.instance.TargetPosition) >= 150) turning = true;
+
         if (turning)
         {
-            Vector3 direction = (player.position + FlockManager.instance.GetPositionInBounds()) - transform.position;
+            Vector3 direction = FlockManager.instance.GetPositionInBounds() - transform.position;
             transform.rotation = Quaternion.Slerp(transform.rotation,
                                                   Quaternion.LookRotation(direction),
                                                   rotationSpeed * Time.deltaTime);
-        }
 
-        if (Random.Range(0, 5) < 1)
+            if (Vector3.Distance(transform.position, FlockManager.instance.TargetPosition) <= 30f) turning = false;
+        }
+        else if (Random.Range(0, 5) < 1)
         {
             Vector3 boidCohesion = transform.position;            
-            Vector3 boidSeperation = lastPlayerPos;
+            Vector3 boidSeperation = Vector3.zero;
             Vector3 boidAlignment;
 
             int neighbourAmount = 0;

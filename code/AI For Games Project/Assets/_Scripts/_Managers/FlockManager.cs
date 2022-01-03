@@ -8,22 +8,24 @@ public class FlockManager : MonoBehaviour
     public static FlockManager instance;
 
     [Header("Main Variables")]
-    public GameObject birdPrefab;
-    public Transform player;
-    public Transform boidsContainer;
+    [SerializeField] public GameObject birdPrefab;
+    [SerializeField] private Transform boidsContainer;
 
     public static BoxCollider boundsCollider;
 
     [Header("Flock Attributes")]
-    public Vector3 flockBounds = new Vector3(0, 0, 0);
-    public float distanceFromGround = 10f;
-    public float targetChangeTime = 30f;
+    [SerializeField] public Vector3 flockBounds = new Vector3(0, 0, 0);
+    [SerializeField] private float distanceFromGround = 10f;
+    [SerializeField] private int targetChangeTime = 30;
 
     [SerializeField] public int numBirds = 100;
     [SerializeField] private Vector3 targetPosition = new Vector3(0f, 0f, 0f); 
 
+    [Space]
+
     public GameObject[] birds;
-    public Coroutine targetChange;
+    [SerializeField] private float timeChangeRemaining;
+    private Coroutine targetChange;
 
     [Header("Debug")]
     public GameObject targetVisualizer;
@@ -39,30 +41,43 @@ public class FlockManager : MonoBehaviour
         {
             targetPosition = value;
             MoveTargetVisualizer();
+            GameManager.instance.ChangeBoidTargetText(value);
+        }
+    }
+
+    private float TimeChangeRemaining
+    {
+        get
+        {
+            return timeChangeRemaining;
+        }
+        set
+        {
+            timeChangeRemaining = value;
+            GameManager.instance.ChangeBoidSecondsRemainingText(value);
         }
     }
 
     #region Unity Functions
-    private void Awake()
+    private void Start()
     {
         instance = this;
 
         TargetPosition = GetPositionInBounds();
         boundsCollider = GetComponent<BoxCollider>();
 
-        boundsCollider.center = new Vector3(0, distanceFromGround, 0);
+        boundsCollider.center = new Vector3(0, distanceFromGround + (flockBounds.y / 2), 0);
         boundsCollider.size = flockBounds;
 
         birds = new GameObject[numBirds];
         for (int i = 0; i < numBirds; i++)
         {
             GameObject birdInstance = Instantiate(birdPrefab, GetPositionInBounds(), Quaternion.LookRotation(new Vector3(Random.Range(-1,1), 0, Random.Range(-1, 1))));
-            birdInstance.GetComponent<FlockAgent>().SetPlayer(player);
             birdInstance.transform.SetParent(boidsContainer);
             birds[i] = birdInstance;
         }
 
-        targetChange = StartCoroutine("ChangeTarget");
+        targetChange = StartCoroutine(ChangeTarget());
     }
 
     private void OnEnable()
@@ -78,6 +93,14 @@ public class FlockManager : MonoBehaviour
     private void Update()
     {
         
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {   
+        if (collider.gameObject.TryGetComponent<FlockAgent>(out FlockAgent agent))
+        {
+            agent.turning = true;
+        }
     }
 
     private void OnDrawGizmos()
@@ -99,16 +122,23 @@ public class FlockManager : MonoBehaviour
     #region Positioning Functions
     private IEnumerator ChangeTarget()
     {
-        yield return new WaitForSeconds(targetChangeTime);
-        TargetPosition = GetPositionInBounds();
+        while (true)
+        {
+            for (TimeChangeRemaining = targetChangeTime; TimeChangeRemaining > 0; TimeChangeRemaining -= Time.deltaTime)
+            {
+                yield return null;
+            }
+
+            TargetPosition = GetPositionInBounds();            
+        }
     }
 
     public Vector3 GetPositionInBounds()
     {
-        Vector3 halfBounds = flockBounds * 0.5f;
+        Vector3 halfBounds = flockBounds * 0.3f;
 
         return new Vector3(Random.Range(-(halfBounds.x), halfBounds.x),
-                           Random.Range(distanceFromGround, distanceFromGround + flockBounds.y), 
+                           Random.Range(distanceFromGround, distanceFromGround + (flockBounds.y * 0.7f)), 
                            Random.Range(-(halfBounds.z), halfBounds.z));
     }
 

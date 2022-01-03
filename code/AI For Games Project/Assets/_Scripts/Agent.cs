@@ -102,6 +102,7 @@ public class Agent : MonoBehaviour
 
             if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 0.5f)
             {
+                pathRenderer.SetPositions(pathWaypoints.ToArray());                
                 pathWaypoints.Dequeue();
             }       
         }

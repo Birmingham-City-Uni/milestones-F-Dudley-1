@@ -17,7 +17,6 @@ namespace BehaviourTree
         {
             if (owner.info.completedCurrentJob)
             {
-                Debug.Log("Completed Current Job");
                 nodeState = EvaluateState.SUCCESS;
             }
             else 

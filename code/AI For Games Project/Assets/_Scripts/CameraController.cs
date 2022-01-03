@@ -65,14 +65,9 @@ public class CameraController : MonoBehaviour
     #region User Input
     private void UserInput()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             RemoveParent();
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            // Toggle Debug Settings.
         }
     }
 
