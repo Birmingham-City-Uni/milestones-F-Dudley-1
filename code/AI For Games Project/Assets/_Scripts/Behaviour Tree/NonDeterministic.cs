@@ -16,6 +16,7 @@ namespace BehaviourTree
             public override EvaluateState Evaluate()
             {
                 bool isChildRunning = false;
+                if (nodeState != EvaluateState.RUNNING) Utils.ShuffleList(ref childNodes);
 
                 foreach (BehaviourNode child in childNodes)
                 {
@@ -52,6 +53,8 @@ namespace BehaviourTree
 
             public override EvaluateState Evaluate()
             {
+                if (nodeState != EvaluateState.RUNNING) Utils.ShuffleList(ref childNodes);
+
                 foreach (BehaviourNode child in childNodes)
                 {
                     switch (child.Evaluate())

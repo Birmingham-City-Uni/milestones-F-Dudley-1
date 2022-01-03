@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BehaviourTree.Nondeterministic;
 
 namespace BehaviourTree
 {
@@ -30,11 +31,12 @@ namespace BehaviourTree
             });
 
             // Go To House
-
+            GoToHouse goToHouseSequence = new GoToHouse(owner);
 
             // Food Location Selector
-            Selector foodLocation = new Selector(new List<BehaviourNode> {
+            NonDSelector foodLocation = new NonDSelector(new List<BehaviourNode> {
                 goToFoodStallSequence,
+                goToHouseSequence,
             });
             
             // Construct SubTree

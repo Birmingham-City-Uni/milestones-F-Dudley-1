@@ -23,11 +23,7 @@ namespace BehaviourTree
         private void CreateTiredTree()
         {
             // Go To House Sequence
-            Sequence goToHouseSequence = new Sequence(new List<BehaviourNode> {
-                new TravelNode(owner, owner.info.house.entrance, 2f),
-                new RangeNode(owner, owner.info.house.entrance, 2f),
-                new EnterHouseNode(owner),
-            });
+            GoToHouse goToHouseSequence = new GoToHouse(owner);
 
             // Is Tired Checker then GoToHouseSequence
             childNodes.Add(new isTiredNode(owner));

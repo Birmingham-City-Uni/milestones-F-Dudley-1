@@ -93,6 +93,8 @@
      <Compile Include="Assets\_Scripts\Behaviour Tree\Invertor.cs" />
      <Compile Include="Assets\_Scripts\CameraController.cs" />
      <Compile Include="Assets\_Scripts\Data Structures\Heap.cs" />
+     <Compile Include="Assets\_Scripts\Utils.cs" />
+     <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\GoToHouse.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

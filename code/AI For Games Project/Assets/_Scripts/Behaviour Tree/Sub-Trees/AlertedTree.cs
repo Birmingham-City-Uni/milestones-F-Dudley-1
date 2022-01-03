@@ -22,11 +22,7 @@ namespace BehaviourTree
 
         private void CreateAlertedTree()
         {
-            Sequence goToHouseSequence = new Sequence(new List<BehaviourNode> {
-                new TravelNode(owner, owner.info.house.entrance, 1.75f),
-                new RangeNode(owner, owner.info.house.entrance, 1.75f),
-                new EnterHouseNode(owner),
-            });
+            GoToHouse goToHouseSequence = new GoToHouse(owner);
             
             // Construct SubTree
             childNodes.Add(new isAlertedNode(owner));
