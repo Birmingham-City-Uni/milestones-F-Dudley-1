@@ -177,7 +177,7 @@ public class CharacterInfo : MonoBehaviour
         set
         {
             currentJobLocation = value;
-            currentJobLocationText.text = string.Format("(X: {0}, Y: {1}, Z: {2})", Mathf.RoundToInt(value.position.x), Mathf.RoundToInt(value.position.y), Mathf.RoundToInt(value.position.z));
+            if (value != null) currentJobLocationText.text = string.Format("(X: {0}, Y: {1}, Z: {2})", Mathf.RoundToInt(value.position.x), Mathf.RoundToInt(value.position.y), Mathf.RoundToInt(value.position.z));
         }
     }
 

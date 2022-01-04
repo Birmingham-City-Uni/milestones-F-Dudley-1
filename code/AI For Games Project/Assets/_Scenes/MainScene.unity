@@ -37918,6 +37918,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Villager
       objectReference: {fileID: 0}
+    - target: {fileID: 2275530961589710067, guid: 9f8e35cc5e9737048a0bfcf6bb52a108,
+        type: 3}
+      propertyPath: showDebugMessages
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2275530961589710076, guid: 9f8e35cc5e9737048a0bfcf6bb52a108,
         type: 3}
       propertyPath: m_RootOrder

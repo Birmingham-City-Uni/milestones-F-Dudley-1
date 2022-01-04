@@ -34,6 +34,11 @@ namespace BehaviourTree
             range = _range;
         }
 
-        public override EvaluateState Evaluate() => (Vector3.Distance(owner.gameObject.transform.position, target.position) <= range) ? EvaluateState.SUCCESS : EvaluateState.FAILURE; 
+        public override EvaluateState Evaluate()
+        {
+            if (owner.showDebugMessages) Debug.Log("Current Range:" + Vector3.Distance(owner.gameObject.transform.position, target.position));
+
+            return (Vector3.Distance(owner.gameObject.transform.position, target.position) <= range) ? EvaluateState.SUCCESS : EvaluateState.FAILURE;
+        }
     }
 }

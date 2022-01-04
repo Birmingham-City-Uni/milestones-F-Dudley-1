@@ -8,7 +8,7 @@ public class FlockAgent : MonoBehaviour
     /// <summary>
     /// The Physics LayerMask The Boids Are Calculated On.
     /// </summary>
-    [SerializeField] private LayerMask boidsLayerMask = LayerMask.NameToLayer("Boids");
+    [SerializeField] private LayerMask boidsLayerMask;
 
     /// <summary>
     /// The Movement Speed of The Boid Agent.

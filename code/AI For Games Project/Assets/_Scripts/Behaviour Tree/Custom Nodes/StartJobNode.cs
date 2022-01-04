@@ -32,11 +32,11 @@ namespace BehaviourTree
 
         public override EvaluateState Evaluate()
         {
-            if (!coroutineRunning && !owner.info.CompletedCurrentJob)
+            if ((Vector3.Distance(owner.transform.position, owner.info.CurrentJobLocation.position) <= 2f) && !coroutineRunning && !owner.info.CompletedCurrentJob)
             {
-                Debug.Log("Started Coroutine");
                 coroutineRunning = true;
-                owner.StartCoroutine(StartJobProcess());
+                if (jobCoroutine != null) owner.StopCoroutine(jobCoroutine);
+                jobCoroutine = owner.StartCoroutine(StartJobProcess());
             }
 
             nodeState = EvaluateState.SUCCESS;
@@ -49,7 +49,10 @@ namespace BehaviourTree
         /// <returns></returns>
         private IEnumerator StartJobProcess()
         {
-            yield return new WaitForSeconds(10f);
+            owner.SetAnimatorAnimations("isWorking", true);
+            yield return new WaitForSeconds(6f);
+            owner.SetAnimatorAnimations("isWorking", false);
+            yield return new WaitForSeconds(9f);
 
             owner.info.CompletedCurrentJob = true;
             coroutineRunning = false;

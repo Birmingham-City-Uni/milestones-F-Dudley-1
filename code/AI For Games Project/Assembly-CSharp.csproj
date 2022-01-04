@@ -46,6 +46,7 @@
      <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
      <Compile Include="Assets\_Scripts\FSM\States\PatrolState.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\isAlerted.cs" />
+     <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\GoToHouse.cs" />
      <Compile Include="Assets\_Scripts\Village Scripts\CharacterInfo.cs" />
      <Compile Include="Assets\_Scripts\Path Finding\PathingTester.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Sub-Trees\AlertedTree.cs" />
@@ -64,9 +65,11 @@
      <Compile Include="Assets\_Scripts\Behaviour Tree\Agent_BT.cs" />
      <Compile Include="Assets\_Scripts\Path Finding\PathGraph.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\SetJobLocation.cs" />
+     <Compile Include="Assets\_Scripts\_Managers\MainMenuManager.cs" />
      <Compile Include="Assets\_Scripts\FSM\Agent_FSM.cs" />
      <Compile Include="Assets\_Scripts\FSM\States\SeekState.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\RangeNode.cs" />
+     <Compile Include="Assets\_Scripts\Utils.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\CompletedJobNode.cs" />
      <Compile Include="Assets\_Scripts\Path Finding\Node.cs" />
@@ -75,7 +78,6 @@
      <Compile Include="Assets\_Scripts\Data Structures\DataItems.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\TravelNode.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Sub-Trees\JobTree.cs" />
-     <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\CancelJobLocation.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\NonDeterministic.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanSmooth.cs" />
      <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\isTired.cs" />
@@ -93,9 +95,6 @@
      <Compile Include="Assets\_Scripts\Behaviour Tree\Invertor.cs" />
      <Compile Include="Assets\_Scripts\CameraController.cs" />
      <Compile Include="Assets\_Scripts\Data Structures\Heap.cs" />
-     <Compile Include="Assets\_Scripts\Utils.cs" />
-     <Compile Include="Assets\_Scripts\Behaviour Tree\Custom Nodes\GoToHouse.cs" />
-     <Compile Include="Assets\_Scripts\_Managers\MainMenuManager.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

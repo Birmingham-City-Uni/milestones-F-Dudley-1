@@ -35,8 +35,8 @@ namespace BehaviourTree
         {
             // Go To Food Stall
             Sequence goToFoodStallSequence = new Sequence(new List<BehaviourNode> {
-                new TravelNode(owner, VillageManager.instance.FoodStallLocation, 1.75f),
-                new RangeNode(owner, VillageManager.instance.FoodStallLocation, 1.75f),
+                new TravelNode(owner, VillageManager.instance.FoodStallLocation, 2f),
+                new RangeNode(owner, VillageManager.instance.FoodStallLocation, 2f),
                 new EatFoodNode(owner),
             });
 

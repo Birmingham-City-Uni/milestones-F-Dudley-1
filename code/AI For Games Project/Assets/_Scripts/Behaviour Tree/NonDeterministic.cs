@@ -21,7 +21,6 @@ namespace BehaviourTree
             public override EvaluateState Evaluate()
             {
                 bool isChildRunning = false;
-                if (nodeState != EvaluateState.RUNNING) Utils.ShuffleList(ref childNodes);
 
                 foreach (BehaviourNode child in childNodes)
                 {
@@ -45,7 +44,15 @@ namespace BehaviourTree
 
                 nodeState = isChildRunning ? EvaluateState.RUNNING : EvaluateState.SUCCESS;
 
+                if (!isChildRunning) ShuffleChildren();
+
                 return nodeState;
+            }
+
+            private void ShuffleChildren()
+            {
+                Debug.Log("Shuffling Child Nodes");
+                childNodes = Utils.ShuffleList(childNodes);
             }
         }
 
@@ -63,8 +70,6 @@ namespace BehaviourTree
 
             public override EvaluateState Evaluate()
             {
-                if (nodeState != EvaluateState.RUNNING) Utils.ShuffleList(ref childNodes);
-
                 foreach (BehaviourNode child in childNodes)
                 {
                     switch (child.Evaluate())
@@ -75,6 +80,7 @@ namespace BehaviourTree
 
                         case EvaluateState.SUCCESS:
                             nodeState = EvaluateState.SUCCESS;
+                            ShuffleChildren();
                             return nodeState;
 
                         case EvaluateState.FAILURE:
@@ -87,6 +93,12 @@ namespace BehaviourTree
 
                 nodeState = EvaluateState.FAILURE;
                 return nodeState;
+            }
+
+            private void ShuffleChildren()
+            {
+                Debug.Log("Shuffling Child Nodes");
+                childNodes = Utils.ShuffleList(childNodes);
             }
         }        
     }
