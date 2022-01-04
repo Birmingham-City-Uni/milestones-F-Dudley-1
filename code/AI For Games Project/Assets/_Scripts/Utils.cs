@@ -4,12 +4,14 @@ using System.Collections.Generic;
 
 public static class Utils
 {
+    private static Random random = new Random();
+
     /// <summary>
     /// Shuffles an Array Using the Fisher-Yates Shuffle Algorithm.
     /// </summary>
     /// <param name="_arrayToShuffle">Array To Shuffle.</param>
     /// <typeparam name="T">Array Element Type.</typeparam>
-    public static void SuffleArray<T>(ref T[] _arrayToShuffle)
+    public static T[] SuffleArray<T>(T[] _arrayToShuffle)
     {
         Random random = new Random();
         int selection = 0;
@@ -21,6 +23,8 @@ public static class Utils
             _arrayToShuffle[i] = _arrayToShuffle[selection];
             _arrayToShuffle[selection] = temp;
         }
+
+        return _arrayToShuffle;
     }
 
     /// <summary>
@@ -29,17 +33,19 @@ public static class Utils
     /// <param name="_ListToShuffle">List To Shuffle.</param>
     /// <typeparam name="T">List Element Type.</typeparam>
     /// <returns></returns>
-    public static void ShuffleList<T>(ref List<T> _listToShuffle)
+    public static List<T> ShuffleList<T>(List<T> _listToShuffle)
     {
-        Random random = new Random();
         int selection = 0;
 
-        for (int i = 0; i < _listToShuffle.Count; i++)
+        int index = _listToShuffle.Count;
+        while (index > 0)
         {
-            selection = random.Next(i, _listToShuffle.Count - 1);
-            T temp = _listToShuffle[i];
-            _listToShuffle[i] = _listToShuffle[selection];
+            selection = random.Next(index--);
+            T temp = _listToShuffle[index];
+            _listToShuffle[index] = _listToShuffle[selection];
             _listToShuffle[selection] = temp;
         }
+
+        return _listToShuffle;
     }
 }

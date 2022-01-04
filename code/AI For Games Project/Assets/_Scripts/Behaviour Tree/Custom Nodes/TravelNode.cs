@@ -37,7 +37,7 @@ namespace BehaviourTree
 
         public override EvaluateState Evaluate()
         {
-            if (owner.DistanceToTarget(location.position) > distanceCheck && !owner.HasPath())
+            if (owner.DistanceToTarget(location.position) > distanceCheck)
             {
                 owner.GetPathing(location.position);
                 nodeState = EvaluateState.RUNNING;

@@ -55,6 +55,11 @@ public class Agent : MonoBehaviour
     /// </summary>
     private LineRenderer pathRenderer;
 
+    /// <summary>
+    /// Shows Console Debug Messages Assosiated With The Agent.
+    /// </summary>
+    public bool showDebugMessages;
+
     #region Unity Functions
 
     /// <summary>
@@ -175,7 +180,7 @@ public class Agent : MonoBehaviour
             }
         }
         else {
-            controller.StopCharacterAnimation();
+            controller.SetCharacterAnimations("isMoving", false);
             controller.StopCharacterAudio();
         }
     }
@@ -191,6 +196,11 @@ public class Agent : MonoBehaviour
         {
             controller.StopCharacterAudio();
         }
+    }
+
+    public void SetAnimatorAnimations(string animatorParameter, bool parameterValue)
+    {
+        controller.SetCharacterAnimations(animatorParameter, parameterValue);
     }
 
     /// <summary>

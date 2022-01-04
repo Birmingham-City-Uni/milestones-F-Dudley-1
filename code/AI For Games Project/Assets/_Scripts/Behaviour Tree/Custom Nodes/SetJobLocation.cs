@@ -34,6 +34,7 @@ namespace BehaviourTree
             {
                 Debug.Log("Setting Job Location");
                 owner.info.HasJobLocation = true;
+                owner.info.CompletedCurrentJob = false;
                 owner.info.CurrentJobLocation = jobGetterFunction();
                 owner.GetPathing(owner.info.CurrentJobLocation.position);
             }

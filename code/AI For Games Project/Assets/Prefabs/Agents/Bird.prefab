@@ -76,6 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7440dabc5639bb468b217071deb3af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boidsLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
   minMovementSpeed: 2
   maxMovementSpeed: 10
   rotationSpeed: 3

@@ -92,6 +92,7 @@ public class CharacterHouse : MonoBehaviour
         yield return new WaitForSeconds(10f);
 
         agent.info.Hunger += 50;
+        agent.info.HasJobLocation = false;
 
         doorSound.Play();
         agent.ChangeAgentVisability(true);
@@ -112,6 +113,7 @@ public class CharacterHouse : MonoBehaviour
         yield return new WaitForSeconds(20f);
 
         agent.info.Tiredness = 100;
+        agent.info.HasJobLocation = false;
 
         doorSound.Play();
         agent.ChangeAgentVisability(true);
@@ -132,6 +134,7 @@ public class CharacterHouse : MonoBehaviour
         yield return new WaitForSeconds(15f);
 
         agent.info.isAlerted = false;
+        agent.info.HasJobLocation = false;
 
         doorSound.Play();
         agent.ChangeAgentVisability(true);

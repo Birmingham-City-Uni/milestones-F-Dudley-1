@@ -5,7 +5,7 @@ using BehaviourTree.Nondeterministic;
 
 namespace BehaviourTree
 {
-    public class DoJobSubTree : Selector
+    public class DoJobSubTree : Sequence
     {
         /// <summary>
         /// The Nodes Owner.
@@ -45,20 +45,15 @@ namespace BehaviourTree
                 getJobLocationNonDSelector,
             });
 
-            Sequence goToJobLocationSequence = new Sequence(new List<BehaviourNode> {
-                checkJobLocation,
-                new RangeNode(owner, owner.info.CurrentJobLocation, 2f),
-            });
-
             // Do Job
             Sequence doJobSequence = new Sequence(new List<BehaviourNode> {
                 new StartJobNode(owner),
                 new CompletedJobNode(owner),
-                new CancelJobLocationNode(owner),
             });
 
             // Add To Main Selector
-            childNodes.Add(goToJobLocationSequence);
+            childNodes.Add(checkJobLocation);
+            //childNodes.Add(new RangeNode(owner, owner.info.CurrentJobLocation, 1f));
             childNodes.Add(doJobSequence);
         }
     }

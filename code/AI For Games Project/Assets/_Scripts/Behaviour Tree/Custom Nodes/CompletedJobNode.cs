@@ -25,6 +25,9 @@ namespace BehaviourTree
             if (owner.info.CompletedCurrentJob)
             {
                 nodeState = EvaluateState.SUCCESS;
+                owner.info.CompletedCurrentJob = false;
+                owner.info.CurrentJobLocation = null;
+                owner.info.HasJobLocation = false;
             }
             else 
             {

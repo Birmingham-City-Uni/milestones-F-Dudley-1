@@ -259,11 +259,13 @@ public class CharacterMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Stops The Characters Movement Animation.
+    /// Sets The Characters Animation Parameter.
     /// </summary>
-    public void StopCharacterAnimation()
+    /// <param name="animationParameter">The Animators Parameter Name.</param>
+    /// <param name="animationValue">The Desired Value of The Parameter.</param>
+    public void SetCharacterAnimations(string animationParameter, bool animationValue)
     {
-        animator.SetBool("isMoving", false);
+        animator.SetBool(animationParameter, animationValue);
     }
 
     /// <summary>

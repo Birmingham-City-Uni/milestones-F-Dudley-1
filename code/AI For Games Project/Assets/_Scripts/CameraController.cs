@@ -174,7 +174,7 @@ public class CameraController : MonoBehaviour
         bool castCollide = Physics.Raycast(transform.position, transform.forward, out hit, interactionRange, characterLayerMask);
         if (castCollide)
         {
-            Debug.Log("Casting on Character");
+            //Debug.Log("Casting on Character");
             CharacterMovement controller = hit.collider.transform.root.GetComponent<CharacterMovement>();
 
             if (Input.GetKeyDown(KeyCode.F))
