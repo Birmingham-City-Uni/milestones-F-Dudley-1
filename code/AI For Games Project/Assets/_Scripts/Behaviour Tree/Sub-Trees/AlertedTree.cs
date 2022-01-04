@@ -33,7 +33,7 @@ namespace BehaviourTree
         private void CreateAlertedTree()
         {
             GoToHouse goToHouseSequence = new GoToHouse(owner);
-            
+
             // Construct SubTree
             childNodes.Add(new isAlertedNode(owner));
             childNodes.Add(goToHouseSequence);

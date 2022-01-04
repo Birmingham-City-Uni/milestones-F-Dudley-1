@@ -43,5 +43,5 @@ namespace BehaviourTree
             nodeState = EvaluateState.FAILURE;
             return nodeState;
         }
-    }    
+    }
 }

@@ -95,7 +95,6 @@ public class PathFinding : MonoBehaviour
                 StartCoroutine(FindPath_DepthFirstSearch(_startPositon, _targetPosition));
                 break;
         }
-        
     }
 
     /// <summary>
@@ -116,7 +115,7 @@ public class PathFinding : MonoBehaviour
         if (startingNode.isWalkable && targetNode.isWalkable)
         {
             Stopwatch stopwatch = new Stopwatch(); // Starting A StopWatch For Debug Purposes.
-            stopwatch.Start();            
+            stopwatch.Start();
 
             Heap<Node> openSet = new Heap<Node>(nodeContainer.MaxSize); // Initializing The open and closed Set of Nodes.
             HashSet<Node> closeSet = new HashSet<Node>();               // Using a Heap and HashSet For Speed.
@@ -168,13 +167,14 @@ public class PathFinding : MonoBehaviour
         pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess); // Finishes The Current Pathfinding Path in The Queue.
         yield return null;
     }
-    
+
     /// <summary>
     /// The Coroutine For Pathfinding, Performed Using a Uniform Cost Search Algorithm.
     /// </summary>
     /// <param name="_startPosition">The World Position Where To Start Pathfinding From.</param>
     /// <param name="_targetPosition">The Target, in World Coordinates, Where To Aim For in Pathfinding.</param>
     /// <returns>Returns a Coroutine.</returns>
+    ///
     public IEnumerator FindPath_UniformCostSearch(Vector3 _startPosition, Vector3 _targetPosition)
     {
         // Initializing Needed Variables.
@@ -187,7 +187,7 @@ public class PathFinding : MonoBehaviour
         if (startingNode.isWalkable && targetNode.isWalkable)
         {
             Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();            
+            stopwatch.Start();      
 
             Heap<Node> openSet = new Heap<Node>(nodeContainer.MaxSize); // Creates a open and closed Set For Searched Nodes.
             HashSet<Node> closeSet = new HashSet<Node>();               // Using a Heap and HashSet For Speed. - HashSet Cannot Contain Duplicate Data.
@@ -420,7 +420,7 @@ public class PathFinding : MonoBehaviour
             }
         }
 
-                // Traces Back Through The Created Path Through Parent Nodes, if A Path Was Found.
+        // Traces Back Through The Created Path Through Parent Nodes, if A Path Was Found.
         if (pathSuccess) pathWaypoints = RetracePath(startingNode, targetNode);
         pathManager.FinishedProcessingPath(pathWaypoints, pathSuccess); // Finishes The Current Pathfinding Path in The Queue.
         yield return null;

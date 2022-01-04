@@ -66,7 +66,7 @@ public class Node : IHeapItem<Node>
     {
         isWalkable = _isWalkable;
         worldPosition = _worldPosition;
-        movementPenalty = _penalty;        
+        movementPenalty = _penalty;
         neighbours = _neighbours;
     }
 

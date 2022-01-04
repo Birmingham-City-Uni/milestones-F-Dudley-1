@@ -48,7 +48,7 @@ namespace BehaviourTree
                 goToFoodStallSequence,
                 goToHouseSequence,
             });
-            
+
             // Construct SubTree
             childNodes.Add(new isHungryNode(owner));
             childNodes.Add(foodLocation);

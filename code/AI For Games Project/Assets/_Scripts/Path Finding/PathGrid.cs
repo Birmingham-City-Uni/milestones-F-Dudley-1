@@ -113,7 +113,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
         foreach (TerrainMaskType type in terrainRegions) // Adds All The Terrain Regions To The Dictionary, Based On The Layers int32 and penalty value.
         {
             walkableTerrainMask |= type.maskName;
-            terrainRegionsLog.Add((int) Mathf.Log(type.maskName.value, 2), type.maskPenalty);
+            terrainRegionsLog.Add((int)Mathf.Log(type.maskName.value, 2), type.maskPenalty);
         }
 
         CreateContainer();
@@ -169,7 +169,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
             for (int z = 0; z < gridSizeZ; z++)
             {
                 Vector3 pointInWorld = worldBottomLeft + (Vector3.right * (x * nodeDiameter + nodeRadius)) + (Vector3.forward * (z * nodeDiameter + nodeRadius));
-                
+
                 // Checking if The Nodes Position is Walkable, By Checking The Box of The Node.
                 bool isWalkable = !(Physics.CheckBox(pointInWorld, Vector3.one * nodeRadius, Quaternion.identity, unwalkableTerrainMask, QueryTriggerInteraction.Ignore));
                 

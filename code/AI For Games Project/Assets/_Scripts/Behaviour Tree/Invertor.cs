@@ -40,5 +40,5 @@ namespace BehaviourTree
 
             return nodeState;
         }
-    }    
+    }
 }

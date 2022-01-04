@@ -24,7 +24,7 @@ namespace BehaviourTree
         {
             Debug.Log("Evaluating House Node");
             owner.info.house.EnterHouse(owner);
-            nodeState = EvaluateState.SUCCESS;                
+            nodeState = EvaluateState.SUCCESS;
 
             return nodeState;
         }

@@ -10,7 +10,7 @@ public class CharacterMovement : MonoBehaviour
     /// Specifies if a Player Can Control The Character.
     /// </summary>
     public bool userControllable = false;
-    
+
     /// <summary>
     /// Specifies if The Player is Currently Controlling the Character.
     /// </summary>
@@ -97,8 +97,7 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     private AudioSource shoutingAudio;
 
-    #region Unity Functions    
-    
+    #region Unity Functions
     /// <summary>
     /// Unitys Start Function.
     /// </summary>
@@ -109,7 +108,7 @@ public class CharacterMovement : MonoBehaviour
 
         walkingAudio = GetComponent<AudioSource>();
         shoutingAudio = cameraPosition.GetComponent<AudioSource>();
-        shoutingAudio.maxDistance = shoutDistance;            
+        shoutingAudio.maxDistance = shoutDistance;
 
         currentlyControlled = false;
     }
@@ -141,7 +140,7 @@ public class CharacterMovement : MonoBehaviour
         if (userControllable)
         {
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(cameraPosition.position, shoutDistance);            
+            Gizmos.DrawWireSphere(cameraPosition.position, shoutDistance);
         }
 
         // Ground Check
@@ -164,8 +163,8 @@ public class CharacterMovement : MonoBehaviour
         {
            walkingAudio.Stop();
            animator.SetBool("isMoving", false);
-        } 
-        else if (isGrounded && !walkingAudio.isPlaying && (_vertical != 0 || _horizontal != 0)) 
+        }
+        else if (isGrounded && !walkingAudio.isPlaying && (_vertical != 0 || _horizontal != 0))
         {
             walkingAudio.Play();
             animator.SetBool("isMoving", true);
@@ -182,7 +181,7 @@ public class CharacterMovement : MonoBehaviour
     /// <param name="_targetPos">The Target Position To Move Towards.</param>
     public void UpdateCharacterPosition(Vector3 _targetPos)
     {
-        if (isGrounded && !walkingAudio.isPlaying) 
+        if (isGrounded && !walkingAudio.isPlaying)
         {
             walkingAudio.Play();
             animator.SetBool("isMoving", true);

@@ -29,9 +29,9 @@ namespace BehaviourTree
                 owner.info.CurrentJobLocation = null;
                 owner.info.HasJobLocation = false;
             }
-            else 
+            else
             {
-                nodeState = EvaluateState.RUNNING;                
+                nodeState = EvaluateState.RUNNING;
             }
 
             return nodeState;

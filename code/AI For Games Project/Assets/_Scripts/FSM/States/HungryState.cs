@@ -17,7 +17,7 @@ public class HungryState : State
 
     public override void Enter()
     {
-        
+
     }
 
     public override bool Execute()
@@ -27,6 +27,6 @@ public class HungryState : State
 
     public override void Exit()
     {
-        
+
     }
 }

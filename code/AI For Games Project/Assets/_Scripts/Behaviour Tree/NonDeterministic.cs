@@ -100,7 +100,7 @@ namespace BehaviourTree
                 Debug.Log("Shuffling Child Nodes");
                 childNodes = Utils.ShuffleList(childNodes);
             }
-        }        
+        }
     }
 
 }

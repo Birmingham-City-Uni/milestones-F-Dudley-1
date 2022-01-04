@@ -146,7 +146,7 @@ public class Agent : MonoBehaviour
     /// </summary>
     /// <param name="_targetLocation">The Target Location To Get Pathing To.</param>
     public void GetPathing(Vector3 _targetLocation) => PathRequestManager.RequestPath(transform.position, _targetLocation, FoundPathCallback);
-    
+
     /// <summary>
     /// The Distance To The Target From The Agent.
     /// </summary>
@@ -175,11 +175,12 @@ public class Agent : MonoBehaviour
 
             if (Vector3.Distance(transform.position, pathWaypoints.Peek()) < 0.5f)
             {
-                pathRenderer.SetPositions(pathWaypoints.ToArray());                
+                pathRenderer.SetPositions(pathWaypoints.ToArray());
                 pathWaypoints.Dequeue();
             }
         }
-        else {
+        else
+        {
             controller.SetCharacterAnimations("isMoving", false);
             controller.StopCharacterAudio();
         }

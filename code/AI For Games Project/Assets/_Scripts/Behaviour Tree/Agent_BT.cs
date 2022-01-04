@@ -9,9 +9,8 @@ public class Agent_BT : Agent
     /// The Top Node Of The Behaviour Tree.
     /// </summary>
     BehaviourNode topBehaviourNode;
-    
-    #region Unity Functions
 
+    #region Unity Functions
     /// <summary>
     /// Unitys Start Function.
     /// </summary>

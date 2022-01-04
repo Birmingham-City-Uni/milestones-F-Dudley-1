@@ -26,7 +26,7 @@ namespace BehaviourTree
         /// The Current State of The Behaviour Node.
         /// </summary>
         /// <value></value>
-        public EvaluateState NodeState 
+        public EvaluateState NodeState
         {
             get
             {
@@ -39,5 +39,5 @@ namespace BehaviourTree
         /// </summary>
         /// <returns>The Current State of The Node.</returns>
         public abstract EvaluateState Evaluate();
-    }    
+    }
 }

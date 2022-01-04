@@ -38,7 +38,7 @@ public class SeekState : State
     }
 
     public override bool Execute()
-    {   
+    {
         if (waitedInArea) return false;
 
         if (owner.DistanceToTarget(owner.info.AlertedLocation) <= 5f && !waitingIsRunning)

@@ -75,7 +75,7 @@ public class FlockAgent : MonoBehaviour
         }
         else if (Random.Range(0, 5) < 1)
         {
-            Vector3 boidCohesion = transform.position;            
+            Vector3 boidCohesion = transform.position;
             Vector3 boidSeperation = Vector3.zero;
             Vector3 boidAlignment;
 
@@ -95,9 +95,9 @@ public class FlockAgent : MonoBehaviour
 
                         if (neighbourDistance < seperationRange)
                         {
-                            boidSeperation = Seperation(boidSeperation, bird.transform);                        
+                            boidSeperation = Seperation(boidSeperation, bird.transform);
                         }
-                    
+
                         neighbourSpeed += neighbourAgent.movementSpeed;
                     }
                 }
@@ -111,7 +111,7 @@ public class FlockAgent : MonoBehaviour
 
                 boidAlignment = Alignment(boidCohesion, boidSeperation);
 
-                transform.rotation = Quaternion.Slerp(transform.rotation, 
+                transform.rotation = Quaternion.Slerp(transform.rotation,
                                                       Quaternion.LookRotation(boidAlignment),
                                                       rotationSpeed * Time.deltaTime);
             }

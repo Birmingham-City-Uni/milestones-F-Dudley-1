@@ -20,6 +20,6 @@ namespace BehaviourTree
             owner = _owner;
         }
 
-        public override EvaluateState Evaluate() => (owner.info.HasJobLocation) ? EvaluateState.SUCCESS : EvaluateState.FAILURE; 
+        public override EvaluateState Evaluate() => (owner.info.HasJobLocation) ? EvaluateState.SUCCESS : EvaluateState.FAILURE;
     }
 }

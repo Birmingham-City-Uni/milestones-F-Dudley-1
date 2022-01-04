@@ -25,7 +25,7 @@ public class PatrolState : State
         if (!owner.HasPath())
         {
             Vector3 newPatrolLocation = VillageManager.instance.GetRandomGuardLocation();
-            
+
             owner.GetPathing(newPatrolLocation);
         }
 
@@ -34,6 +34,6 @@ public class PatrolState : State
 
     public override void Exit()
     {
-        
+
     }
 }
