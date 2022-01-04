@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1960684430130606919}
   - component: {fileID: 9051689342357422608}
   - component: {fileID: 2888021019191266271}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ MonoBehaviour:
   maxMovementSpeed: 10
   rotationSpeed: 3
   turning: 0
-  neighbourRange: 10
+  neighbourRange: 15
   seperationRange: 6
 --- !u!1 &8243233042939959272
 GameObject:
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 457381499053159343}
   - component: {fileID: 7040781798240173962}
   - component: {fileID: 6536704471108700930}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

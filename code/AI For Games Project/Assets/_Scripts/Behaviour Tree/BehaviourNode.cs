@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace BehaviourTree
 {
+    /// <summary>
+    /// The Evaluation States of BehaviourNodes.
+    /// </summary>
     public enum EvaluateState
     {
         RUNNING,
@@ -14,7 +17,15 @@ namespace BehaviourTree
     [System.Serializable]
     public abstract class BehaviourNode
     {
+        /// <summary>
+        /// The Current State of The Behaviour Node.
+        /// </summary>
         protected EvaluateState nodeState;
+
+        /// <summary>
+        /// The Current State of The Behaviour Node.
+        /// </summary>
+        /// <value></value>
         public EvaluateState NodeState 
         {
             get
@@ -23,6 +34,10 @@ namespace BehaviourTree
             }
         }
 
+        /// <summary>
+        /// Evaluates The Node.
+        /// </summary>
+        /// <returns>The Current State of The Node.</returns>
         public abstract EvaluateState Evaluate();
     }    
 }

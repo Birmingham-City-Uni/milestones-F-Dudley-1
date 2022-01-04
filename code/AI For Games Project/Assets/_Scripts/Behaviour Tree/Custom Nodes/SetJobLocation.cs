@@ -7,9 +7,21 @@ namespace BehaviourTree
 {
     public class SetJobLocationNode : BehaviourNode
     {
+        /// <summary>
+        /// The Nodes Owner.
+        /// </summary>
         Agent owner;
+
+        /// <summary>
+        /// The Function That is Used To Get A Job Location.
+        /// </summary>
         Func<Transform> jobGetterFunction;
 
+        /// <summary>
+        /// The Nodes Constructor.
+        /// </summary>
+        /// <param name="_owner">The Owner Of The Behaviour Node.</param>
+        /// <param name="_jobFunction">The Function That Returns a Job Location Transform.</param>
         public SetJobLocationNode(Agent _owner, Func<Transform> _jobFunction)
         {
             owner = _owner;

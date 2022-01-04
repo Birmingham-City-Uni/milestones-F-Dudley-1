@@ -6,8 +6,15 @@ namespace BehaviourTree
 {
     public class CancelJobLocationNode : BehaviourNode
     {
+        /// <summary>
+        /// The Nodes Owner.
+        /// </summary>
         Agent owner;
 
+        /// <summary>
+        /// Nodes Contructor.
+        /// </summary>
+        /// <param name="_owner">The Current Owner of The Node.</param>
         public CancelJobLocationNode(Agent _owner)
         {
             owner = _owner;

@@ -6,8 +6,15 @@ namespace BehaviourTree
 {
     public class CompletedJobNode : BehaviourNode
     {
+        /// <summary>
+        /// The Nodes Owner.
+        /// </summary>
         Agent owner;
 
+        /// <summary>
+        /// Nodes Constructor.
+        /// </summary>
+        /// <param name="_owner">The Current Node of The Owner.</param>
         public CompletedJobNode(Agent _owner)
         {
             owner = _owner;

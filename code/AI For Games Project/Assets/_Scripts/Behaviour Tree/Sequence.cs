@@ -4,9 +4,15 @@ namespace BehaviourTree
 {
     public class Sequence : BehaviourNode
     {
+        /// <summary>
+        /// The ChildNodes of The Sequence.
+        /// </summary>
         protected List<BehaviourNode> childNodes;
 
-        
+        /// <summary>
+        /// The Nodes Constructor.
+        /// </summary>
+        /// <param name="_childNodes">The Desired Child Nodes of The Sequence.</param>
         public Sequence(List<BehaviourNode> _childNodes)
         {
             childNodes = _childNodes;

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PatrolState : State
 {
+    /// <summary>
+    /// The Patrol States Constructor.
+    /// </summary>
+    /// <param name="_owner">The States Owner.</param>
+    /// <param name="_stateManager">The StateManager the Current State Belongs To.</param>
+    /// <returns></returns>
     public PatrolState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
 

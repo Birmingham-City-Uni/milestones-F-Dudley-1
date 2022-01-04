@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class TiredState : State
 {
-    private bool enteredHouse = true;
+    /// <summary>
+    /// Holds a Value if The House is Entered.
+    /// </summary>
+    private bool enteredHouse = false;
 
+    /// <summary>
+    /// The TiredStates Constructor.
+    /// </summary>
+    /// <param name="_owner">The States Owner.</param>
+    /// <param name="_stateManager">The StateManager the Current State Belongs To.</param>
+    /// <returns></returns>
     public TiredState(Agent _owner, StateManager _stateManager) : base(_owner, _stateManager)
     {
 

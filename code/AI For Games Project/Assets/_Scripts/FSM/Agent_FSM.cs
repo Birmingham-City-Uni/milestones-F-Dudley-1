@@ -7,9 +7,15 @@ public class Agent_FSM : Agent
 {
     [Header("Main Variables")]
 
+    /// <summary>
+    /// The StateManager For The Agent.
+    /// </summary>
     private StateManager stateManager;
 
     #region Unity Functions
+    /// <summary>
+    /// Unitys Start Function.
+    /// </summary>
     protected new void Start()
     {
         base.Start();
@@ -17,16 +23,25 @@ public class Agent_FSM : Agent
         stateManager.Init(new PatrolState(this, stateManager));
     }
 
+    /// <summary>
+    /// Unitys OnEnable Function.
+    /// </summary>
     protected new void OnEnable()
     {
         base.OnEnable();
     }
 
+    /// <summary>
+    /// Unitys OnDisable Function.
+    /// </summary>
     protected new void OnDisable()
     {
         base.OnDisable();
     }
 
+    /// <summary>
+    /// Unitys Update Function.
+    /// </summary>
     protected new void Update()
     {
         MoveCharacterAlongPath();
@@ -59,11 +74,17 @@ public class Agent_FSM : Agent
         else stateManager.pushState(new PatrolState(this, stateManager));
     }
 
+    /// <summary>
+    /// Unitys FixedUpdate Function.
+    /// </summary>
     protected new void FixedUpdate()
     {
         base.FixedUpdate();
     }
 
+    /// <summary>
+    /// Unitys FixedUpdate Function.
+    /// </summary>
     protected new void OnDrawGizmos()
     {
         base.OnDrawGizmos();

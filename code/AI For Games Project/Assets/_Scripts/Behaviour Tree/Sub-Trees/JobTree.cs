@@ -7,8 +7,15 @@ namespace BehaviourTree
 {
     public class DoJobSubTree : Selector
     {
+        /// <summary>
+        /// The Nodes Owner.
+        /// </summary>
         Agent owner;
 
+        /// <summary>
+        /// The Nodes Constructor.
+        /// </summary>
+        /// <param name="_owner">The Owner Of The Behaviour Node.</param>
         public DoJobSubTree(Agent _owner) : base(new List<BehaviourNode>())
         {
             owner = _owner;
@@ -21,6 +28,9 @@ namespace BehaviourTree
             return base.Evaluate();
         }
 
+        /// <summary>
+        /// Constructs The ChildNodes of The Job SubTree.
+        /// </summary>
         private void CreateJobTree()
         {
             // Go To Job

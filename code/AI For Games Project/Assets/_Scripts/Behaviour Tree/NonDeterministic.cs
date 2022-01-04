@@ -8,6 +8,11 @@ namespace BehaviourTree
     {
         public class NonDSequence : Sequence
         {
+            /// <summary>
+            /// The Nodes Constructor.
+            /// </summary>
+            /// <param name="_childNodes">The ChildNodes of The Sequence.</param>
+            /// <returns></returns>
             public NonDSequence(List<BehaviourNode> _childNodes) : base(_childNodes)
             {
 
@@ -46,6 +51,11 @@ namespace BehaviourTree
 
         public class NonDSelector : Selector
         {
+            /// <summary>
+            /// The Nodes Constructor.
+            /// </summary>
+            /// <param name="_childNodes">The Selectors ChildNodes.</param>
+            /// <returns></returns>
             public NonDSelector(List<BehaviourNode> _childNodes) : base(_childNodes)
             {
 
