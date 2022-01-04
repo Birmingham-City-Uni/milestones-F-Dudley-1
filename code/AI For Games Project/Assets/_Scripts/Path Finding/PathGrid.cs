@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+/// <summary>
+/// The Terrain Regions Mask, and Assositated Movement Penalty.
+/// </summary>
 public class TerrainMaskType
 {
     public LayerMask maskName;
@@ -13,23 +16,70 @@ public class TerrainMaskType
 public class PathGrid : MonoBehaviour, NodeContainer
 {
     [Header("Grid Attributes")]
+
+    /// <summary>
+    /// The Offset Position of The Grid From The Transforms Position.
+    /// </summary>
     public Vector3 gridPositionOffset;
+
+    /// <summary>
+    /// The Size of The Grid in X, Y, Z Coordinates.
+    /// </summary>
     public Vector3 gridWorldSize;
+
+    /// <summary>
+    /// The Size of Each Individual Node In The Container.
+    /// </summary>
     public float nodeDiameter;
 
+    /// <summary>
+    /// The LayerMask of The Walkable Terrain, Which is Assigned Based On The Differnt Terrain Regions.
+    /// </summary>
     [Tooltip("This Gets Assigned at Runtime.")]
     [SerializeField] private LayerMask walkableTerrainMask;
+
+    /// <summary>
+    /// The LayerMak of UnWalkable Terrain, Which Is Used To Determine if a Node Can Be Walked.
+    /// </summary>
     [SerializeField] private LayerMask unwalkableTerrainMask;
+
+    /// <summary>
+    /// The Different Terrain Regions of The Game World, and Their Assigned Penalty Values.
+    /// </summary>
     public TerrainMaskType[] terrainRegions;
 
+    /// <summary>
+    /// The Minimum Penalty Value.
+    /// </summary>
     private int penaltyMin = int.MaxValue;
+
+    /// <summary>
+    /// The Maxium Penalty Value.
+    /// </summary>
     private int penaltyMax = int.MinValue;
 
+    /// <summary>
+    /// The Dictionary Log of All The Terrain Regions And Their Assosiated Penalty.
+    /// </summary>
+    /// <typeparam name="int">The LayerMask's int32 Value</typeparam>
+    /// <typeparam name="int">The Penalty Cost Of The Region</typeparam>
     private Dictionary<int, int> terrainRegionsLog = new Dictionary<int, int>();
 
     [Header("Debug Referernces")]
+
+    /// <summary>
+    /// The GameObject Container of The PathFinding Visuals.
+    /// </summary>
     private GameObject pathingVisuals;
+
+    /// <summary>
+    /// The Material of a Walkable Visualization Node.
+    /// </summary>
     public Material walkableMat;
+
+    /// <summary>
+    /// The Material of a Non Walkable Visualization Node.
+    /// </summary>
     public Material nonWalkableMat;
 
     public int MaxSize
@@ -40,16 +90,27 @@ public class PathGrid : MonoBehaviour, NodeContainer
         }
     }
 
+    /// <summary>
+    /// The Contents of The Node Grid.
+    /// </summary>
     public Node[,] grid;
+
+    /// <summary>
+    /// The Size of The Grid In The X and Y World Coordinates.
+    /// </summary>
     private int gridSizeX, gridSizeZ;
 
     #region Unity Functions
+
+    /// <summary>
+    /// Unitys Awake Function.
+    /// </summary>
     private void Awake()
     {
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
 
-        foreach (TerrainMaskType type in terrainRegions)
+        foreach (TerrainMaskType type in terrainRegions) // Adds All The Terrain Regions To The Dictionary, Based On The Layers int32 and penalty value.
         {
             walkableTerrainMask |= type.maskName;
             terrainRegionsLog.Add((int) Mathf.Log(type.maskName.value, 2), type.maskPenalty);
@@ -59,21 +120,25 @@ public class PathGrid : MonoBehaviour, NodeContainer
         CreateDebugVisuals();
     }
 
+    /// <summary>
+    /// Unitys OnEnable Function.
+    /// </summary>
     private void OnEnable()
     {
         GameManager.enableNodeContainerDrawing += EnablePathingVisuals;
     }
 
+    /// <summary>
+    /// Unitys OnDisable Function.
+    /// </summary>
     private void OnDisable()
     {
         GameManager.enableNodeContainerDrawing -= EnablePathingVisuals;
     }
 
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Unitys OnDrawGizmos Function.
+    /// </summary>
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube((transform.position + gridPositionOffset) + Vector3.up * (gridWorldSize.y / 2), gridWorldSize);
@@ -90,10 +155,13 @@ public class PathGrid : MonoBehaviour, NodeContainer
     #endregion
 
     #region Grid Functions
+
     public void CreateContainer()
     {
         float nodeRadius = nodeDiameter / 2;
         grid = new Node[gridSizeX, gridSizeZ];
+
+        // The Bottom Left Position of The Node Grid To Iterate Positions Off.
         Vector3 worldBottomLeft = (transform.position + gridPositionOffset) - (Vector3.right * (gridSizeX / 2)) - (Vector3.forward * (gridSizeZ / 2)) + Vector3.up * (gridWorldSize.y / 2);
 
         for (int x = 0; x < gridSizeX; x++)
@@ -101,11 +169,14 @@ public class PathGrid : MonoBehaviour, NodeContainer
             for (int z = 0; z < gridSizeZ; z++)
             {
                 Vector3 pointInWorld = worldBottomLeft + (Vector3.right * (x * nodeDiameter + nodeRadius)) + (Vector3.forward * (z * nodeDiameter + nodeRadius));
+                
+                // Checking if The Nodes Position is Walkable, By Checking The Box of The Node.
                 bool isWalkable = !(Physics.CheckBox(pointInWorld, Vector3.one * nodeRadius, Quaternion.identity, unwalkableTerrainMask, QueryTriggerInteraction.Ignore));
                 
                 int movementPenalty = 0;
                 if (isWalkable)
                 {
+                    // Shooting a Ray Downwards To Collide With The Different Terrain Regions Colliders to See Which Region The Node is In.
                     Ray ray = new Ray(pointInWorld + Vector3.up * 50, Vector3.down);
                     RaycastHit hit;
 
@@ -119,12 +190,13 @@ public class PathGrid : MonoBehaviour, NodeContainer
             }
         }
 
+        // Blurs The Penalty Map So It Is More Fluid And Less Rigid.
         PenaltyMap(2);
     }
 
     public void CreateDebugVisuals()
     {
-        pathingVisuals = new GameObject("DebugVisualsContainer");
+        pathingVisuals = new GameObject("DebugVisualsContainer"); // Creates a Container Object For The Debug Visuals.
         pathingVisuals.transform.parent = transform;
         pathingVisuals.SetActive(false);        
 
@@ -135,13 +207,13 @@ public class PathGrid : MonoBehaviour, NodeContainer
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
-                GameObject nodeVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                GameObject nodeVisual = GameObject.CreatePrimitive(PrimitiveType.Cube); // Creates a Primitive Cube and Deletes it's Collider.
                 Renderer renderer = nodeVisual.GetComponent<Renderer>();
                 Destroy(nodeVisual.GetComponent<Collider>());
                 nodeVisual.transform.parent = pathingVisuals.transform;
                 nodeVisual.name = string.Format("Node-{0}-{1}", x, z);
 
-                if (grid[x, z].isWalkable)
+                if (grid[x, z].isWalkable) // Assigning The Primitives Material and Scale Based On If The Node is Walkable
                 {
                     nodeVisual.transform.localScale = walkScale;
                     renderer.material = walkableMat;
@@ -157,6 +229,10 @@ public class PathGrid : MonoBehaviour, NodeContainer
         }
     }
 
+    /// <summary>
+    /// Blurs The Penalty Values of The Nodes and Their Neighbours So They Are Less Rigid and Have An Equal Blend.
+    /// </summary>
+    /// <param name="_blurSize">The Severtiy of The Blur.</param>
     private void PenaltyMap(int _blurSize)
     {
         int kernelSize = _blurSize * 2 + 1;
@@ -165,6 +241,7 @@ public class PathGrid : MonoBehaviour, NodeContainer
         int[,] penaltiesHorizontalPass = new int[gridSizeX, gridSizeZ];
         int[,] penaltiesVerticalPass = new int[gridSizeX, gridSizeZ];
 
+        // Performs a Horizontal Pass of The Nodes Penaltys and Neighbours.
 		for (int z = 0; z < gridSizeZ; z++) {
 			for (int x = -kernelExtents; x <= kernelExtents; x++) {
 				int sampleX = Mathf.Clamp (x, 0, kernelExtents);
@@ -178,7 +255,8 @@ public class PathGrid : MonoBehaviour, NodeContainer
 				penaltiesHorizontalPass [x, z] = penaltiesHorizontalPass [x - 1, z] - grid [removeIndex, z].movementPenalty + grid [addIndex, z].movementPenalty;
 			}
 		}
-			
+
+        // Performs a Vertical Pass of The Nodes Penaltys and Neighbours, Over The Previous Pass.
 		for (int x = 0; x < gridSizeX; x++) {
 			for (int z = -kernelExtents; z <= kernelExtents; z++) {
 				int sampleZ = Mathf.Clamp (z, 0, kernelExtents);

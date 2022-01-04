@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class CharacterHouse : MonoBehaviour
 {
+    /// <summary>
+    /// The Entrance Location To The Current House.
+    /// </summary>
     public Transform entrance;
+
+    /// <summary>
+    /// The Audio of The Door Entrance Opening.
+    /// </summary>
     [SerializeField] private AudioSource doorSound;
 
     #region Unity Functions
 
+    /// <summary>
+    /// Unitys Start Function.
+    /// </summary>
     private void Start()
     {
         doorSound = GetComponentInChildren<AudioSource>();
     }
 
+    /// <summary>
+    /// Unity OnDrawGizmos Function.
+    /// </summary>
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(entrance.position, 1.75f);
@@ -21,8 +34,16 @@ public class CharacterHouse : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// Gets The Entrance Location of The House.
+    /// </summary>
+    /// <returns>The Position of The Houses Entrance.</returns>
     public Vector3 GetEntrance() => entrance.position;
 
+    /// <summary>
+    /// Moves The Agent Into a State of Inside Their House.
+    /// </summary>
+    /// <param name="agent">The Agent To Enter The House.</param>
     public void EnterHouse(Agent agent)
     {
         if (agent.info.isAlerted)
@@ -39,16 +60,29 @@ public class CharacterHouse : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Enters An Agent Into The House In a Tired State.
+    /// </summary>
+    /// <param name="agent">The Agent To Enter The House.</param>
     public void EnterHouseTired(Agent agent)
     {
         StartCoroutine(AgentEnteredTired(agent));
     }
 
+    /// <summary>
+    /// Enters An Agent Into The House In a Alerted State.
+    /// </summary>
+    /// <param name="agent">The Agent To Enter The House.</param>
     public void EnterHouseAlerted(Agent agent)
     {
         StartCoroutine(AgentEnteredAlerted(agent));
     }
 
+    /// <summary>
+    /// A Coroutine That Runs If The Agent Enters The House In a Hungry State.
+    /// </summary>
+    /// <param name="agent">The Agent To Enter The House.</param>
+    /// <returns>A Coroutine.</returns>
     private IEnumerator AgentEnteredHungry(Agent agent)
     {
         doorSound.Play();
@@ -64,6 +98,11 @@ public class CharacterHouse : MonoBehaviour
         MoveAgentToEntrance(agent);
     }
 
+    /// <summary>
+    /// A Coroutine That Runs If The Agent Enters The House In a Tired State.
+    /// </summary>
+    /// <param name="agent">The Agent To Enter The House.</param>
+    /// <returns>A Coroutine.</returns>
     private IEnumerator AgentEnteredTired(Agent agent)
     {
         doorSound.Play();
@@ -79,6 +118,11 @@ public class CharacterHouse : MonoBehaviour
         MoveAgentToEntrance(agent);
     }
 
+    /// <summary>
+    /// A Coroutine That Runs If The Agent Enters The House In a Alerted State.
+    /// </summary>
+    /// <param name="agent">The Agent To Enter The House.</param>
+    /// <returns>A Coroutine.</returns>
     private IEnumerator AgentEnteredAlerted(Agent agent)
     {
         doorSound.Play();
@@ -94,6 +138,10 @@ public class CharacterHouse : MonoBehaviour
         MoveAgentToEntrance(agent);
     }
 
+    /// <summary>
+    /// Moves The Selected Agent To The Entrance Position of The House.
+    /// </summary>
+    /// <param name="agent"></param>
     private void MoveAgentToEntrance(Agent agent)
     {
         agent.transform.SetPositionAndRotation(entrance.position, entrance.rotation);

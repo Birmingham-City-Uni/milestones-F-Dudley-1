@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*public struct RayBundle_Ray{ // Whitspace Linting is Fun :)
-    public RaycastHit hitInfo;
-    public bool isHit;
-}*/
-
 public class Sensors : MonoBehaviour
 {
     [HideInInspector]
+
+    /// <summary>
+    /// The Types of Sensors.
+    /// </summary>
     public enum Type
     {
         Line,
@@ -19,27 +18,54 @@ public class Sensors : MonoBehaviour
     }
 
     [Header("General Variables")]
+
+    /// <summary>
+    /// The Current Sensor Type.
+    /// </summary>
     public Type sensorType = Type.Line;
+
+    /// <summary>
+    /// How Far The Current Sensor Detects.
+    /// </summary>
     public float sensorDistance = 1.0f;
-    [SerializeField]
+
+    /// <summary>
+    /// Wether The Sensor Hits Anything.
+    /// </summary>
     public bool Hit { get; private set; }
 
+    /// <summary>
+    /// The Raycast Hit Performed By a Sensor.
+    /// </summary>
     private RaycastHit castInfo = new RaycastHit();
 
     [Header("SphereCast Settings")]
+
+    /// <summary>
+    /// The Radius of a Sphere Cast.
+    /// </summary>
     public float sphereRadius = 1.0f;
 
     [Header("BoxCast Settings")]
+
+    /// <summary>
+    /// The Distance in X and Z The Box Cast Projects.
+    /// </summary>
     public Vector2 boxExtents = new Vector2(1.0f, 1.0f);
 
     [Header("Raybundle Settings")]
     [Range(1, 100)]
+
+    /// <summary>
+    /// The Amount of Rays The Bundle Shoots.
+    /// </summary>
     public int rayAmount = 1;
 
+    /// <summary>
+    /// The Field of View The Raybundle Shoots.
+    /// </summary>
     [Range(0, 360)]
     public int fov;
-
-    //private RayBundle_Ray[] raybundleHits;// To be Used in Updated Raybundle
 
     #region Unity Functions
     void Start()
@@ -50,6 +76,12 @@ public class Sensors : MonoBehaviour
     #endregion
 
     #region Main Functions
+
+    /// <summary>
+    /// Scans Using The Current Sensor, Using The Specified LayerMask.
+    /// </summary>
+    /// <param name="_maskToCheck"></param>
+    /// <returns></returns>
     public bool Scan(LayerMask _maskToCheck)
     {
         Hit = false;
@@ -105,9 +137,10 @@ public class Sensors : MonoBehaviour
     #endregion
 
     #region Debug Functions
-    private void DebugHit() => Debug.Log("Hit Object");
-    private void DebugRay() => Debug.DrawRay(transform.position, transform.forward * sensorDistance, Hit ? Color.red : Color.green);
 
+    /// <summary>
+    /// Unitys OnDraw Gizmos Function.
+    /// </summary>
     public void OnDrawGizmos()
     {
         Hit = Scan(LayerMask.GetMask("Player"));

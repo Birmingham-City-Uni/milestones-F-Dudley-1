@@ -13,31 +13,52 @@ public class CameraController : MonoBehaviour
     /// The Rotation of the Camera or Selected Character.
     /// </summary>
     public float rotationSpeed = 10f;
+
+    /// <summary>
+    /// The Multiplier of The Characters Boost Movement.
+    /// </summary>
     public float boostMultiplier = 10f;
 
+    /// <summary>
+    /// The Characters X and Y Euler Rotation.
+    /// </summary>
     private float xEulerRotation, yEulerRotation;
 
-    private Transform cameraTransform;
-    private Transform cameraContainer;
-
     [Header("Interaction Variables")]
+    /// <summary>
+    /// The Interaction Range The Camera Can Interact An Attach From.
+    /// </summary>
     public float interactionRange = 100f;
 
     [Header("Character Variables")]
+    /// <summary>
+    /// The LayerMask of Characters The Camera Can Attach To.
+    /// </summary>
     public LayerMask characterLayerMask;
+
+    /// <summary>
+    /// Wether The Camera is Controlling an Attached Character.
+    /// </summary>
     public bool controllingCharacter;
 
+    /// <summary>
+    /// The Attached Characters Movement Script. 
+    /// </summary>
     private CharacterMovement characterScript;
 
     #region Unity Functions
+    /// <summary>
+    /// Unitys Start Functon.
+    /// </summary>
     private void Start()
     {
-        cameraTransform = GetComponent<Transform>();
-        cameraContainer = transform.parent;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    /// <summary>
+    /// Unitys Update Function.
+    /// </summary>
     private void Update()
     {
         switch (controllingCharacter)
@@ -63,6 +84,10 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region User Input
+
+    /// <summary>
+    /// The User Input That Can Be Performed Towards the Camera.
+    /// </summary>
     private void UserInput()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -71,14 +96,36 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets The Mouses Current Y Value.
+    /// </summary>
+    /// <returns>A Float of The Mouses Y Value and Rotation Speed.</returns>
     private float GetMouseY() => Input.GetAxis("Mouse Y") * rotationSpeed;
+
+    /// <summary>
+    /// Gets The Mouses Current X Value.
+    /// </summary>
+    /// <returns>A Float of The Mouses X Value and Rotation Speed.</returns>
     private float GetMouseX() => Input.GetAxis("Mouse X") * rotationSpeed;
 
+    /// <summary>
+    /// Gets The Current Horizontal Movement Axis.
+    /// </summary>
+    /// <returns>Returns a Float of The Horizontal Axis Minimised For Current FPS.</returns>
     private float GetMovementX() => Input.GetAxis("Horizontal") * Time.deltaTime;
+
+    /// <summary>
+    /// Gets The Current Vertical Movement Axis.
+    /// </summary>
+    /// <returns>Returns a Float of The Vertical Axis Minimised For Current FPS.</returns>
     private float GetMovementY() => Input.GetAxis("Vertical") * Time.deltaTime;
     #endregion
 
     #region Camera Functions
+    /// <summary>
+    /// Sets The Control Functions of the Camera on Characters, if they are Controllable.
+    /// </summary>
+    /// <param name="controller">The Character Controller Script.</param>
     private void SetControl(CharacterMovement controller)
     {
         if (controller != null)
@@ -98,6 +145,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates The Cameras Transform Based On Input Movement.
+    /// </summary>
     private void UpdateCameraTransform()
     {
         float speed = movementSpeed;
@@ -114,6 +164,9 @@ public class CameraController : MonoBehaviour
         transform.position += transform.right * (GetMovementX() * speed);
     }
 
+    /// <summary>
+    /// Casts a Ray To Check if a Camera Collides With a Character.
+    /// </summary>
     private void CheckCameraRay()
     {
         RaycastHit hit;
@@ -142,6 +195,9 @@ public class CameraController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * interactionRange, castCollide ? Color.red : Color.green, 0.0f);
     }
 
+    /// <summary>
+    /// Removes the Cameras Current Parent if Attached To A Character.
+    /// </summary>
     private void RemoveParent()
     {
         if (transform.parent)

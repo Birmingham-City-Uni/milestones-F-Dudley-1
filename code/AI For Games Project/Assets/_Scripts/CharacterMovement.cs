@@ -5,39 +5,105 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Main Variables")]
+
+    /// <summary>
+    /// Specifies if a Player Can Control The Character.
+    /// </summary>
     public bool userControllable = false;
+    
+    /// <summary>
+    /// Specifies if The Player is Currently Controlling the Character.
+    /// </summary>
     public bool currentlyControlled = false;
 
     [Header("Physics Variables")]
+
+    /// <summary>
+    /// The Movement Speed of the Character.
+    /// </summary>
     public float movementSpeed = 1f;
+
+    /// <summary>
+    /// The Rotation Speed of The Character.
+    /// </summary>
     public float rotationSpeed = 1f;
+
+    /// <summary>
+    /// The Jump Height of The Character.
+    /// </summary>
     public float jumpHeight = 1f;
+
+    /// <summary>
+    /// The Sprint Multiplier of The Character.
+    /// </summary>
     public float sprintMultiplier;
 
+    /// <summary>
+    /// The Distance at Which The Characters Shout Can Be Heard.
+    /// </summary>
     public float shoutDistance = 7f;
 
     [Space]
 
+    /// <summary>
+    /// The LayerMask of The Ground.
+    /// </summary>
     public LayerMask groundMask;
+
+    /// <summary>
+    /// Wether The Character is Grounded or Not.
+    /// </summary>
     public bool isGrounded;
+
+    /// <summary>
+    /// The Location Where The Ground Check is Performed.
+    /// </summary>
     public Transform groundCheck;
+
+    /// <summary>
+    /// The Distance The Ground Check is Performed.
+    /// </summary>
     public float groundDistance = 0.4f;
 
+    /// <summary>
+    /// The Current Y Velocity of the Character.
+    /// </summary>
     [SerializeField] private float velocity = 0.0f;
-    private Transform playerTransform;
+
+    /// <summary>
+    /// The Characters CharacterController Component.
+    /// </summary>
     private CharacterController characterController;
 
     [Header("Player Variables")]
+
+    /// <summary>
+    /// The Position The Attached Camera Goes.
+    /// </summary>
     public Transform cameraPosition;
 
+    /// <summary>
+    /// The Characters Animations.
+    /// </summary>
     private Animator animator;
+
+    /// <summary>
+    /// The Walking Audio of The Character.
+    /// </summary>
     private AudioSource walkingAudio;
+
+    /// <summary>
+    /// The Shouting Audio of The Player.
+    /// </summary>
     private AudioSource shoutingAudio;
 
     #region Unity Functions    
-    void Start()
+    
+    /// <summary>
+    /// Unitys Start Function.
+    /// </summary>
+    private void Start()
     {
-        playerTransform = GetComponent<Transform>();
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
 
@@ -48,17 +114,26 @@ public class CharacterMovement : MonoBehaviour
         currentlyControlled = false;
     }
 
-    void Update()
+    /// <summary>
+    /// Unitys Update Function.
+    /// </summary>
+    private void Update()
     {
         isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(groundDistance, 0.2f, groundDistance) / 2.0f, transform.rotation, groundMask);
     }
 
-    void FixedUpdate()
+    /// <summary>
+    /// Unitys FixedUpdate Function.
+    /// </summary>
+    private void FixedUpdate()
     {
         UpdateCharacterVelocity();
     }
 
-    void OnDrawGizmos()
+    /// <summary>
+    /// Unitys OnDrawGizmos Function.
+    /// </summary>
+    private void OnDrawGizmos()
     {
         Gizmos.DrawRay(cameraPosition.position, transform.forward * 2f);
 
@@ -78,6 +153,11 @@ public class CharacterMovement : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// Updates The Characters Potion Depending on the Vertical and Horizontal Values.
+    /// </summary>
+    /// <param name="_vertical">The Vertiacl Axis Values.</param>
+    /// <param name="_horizontal">The Horizontal Axis Values.</param>
     public void UpdateCharacterPosition(float _vertical, float _horizontal)
     {
         if ((!isGrounded || (_vertical == 0 && _horizontal == 0)) && walkingAudio.isPlaying)
@@ -96,6 +176,10 @@ public class CharacterMovement : MonoBehaviour
         characterController.Move(movement * movementSpeed);
     }
 
+    /// <summary>
+    /// Updates The Characters Postion, Towards a Target Postion.
+    /// </summary>
+    /// <param name="_targetPos">The Target Position To Move Towards.</param>
     public void UpdateCharacterPosition(Vector3 _targetPos)
     {
         if (isGrounded && !walkingAudio.isPlaying) 
@@ -108,12 +192,20 @@ public class CharacterMovement : MonoBehaviour
         characterController.Move((movementDirection).normalized * movementSpeed * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Updates The Characters Euler Y Rotation.
+    /// </summary>
+    /// <param name="_mouseX">The Mouse X Axis.</param>
     public void UpdateCharacterRotation(float _mouseX)
     {
         float newRotationY = transform.localEulerAngles.y + _mouseX;
         transform.localRotation = Quaternion.Euler(0.0f, newRotationY, 0.0f);
     }
 
+    /// <summary>
+    /// Updates The Characters Rotation Towards A Target Postion.
+    /// </summary>
+    /// <param name="_targetPos">The Target Position To Rotate Towards.</param>
     public void UpdateCharacterRotation(Vector3 _targetPos)
     {
         Vector3 movementDirection = _targetPos - transform.position;
@@ -123,6 +215,9 @@ public class CharacterMovement : MonoBehaviour
         transform.Rotate(0, angle * Time.deltaTime, 0);
     }
 
+    /// <summary>
+    /// Updates The Characters Y Velocity, To Simulate Gravity.
+    /// </summary>
     public void UpdateCharacterVelocity()
     {
         velocity += (-20f * Mathf.Pow(Time.deltaTime, 2.0f));
@@ -130,11 +225,17 @@ public class CharacterMovement : MonoBehaviour
         characterController.Move(new Vector3(0.0f, velocity, 0.0f));
     }
 
+    /// <summary>
+    /// Makes The Character Perform a Jump if Possible.
+    /// </summary>
     public void CharacterJump()
     {
         if (isGrounded && userControllable) velocity = Mathf.Sqrt(jumpHeight * -2 * -20);
     }
 
+    /// <summary>
+    /// Makes The Character Shout.
+    /// </summary>
     public void CharacterShout()
     {
         if (userControllable)
@@ -157,11 +258,17 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops The Characters Movement Animation.
+    /// </summary>
     public void StopCharacterAnimation()
     {
         animator.SetBool("isMoving", false);
     }
 
+    /// <summary>
+    /// Stops The Characters Walking Audio.
+    /// </summary>
     public void StopCharacterAudio()
     {
         if (walkingAudio.isPlaying)

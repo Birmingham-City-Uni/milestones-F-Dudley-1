@@ -8,13 +8,31 @@ public class CharacterInfo : MonoBehaviour
 {
     [Header("Stats")]
 
+    /// <summary>
+    /// The Characters Health.
+    /// </summary>
     [Range(0, 100)]
     [SerializeField] private int health;
+
+    /// <summary>
+    /// The Characters Gold.
+    /// </summary>
     [SerializeField] private int gold;
 
+    /// <summary>
+    /// The Characters Hunger Value.
+    /// </summary>
     [SerializeField] private float hunger;
+
+    /// <summary>
+    /// The Characters Tiredness Value.
+    /// </summary>
     [SerializeField] private float tiredness;
 
+    /// <summary>
+    /// The Characters Hunger Value.
+    /// </summary>
+    /// <value>A Float of The Characters Hunger.</value>
     public float Hunger
     {
         get
@@ -28,6 +46,10 @@ public class CharacterInfo : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The Characters Tiredness Value.
+    /// </summary>
+    /// <value></value>
     public float Tiredness
     {
         get
@@ -43,9 +65,20 @@ public class CharacterInfo : MonoBehaviour
 
     [Space]
 
+    /// <summary>
+    /// The Characters Alerted Value.
+    /// </summary>
     [SerializeField] private bool alerted;
+
+    /// <summary>
+    /// The Recieved Location The Character Was Alerted From.
+    /// </summary>
     [SerializeField] private Vector3 alertedLocation;
 
+    /// <summary>
+    /// The Characters Alerted Value.
+    /// </summary>
+    /// <value>A Bool For If The Character is Alerted or Not.</value>
     public bool isAlerted
     {
         get
@@ -59,6 +92,10 @@ public class CharacterInfo : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The Location Where The Character Was Alerted From.
+    /// </summary>
+    /// <value></value>
     public Vector3 AlertedLocation
     {
         get
@@ -75,10 +112,27 @@ public class CharacterInfo : MonoBehaviour
 
 
     [Header("Job Stats")]
+
+    /// <summary>
+    /// The Knowledge of Wether The Character Currently has a Job Location.
+    /// </summary>
     [SerializeField] private bool hasJobLocation = false;
+
+    /// <summary>
+    /// The Knowledge of Wether The Character Currently has Completed Their Assigned Job.
+    /// </summary>
+    /// <value></value>
     [SerializeField] private bool completedCurrentJob = false;
+
+    /// <summary>
+    /// The Position of Their Current Job Locaiton.
+    /// </summary>
     [SerializeField] private Transform currentJobLocation;
 
+    /// <summary>
+    /// The Knowlege of Wether The Character has a Job Location.
+    /// </summary>
+    /// <value>A Bool, True if They Have a Location, False if They Have No Lcoation.</value>
     public bool HasJobLocation
     {
         get
@@ -93,6 +147,10 @@ public class CharacterInfo : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The Knowledge of Wether The Character has Completed Their Current Assigned Job.
+    /// </summary>
+    /// <value>A Bool, True if They Have Completed Their Job, Fales if They Are Still Doing Their Job.</value>
     public bool CompletedCurrentJob
     {
         get
@@ -106,6 +164,10 @@ public class CharacterInfo : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The Current Location of Their Job.
+    /// </summary>
+    /// <value>A Transform of The Jobs Location.</value>
     public Transform CurrentJobLocation
     {
         get
@@ -121,39 +183,100 @@ public class CharacterInfo : MonoBehaviour
 
     [Header("Effects Thresholds")]
     [Tooltip("The Amount at where the Player will start to Seek out Food")]
+    /// <summary>
+    /// The Threshold at When a Character Should Start Seeking out Food.
+    /// </summary>
     public float hungryThreshold = 30f;
+
     [Tooltip("The Amount at where the Player will start to Go Home To Bed")]
+    /// <summary>
+    /// The Threshold When a Character Should Start Seeking out a Place to Sleep.
+    /// </summary>
     public float tirednessThreshold = 30f;
 
     [Header("Enviroment References")]
+
+    /// <summary>
+    /// The Characters House.
+    /// </summary>
     public CharacterHouse house;
+
+    /// <summary>
+    /// The Characters Job.
+    /// </summary>
     public CharacterJob job;
 
     [Header("Visualizer References")]
+
+    /// <summary>
+    /// The Characters Debug Info Visualizer.
+    /// </summary>
     [SerializeField] private GameObject debugVisualizer;
+
+    /// <summary>
+    /// The Debug CharacterInfos JobTitle Text.
+    /// </summary>
     [SerializeField] private TextMeshProUGUI jobTitleText;
+
+    /// <summary>
+    /// The Debug CharacterInfos Hunger Text.
+    /// </summary>
     [SerializeField] private TextMeshPro hungerText;
+
+    /// <summary>
+    /// The Debug CharacterInfos Tiredness Text.
+    /// </summary>
     [SerializeField] private TextMeshPro tirednessText;
+
+    /// <summary>
+    /// The Debug CharacterInfos isAlerted Text.
+    /// </summary>
     [SerializeField] private TextMeshPro isAlertedText;
+
+    /// <summary>
+    /// The Debug CharacterInfos hasJobLocation Text.
+    /// </summary>
     [SerializeField] private TextMeshPro hasJobLocationText;
+
+    /// <summary>
+    /// The Debug CharacterInfos CompletedJobLocation Text.
+    /// </summary>
     [SerializeField] private TextMeshPro completedJobLocationText;
+
+    /// <summary>
+    /// The Debug CharacterInfos CurrentJobLocation Text.
+    /// </summary>
     [SerializeField] private TextMeshPro currentJobLocationText;
 
+    #region Unity Functions
+
+    /// <summary>
+    /// Unitys Start Function.
+    /// </summary>
     private void Start()
     {
         if (job != null) jobTitleText.text = job.JobName;
     }
 
+    /// <summary>
+    /// Unity OnEnable Function.
+    /// </summary>
     private void OnEnable()
     {
         GameManager.enableCharacterInfoBoxes += ChangeVisualizerVisability;
     }
 
+    /// <summary>
+    /// Unitys OnDisable Function.
+    /// </summary>
     private void OnDisable()
     {
         GameManager.enableCharacterInfoBoxes -= ChangeVisualizerVisability;
     }
 
+    /// <summary>
+    /// Unitys FixedUpdate Function. 
+    /// </summary>
     private void FixedUpdate()
     {
         if (debugVisualizer != null)
@@ -161,7 +284,12 @@ public class CharacterInfo : MonoBehaviour
             if (debugVisualizer.activeSelf) debugVisualizer.transform.LookAt(Camera.main.transform.position, Vector3.up);            
         }
     }
+    #endregion
 
+    /// <summary>
+    /// Changes The CharacterInfoBoxs Visability.
+    /// </summary>
+    /// <param name="_newVisability">The New Visalibty of The InfoBox.</param>
     private void ChangeVisualizerVisability(bool _newVisability)
     {
         if (debugVisualizer != null)
