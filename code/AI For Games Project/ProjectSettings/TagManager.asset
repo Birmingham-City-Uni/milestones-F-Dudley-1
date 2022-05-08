@@ -8,27 +8,27 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Characters
-  - Unwalkable
+  - 
+  - 
+  - Reflection_Probes
+  - Lighting
+  - Props
+  - ReflectedInWater
+  - Boids
+  - AccessibleVolume
   - PostProcessing
-  - Not in Reflection
+  - UnWalkableArea
+  - Ground
+  - Road
+  - Path
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Characters
   - 
   - 
   - 
